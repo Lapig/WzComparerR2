@@ -2956,12 +2956,12 @@ namespace WzComparerR2
 
             if (openedWz.Count < 2)
             {
-                MessageBoxEx.Show("비교할 두 개 이상의 Wz 파일을 선택하세요.", "오류");
+                MessageBoxEx.Show("Select two or more Wz files to compare.", "오류");
                 return;
             }
 
             FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.Description = "저장할 폴더를 선택하세요.";
+            dlg.Description = "Please select a folder to save.";
 
             if (dlg.ShowDialog() == DialogResult.OK)
             {
@@ -2983,7 +2983,7 @@ namespace WzComparerR2
 
                         while (true)
                         {
-                            string txt = string.Format("Wz 파일 :\r\n\r\n  신버전 : {0} (V{1})\r\n  구버전 : {2} (V{3})\r\n\r\nYes를 누르시면 비교가 시작되고, No를 누르시면 신버전과 구버전을 뒤집을 수 있습니다.",
+                            string txt = string.Format("Wz 파일 :\r\n\r\n  New : {0} (V{1})\r\n  Old : {2} (V{3})\r\n\r\nYes를 누르시면 비교가 시작되고, No를 누르시면 신버전과 구버전을 뒤집을 수 있습니다.",
                                 fileNew.Header.FileName,
                                 fileNew.Header.WzVersion,
                                 fileOld.Header.FileName,

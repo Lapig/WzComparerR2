@@ -600,13 +600,13 @@
             this.bar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.bar3.TabIndex = 0;
             this.bar3.TabStop = false;
-            this.bar3.Text = "도구";
+            this.bar3.Text = "Tool";
             // 
             // btnCode
             // 
             this.btnCode.Image = global::WzComparerR2.Avatar.Properties.Resources.script_code;
             this.btnCode.Name = "btnCode";
-            this.btnCode.Tooltip = "코드";
+            this.btnCode.Tooltip = "Code";
             this.btnCode.Click += new System.EventHandler(this.btnCode_Click);
             // 
             // btnCharac
@@ -617,25 +617,25 @@
             this.btnCharac.SubItems.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.btnMale,
             this.btnFemale});
-            this.btnCharac.Tooltip = "기본설정";
+            this.btnCharac.Tooltip = "Basic";
             // 
             // btnMale
             // 
             this.btnMale.Name = "btnMale";
-            this.btnMale.Text = "남자기본";
+            this.btnMale.Text = "Male";
             this.btnMale.Click += new System.EventHandler(this.btnMale_Click);
             // 
             // btnFemale
             // 
             this.btnFemale.Name = "btnFemale";
-            this.btnFemale.Text = "여자기본";
+            this.btnFemale.Text = "Female";
             this.btnFemale.Click += new System.EventHandler(this.btnFemale_Click);
             // 
             // btnReset
             // 
             this.btnReset.Image = global::WzComparerR2.Avatar.Properties.Resources.arrow_in;
             this.btnReset.Name = "btnReset";
-            this.btnReset.Tooltip = "원래위치로";
+            this.btnReset.Tooltip = "Reset";
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnLock
@@ -643,7 +643,7 @@
             this.btnLock.AutoCheckOnClick = true;
             this.btnLock.Image = global::WzComparerR2.Avatar.Properties.Resources._lock;
             this.btnLock.Name = "btnLock";
-            this.btnLock.Tooltip = "잠금";
+            this.btnLock.Tooltip = "Lock";
             // 
             // buttonItem1
             // 

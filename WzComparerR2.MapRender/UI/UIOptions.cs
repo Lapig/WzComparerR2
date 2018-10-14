@@ -55,19 +55,19 @@ namespace WzComparerR2.MapRender.UI
             tab1.Content = GetTabContent1();
 
             TabItem tab2 = new TabItem();
-            tab2.Header = "상태 표시줄";
+            tab2.Header = "Status Bar";
             tab2.Content = GetTabContent2();
 
             TabItem tab3 = new TabItem();
-            tab3.Header = "미니맵";
+            tab3.Header = "Minimap";
             tab3.Content = GetTabContent3();
 
             TabItem tab4 = new TabItem();
-            tab4.Header = "월드맵";
+            tab4.Header = "World Map";
             tab4.Content = GetTabContent4();
 
             TabItem tab5 = new TabItem();
-            tab5.Header = "도움말";
+            tab5.Header = "Help";
             tab5.Content = GetTabContent5();
 
             TabControl tabControl = new TabControl();
@@ -82,7 +82,7 @@ namespace WzComparerR2.MapRender.UI
             TextBlock lblHint = new TextBlock();
             lblHint.Foreground = Brushes.Yellow;
             lblHint.VerticalAlignment = VerticalAlignment.Center;
-            lblHint.Text = "* 일부 기능은 MapRender를 재시작해야 적용됩니다.";
+            lblHint.Text = "* may require MapRenderer restart.";
             lblHint.Margin = new Thickness(20, 0, 0, 0);
             grid.Children.Add(lblHint);
             Grid.SetRow(lblHint, 2);
@@ -149,14 +149,14 @@ namespace WzComparerR2.MapRender.UI
 
             TextBlock lbl1 = new TextBlock();
             lbl1.VerticalAlignment = VerticalAlignment.Center;
-            lbl1.Text = "배경음악";
+            lbl1.Text = "BGM";
             lbl1.Foreground = Brushes.Yellow;
             Grid.SetRow(lbl1, 0);
             Grid.SetColumn(lbl1, 0);
             grid.Children.Add(lbl1);
 
             CheckBox chk1 = new CheckBox();
-            chk1.Content = "백그라운드에서 음소거";
+            chk1.Content = "Mute When Unfocused";
             chk1.Margin = new Thickness(18, 0, 0, 0);
             chk1.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.MuteOnLeaveFocus)));
             Grid.SetRow(chk1, 1);
@@ -176,7 +176,7 @@ namespace WzComparerR2.MapRender.UI
             lbl2.HorizontalAlignment = HorizontalAlignment.Center;
             lbl2.VerticalAlignment = VerticalAlignment.Center;
             lbl2.Padding = new Thickness(24, 0, 0, 0);
-            lbl2.Text = "음량";
+            lbl2.Text = "Vol";
             pnl1.Children.Add(lbl2);
 
             Slider slider1 = new Slider();
@@ -200,7 +200,7 @@ namespace WzComparerR2.MapRender.UI
 
             TextBlock lbl3 = new TextBlock();
             lbl3.VerticalAlignment = VerticalAlignment.Center;
-            lbl3.Text = "글꼴";
+            lbl3.Text = "Font";
             lbl3.Foreground = Brushes.Yellow;
             Grid.SetRow(lbl3, 3);
             Grid.SetColumn(lbl3, 0);
@@ -215,14 +215,14 @@ namespace WzComparerR2.MapRender.UI
 
             TextBlock lbl4 = new TextBlock();
             lbl4.VerticalAlignment = VerticalAlignment.Center;
-            lbl4.Text = "시야 범위";
+            lbl4.Text = "Lock FOV";
             lbl4.Foreground = Brushes.Yellow;
             Grid.SetRow(lbl4, 4);
             Grid.SetColumn(lbl4, 0);
             grid.Children.Add(lbl4);
 
             CheckBox chk2 = new CheckBox();
-            chk2.Content = "맵 범위 이내로 제한";
+            chk2.Content = "Map Range";
             chk2.Margin = new Thickness(18, 0, 0, 0);
             chk2.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.ClipMapRegion)));
             Grid.SetRow(chk2, 5);
@@ -232,7 +232,7 @@ namespace WzComparerR2.MapRender.UI
 
             TextBlock lbl5 = new TextBlock();
             lbl5.VerticalAlignment = VerticalAlignment.Center;
-            lbl5.Text = "렌더링";
+            lbl5.Text = "Rendering";
             lbl5.Foreground = Brushes.Yellow;
             Grid.SetRow(lbl5, 6);
             Grid.SetColumn(lbl5, 0);
@@ -248,7 +248,7 @@ namespace WzComparerR2.MapRender.UI
             grid.Children.Add(chk3);
 
             CheckBox chk4 = new CheckBox();
-            chk4.Content = "NPC 이름 표시";
+            chk4.Content = "NPC Names";
             chk4.Margin = new Thickness(18, 0, 0, 0);
             chk4.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.NpcNameVisible)));
             Grid.SetRow(chk4, 8);
@@ -257,7 +257,7 @@ namespace WzComparerR2.MapRender.UI
             grid.Children.Add(chk4);
 
             CheckBox chk5 = new CheckBox();
-            chk5.Content = "몬스터 이름 표시";
+            chk5.Content = "Mob Names";
             chk5.Margin = new Thickness(18, 0, 0, 0);
             chk5.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.MobNameVisible)));
             Grid.SetRow(chk5, 9);
@@ -278,7 +278,7 @@ namespace WzComparerR2.MapRender.UI
             grid.ColumnDefinitions.Add(new ColumnDefinition());
 
             CheckBox chk1 = new CheckBox();
-            chk1.Content = "상태 표시줄 표시";
+            chk1.Content = "Status Bar";
             chk1.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.TopBarVisible)));
             Grid.SetRow(chk1, 0);
             Grid.SetColumn(chk1, 0);
@@ -296,7 +296,7 @@ namespace WzComparerR2.MapRender.UI
             grid.ColumnDefinitions.Add(new ColumnDefinition());
 
             CheckBox chk1 = new CheckBox();
-            chk1.Content = "시야 범위 표시";
+            chk1.Content = "Visiblity Indicator";
             chk1.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.Minimap_CameraRegionVisible)));
             Grid.SetRow(chk1, 0);
             Grid.SetColumn(chk1, 0);
@@ -314,7 +314,7 @@ namespace WzComparerR2.MapRender.UI
             grid.ColumnDefinitions.Add(new ColumnDefinition());
 
             CheckBox chk1 = new CheckBox();
-            chk1.Content = "img 이름을 월드맵 이름으로 사용";
+            chk1.Content = "img name as world map name";
             chk1.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.WorldMap_UseImageNameAsInfoName)));
             Grid.SetRow(chk1, 0);
             Grid.SetColumn(chk1, 0);
@@ -331,16 +331,16 @@ namespace WzComparerR2.MapRender.UI
             
             var tips = new[]
             {
-                 "단축키 :",
+                 "Hotkeys :",
                  "",
-                 "M 미니맵",
-                 "W 월드맵",
-                 "Esc 설정",
-                 "Ctrl+1~9 레이어 표시 변경",
-                 "Ctrl+U 시야 범위 제한 변경",
-                 "` 채팅창",
-                 "Alt+Enter 해상도 변경",
-                 "ScrollLock 스크린샷",
+                 "M Minimap",
+                 "W Worldmap",
+                 "Esc Settings",
+                 "Ctrl+1~9 Toggle Display Layers",
+                 "Ctrl+U Change View Limits",
+                 "` Chat",
+                 "Alt+Enter Reso Cycle",
+                 "ScrollLock SS",
             };
 
             foreach (var tip in tips)

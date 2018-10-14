@@ -97,7 +97,7 @@
             this.checkBoxX1.Size = new System.Drawing.Size(51, 18);
             this.checkBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.checkBoxX1.TabIndex = 3;
-            this.checkBoxX1.Text = "덮기";
+            this.checkBoxX1.Text = "Cover";
             // 
             // checkBoxX2
             // 
@@ -112,7 +112,7 @@
             this.checkBoxX2.Size = new System.Drawing.Size(51, 18);
             this.checkBoxX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.checkBoxX2.TabIndex = 4;
-            this.checkBoxX2.Text = "추가";
+            this.checkBoxX2.Text = "Add";
             // 
             // labelX1
             // 
