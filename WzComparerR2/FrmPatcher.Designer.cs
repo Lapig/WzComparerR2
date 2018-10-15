@@ -204,9 +204,9 @@
             this.chkPrePatch.Name = "chkPrePatch";
             this.chkPrePatch.Size = new System.Drawing.Size(76, 16);
             this.chkPrePatch.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.superTooltip1.SetSuperTooltip(this.chkPrePatch, new DevComponents.DotNetBar.SuperTooltipInfo("패치 요약", "", "실제 패치를 적용하기 전에 패치가 필요한 파일을 확인하고, 자유롭게 선택한 파일만 패치할 수 있습니다.", null, null, DevComponents.DotNetBar.eTooltipColor.Default, true, false, new System.Drawing.Size(180, 120)));
+            this.superTooltip1.SetSuperTooltip(this.chkPrePatch, new DevComponents.DotNetBar.SuperTooltipInfo("패치 요약", "", "Before applying the actual patch, you can check which files need patching, and patch only the files that you choose.", null, null, DevComponents.DotNetBar.eTooltipColor.Default, true, false, new System.Drawing.Size(180, 120)));
             this.chkPrePatch.TabIndex = 6;
-            this.chkPrePatch.Text = "패치 요약";
+            this.chkPrePatch.Text = "Summary";
             // 
             // buttonXOpen2
             // 
@@ -218,7 +218,7 @@
             this.buttonXOpen2.Size = new System.Drawing.Size(33, 21);
             this.buttonXOpen2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonXOpen2.TabIndex = 4;
-            this.buttonXOpen2.Text = "열기";
+            this.buttonXOpen2.Text = "Open";
             this.buttonXOpen2.Click += new System.EventHandler(this.buttonXOpen2_Click);
             // 
             // txtMSFolder
@@ -247,7 +247,7 @@
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(62, 16);
             this.labelX2.TabIndex = 5;
-            this.labelX2.Text = "메이플스토리";
+            this.labelX2.Text = "MapleStory";
             // 
             // buttonXOpen1
             // 
@@ -259,7 +259,7 @@
             this.buttonXOpen1.Size = new System.Drawing.Size(33, 21);
             this.buttonXOpen1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonXOpen1.TabIndex = 1;
-            this.buttonXOpen1.Text = "열기";
+            this.buttonXOpen1.Text = "Open";
             this.buttonXOpen1.Click += new System.EventHandler(this.buttonXOpen1_Click);
             // 
             // txtPatchFile
@@ -288,7 +288,7 @@
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(62, 16);
             this.labelX1.TabIndex = 2;
-            this.labelX1.Text = "패치 파일";
+            this.labelX1.Text = "Patch file";
             // 
             // expandablePanel1
             // 
@@ -320,7 +320,7 @@
             this.expandablePanel1.TitleStyle.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
             this.expandablePanel1.TitleStyle.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.expandablePanel1.TitleStyle.GradientAngle = 90;
-            this.expandablePanel1.TitleText = "패치 파일 다운로드 주소";
+            this.expandablePanel1.TitleText = "Patch file URL";
             // 
             // buttonXCheck
             // 
@@ -376,7 +376,7 @@
             this.expandablePanel2.TitleStyle.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
             this.expandablePanel2.TitleStyle.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.expandablePanel2.TitleStyle.GradientAngle = 90;
-            this.expandablePanel2.TitleText = "수동 패쳐";
+            this.expandablePanel2.TitleText = "Manual Patcher";
             // 
             // chkOutputRemovedImg
             // 
@@ -599,34 +599,34 @@
             // columnHeader1
             // 
             this.columnHeader1.Name = "columnHeader1";
-            this.columnHeader1.Text = "파일명";
+            this.columnHeader1.Text = "Filename";
             this.columnHeader1.Width.Absolute = 100;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Editable = false;
             this.columnHeader2.Name = "columnHeader2";
-            this.columnHeader2.Text = "패치 유형";
+            this.columnHeader2.Text = "Patch Type";
             this.columnHeader2.Width.Absolute = 70;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Editable = false;
             this.columnHeader3.Name = "columnHeader3";
-            this.columnHeader3.Text = "용량";
+            this.columnHeader3.Text = "Volume";
             this.columnHeader3.Width.Absolute = 70;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Editable = false;
             this.columnHeader4.Name = "columnHeader4";
-            this.columnHeader4.Text = "패치 후 체크섬";
+            this.columnHeader4.Text = "Post-patch checksum";
             this.columnHeader4.Width.Absolute = 70;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Name = "columnHeader5";
-            this.columnHeader5.Text = "패치 전 체크섬";
+            this.columnHeader5.Text = "Pre-patch checksum";
             this.columnHeader5.Width.Absolute = 70;
             // 
             // columnHeader6
@@ -650,7 +650,7 @@
             this.superTabItem2.AttachedControl = this.superTabControlPanel2;
             this.superTabItem2.GlobalItem = false;
             this.superTabItem2.Name = "superTabItem2";
-            this.superTabItem2.Text = "파일";
+            this.superTabItem2.Text = "File";
             // 
             // superTabControlPanel3
             // 
@@ -753,7 +753,7 @@
             this.expandablePanel3.TitleStyle.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder;
             this.expandablePanel3.TitleStyle.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText;
             this.expandablePanel3.TitleStyle.GradientAngle = 90;
-            this.expandablePanel3.TitleText = "패치 되돌리기";
+            this.expandablePanel3.TitleText = "Revert Patch";
             // 
             // buttonXCreate
             // 
@@ -765,7 +765,7 @@
             this.buttonXCreate.Size = new System.Drawing.Size(48, 21);
             this.buttonXCreate.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonXCreate.TabIndex = 12;
-            this.buttonXCreate.Text = "만들기";
+            this.buttonXCreate.Text = "Create";
             this.buttonXCreate.Click += new System.EventHandler(this.buttonXCreate_Click);
             // 
             // txtPatchFile2
@@ -792,7 +792,7 @@
             this.buttonXOpen4.Size = new System.Drawing.Size(33, 21);
             this.buttonXOpen4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonXOpen4.TabIndex = 10;
-            this.buttonXOpen4.Text = "열기";
+            this.buttonXOpen4.Text = "Open";
             this.buttonXOpen4.Click += new System.EventHandler(this.buttonXOpen4_Click);
             // 
             // buttonXOpen3
@@ -805,7 +805,7 @@
             this.buttonXOpen3.Size = new System.Drawing.Size(33, 21);
             this.buttonXOpen3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.buttonXOpen3.TabIndex = 7;
-            this.buttonXOpen3.Text = "열기";
+            this.buttonXOpen3.Text = "Open";
             this.buttonXOpen3.Click += new System.EventHandler(this.buttonXOpen3_Click);
             // 
             // txtMSFolder2
@@ -834,7 +834,7 @@
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(62, 16);
             this.labelX4.TabIndex = 11;
-            this.labelX4.Text = "메이플스토리";
+            this.labelX4.Text = "MapleStory";
             // 
             // labelX5
             // 
@@ -848,7 +848,7 @@
             this.labelX5.Name = "labelX5";
             this.labelX5.Size = new System.Drawing.Size(62, 16);
             this.labelX5.TabIndex = 8;
-            this.labelX5.Text = "패치 파일";
+            this.labelX5.Text = "Patch File";
             // 
             // labelX3
             // 
@@ -862,7 +862,7 @@
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(285, 18);
             this.labelX3.TabIndex = 1;
-            this.labelX3.Text = "이 기능은 불안정합니다. 주의해서 사용하세요.";
+            this.labelX3.Text = "This function is unstable. Use with caution.";
             // 
             // superTooltip1
             // 

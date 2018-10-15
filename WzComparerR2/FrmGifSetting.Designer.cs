@@ -91,7 +91,7 @@
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(99, 16);
             this.labelX1.TabIndex = 0;
-            this.labelX1.Text = "배경색";
+            this.labelX1.Text = "BG Color";
             // 
             // checkBoxX1
             // 
@@ -105,7 +105,7 @@
             this.checkBoxX1.Size = new System.Drawing.Size(163, 16);
             this.checkBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.checkBoxX1.TabIndex = 2;
-            this.checkBoxX1.Text = "투명한 배경(&T)";
+            this.checkBoxX1.Text = "Transparent BG(&T)";
             // 
             // buttonX1
             // 
@@ -143,7 +143,7 @@
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(56, 16);
             this.labelX2.TabIndex = 5;
-            this.labelX2.Text = "파일명";
+            this.labelX2.Text = "Filename";
             // 
             // comboBoxEx1
             // 

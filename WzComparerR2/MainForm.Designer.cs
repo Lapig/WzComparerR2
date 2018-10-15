@@ -763,7 +763,7 @@
             // buttonItemAddItem
             // 
             this.buttonItemAddItem.Name = "buttonItemAddItem";
-            this.buttonItemAddItem.Text = "아이템 추가";
+            this.buttonItemAddItem.Text = "Add Item";
             this.buttonItemAddItem.Tooltip = "Add selected item to inventory";
             this.buttonItemAddItem.Click += new System.EventHandler(this.buttonItemAddItem_Click);
             // 
