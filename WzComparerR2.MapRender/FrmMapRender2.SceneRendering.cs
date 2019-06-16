@@ -278,8 +278,10 @@ namespace WzComparerR2.MapRender
             var origin = renderEnv.Camera.Origin.ToPoint();
             foreach (var item in mapData.Tooltips)
             {
-                if (item.CharRect.Contains(pos) || item.Rect.Contains(pos))
+                if (item.CharRect.Contains(pos) || item.Rect.Contains(pos) || item.Title=="D")
                 {
+                    if (item.Title == "D")
+                        item.Title = "Debug";
                     var center = new Vector2(item.Rect.Center.X - origin.X, item.Rect.Center.Y - origin.Y);
                     tooltip.Draw(gameTime, renderEnv, item, center);
                 }

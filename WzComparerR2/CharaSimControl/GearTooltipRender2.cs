@@ -205,6 +205,28 @@ namespace WzComparerR2.CharaSimControl
                 picH += 15;
             }
 
+            if (Gear.Props.TryGetValue(GearPropType.royalSpecial, out value) && value > 0)
+            {
+                switch (value)
+                {
+                    case 1:
+                        TextRenderer.DrawText(g, "SilverLabel", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.GearNameBrushA).Color, TextFormatFlags.HorizontalCenter);
+                        break;
+                    case 2:
+                        TextRenderer.DrawText(g, "RedLabel", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.GearNameBrushH).Color, TextFormatFlags.HorizontalCenter);
+                        break;
+                    case 3:
+                        TextRenderer.DrawText(g, "BlackLabel", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.GearNameBrushF).Color, TextFormatFlags.HorizontalCenter);
+                        break;
+                }
+                picH += 15;
+            }
+            else if (Gear.Props.TryGetValue(GearPropType.masterSpecial, out value) && value > 0)
+            {
+                TextRenderer.DrawText(g, "MasterLabel", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.BlueBrush).Color, TextFormatFlags.HorizontalCenter);
+                picH += 15;
+            }
+
             //额外属性
             var attrList = GetGearAttributeString();
             if (attrList.Count > 0)
@@ -230,28 +252,6 @@ namespace WzComparerR2.CharaSimControl
                     TextRenderer.DrawText(g, attrStr, GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.OrangeBrush2).Color, TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPadding);
                     picH += 15;
                 }
-            }
-
-            if (Gear.Props.TryGetValue(GearPropType.royalSpecial, out value) && value > 0)
-            {
-                switch (value)
-                {
-                case 1:
-                    TextRenderer.DrawText(g, "스페셜라벨", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.GearNameBrushA).Color, TextFormatFlags.HorizontalCenter);
-                    break;
-                case 2:
-                    TextRenderer.DrawText(g, "레드라벨", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.GearNameBrushH).Color, TextFormatFlags.HorizontalCenter);
-                    break;
-                case 3:
-                    TextRenderer.DrawText(g, "블랙라벨", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.GearNameBrushF).Color, TextFormatFlags.HorizontalCenter);
-                    break;
-                }
-                picH += 15;
-            }
-            else if (Gear.Props.TryGetValue(GearPropType.masterSpecial, out value) && value > 0)
-            {
-                TextRenderer.DrawText(g, "마스터라벨", GearGraphics.EquipDetailFont, new Point(261, picH), ((SolidBrush)GearGraphics.BlueBrush).Color, TextFormatFlags.HorizontalCenter);
-                picH += 15;
             }
 
             //装备限时
@@ -820,7 +820,7 @@ namespace WzComparerR2.CharaSimControl
 
                 if (PluginBase.PluginManager.FindWz("Effect/ItemEff.img/" + Gear.ItemID) != null)
                 {
-                    desc.Add(" #c캐릭터 정보창 등 일부 상황에서는 보이지 않는 아이템입니다.#");
+                    desc.Add(" #cBuy with Nexon Cache, you can exchange with others only once before use.#");
                 }
 
                 if (desc.Last() == "")
@@ -867,15 +867,15 @@ namespace WzComparerR2.CharaSimControl
                 }
                 if (!string.IsNullOrEmpty(sr.Desc))
                 {
-                    GearGraphics.DrawString(g, sr.Desc.Replace("#", " #"), GearGraphics.EquipDetailFont2, 13, 243, ref picH, 15, orangeColor: ((SolidBrush)GearGraphics.OrangeBrush2).Color);
+                    GearGraphics.DrawString(g, sr.Desc.Replace("#", " #"), GearGraphics.EquipDetailFont2, 10, 243, ref picH, 15, orangeColor: ((SolidBrush)GearGraphics.OrangeBrush2).Color);
                 }
                 if (!string.IsNullOrEmpty(levelDesc))
                 {
-                    GearGraphics.DrawString(g, " " + levelDesc, GearGraphics.EquipDetailFont2, 13, 243, ref picH, 15, orangeColor: ((SolidBrush)GearGraphics.OrangeBrush2).Color);
+                    GearGraphics.DrawString(g, " " + levelDesc, GearGraphics.EquipDetailFont2, 10, 243, ref picH, 15, orangeColor: ((SolidBrush)GearGraphics.OrangeBrush2).Color);
                 }
                 foreach (string str in desc)
                 {
-                    GearGraphics.DrawString(g, str, GearGraphics.EquipDetailFont, 13, 243, ref picH, 15, orangeColor: ((SolidBrush)GearGraphics.OrangeBrush2).Color);
+                    GearGraphics.DrawString(g, str, GearGraphics.EquipDetailFont, 10, 243, ref picH, 15, orangeColor: ((SolidBrush)GearGraphics.OrangeBrush2).Color);
                 }
                 picH += 5;
             }

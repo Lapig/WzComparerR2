@@ -36,5 +36,16 @@ namespace WzComparerR2.CharaSim
         exp_maxLev,
         dressUpgrade,
         wonderGrade,
+        onlyCash,
+        noScroll,
+        noRevive,
+        pickupItem,
+        longRange,
+        sweepForDrop,
+        pickupAll,
+        consumeHP,
+        consumeMP,
+        autoBuff,
+        giantPet,
     }
 }

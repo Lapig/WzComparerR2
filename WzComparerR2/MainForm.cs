@@ -1,5 +1,5 @@
-﻿using System; 
-using System.Collections.Generic; 
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -1502,6 +1502,13 @@ namespace WzComparerR2
                     imagePath.Add(id);
                     addPath();
                     break;
+
+                case "SetItemInfo.img":
+                    wzPath.Add("Etc");
+                    wzPath.Add("SetItemInfo.img");
+                    imagePath.Add(id);
+                    addPath();
+                    break;
                 default:
                     break;
             }
@@ -1872,7 +1879,7 @@ namespace WzComparerR2
             QueryPerformance.Start();
             if (!this.stringLinker.HasValues)
             {
-                if (!this.stringLinker.Load(findStringWz(), findItemWz()))
+                if (!this.stringLinker.Load(findStringWz(), findItemWz(), findEtcWz()))
                 {
                     MessageBoxEx.Show("Base.wz를 먼저 열어주세요.", "오류");
                     return;
@@ -1894,6 +1901,7 @@ namespace WzComparerR2
                     dicts.Add(stringLinker.StringMob);
                     dicts.Add(stringLinker.StringNpc);
                     dicts.Add(stringLinker.StringSkill);
+                    dicts.Add(stringLinker.StringSetItem);
                     break;
                 case 1:
                     dicts.Add(stringLinker.StringEqp);
@@ -1912,6 +1920,9 @@ namespace WzComparerR2
                     break;
                 case 6:
                     dicts.Add(stringLinker.StringSkill);
+                    break;
+                case 7:
+                    dicts.Add(stringLinker.StringSetItem);
                     break;
             }
             listViewExString.BeginUpdate();
@@ -1947,6 +1958,21 @@ namespace WzComparerR2
                 foreach (Wz_File file in wz.wz_files)
                 {
                     if (file.Type == Wz_Type.Item)
+                    {
+                        return file;
+                    }
+                }
+            }
+            return null;
+        }
+
+        private Wz_File findEtcWz()
+        {
+            foreach (Wz_Structure wz in openedWz)
+            {
+                foreach (Wz_File file in wz.wz_files)
+                {
+                    if (file.Type == Wz_Type.Etc)
                     {
                         return file;
                     }
@@ -2001,13 +2027,14 @@ namespace WzComparerR2
         {
             Wz_File stringWzFile = advTree1.SelectedNode?.AsWzNode()?.FindNodeByPath("String").GetNodeWzFile();
             Wz_File itemWzFile = advTree1.SelectedNode?.AsWzNode()?.FindNodeByPath("Item").GetNodeWzFile();
-            if (stringWzFile == null || itemWzFile == null)
+            Wz_File etcWzFile = advTree1.SelectedNode?.AsWzNode()?.FindNodeByPath("Etc").GetNodeWzFile();
+            if (stringWzFile == null || itemWzFile == null || etcWzFile == null)
             {
                 MessageBoxEx.Show("Base.wz를 선택하세요.", "오류");
                 return;
             }
             QueryPerformance.Start();
-            bool r = stringLinker.Load(stringWzFile, itemWzFile);
+            bool r = stringLinker.Load(stringWzFile, itemWzFile, etcWzFile);
             QueryPerformance.End();
             if (r)
             {
@@ -2079,14 +2106,14 @@ namespace WzComparerR2
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 List<string> supportExt = new List<string>();
-                supportExt.Add("오디오 파일 (*.mp3;*.ogg;*.wav)|*.mp3;*.ogg;*.wav");
+                supportExt.Add("Audio File (*.mp3;*.ogg;*.wav)|*.mp3;*.ogg;*.wav");
                 foreach (string ext in this.soundPlayer.GetPluginSupportedExt())
                 {
                     supportExt.Add(ext);
                 }
-                supportExt.Add("모든 파일 (*.*)|*.*");
+                supportExt.Add("All File (*.*)|*.*");
 
-                dlg.Title = "오디오 파일 열기";
+                dlg.Title = "Audio file opened";
                 dlg.Filter = string.Join("|", supportExt.ToArray());
                 dlg.Multiselect = false;
 
@@ -2135,8 +2162,8 @@ namespace WzComparerR2
             using (SaveFileDialog dlg = new SaveFileDialog())
             {
                 dlg.AddExtension = true;
-                dlg.Title = "저장할 폴더 선택";
-                dlg.Filter = "모든 파일 (*.*)|*.*";
+                dlg.Title = "Select folder to output";
+                dlg.Filter = "All Files (*.*)|*.*";
                 dlg.AddExtension = false;
                 dlg.FileName = soundPlayer.PlayingSoundName;
                 if (dlg.ShowDialog() == DialogResult.OK)
@@ -2230,7 +2257,7 @@ namespace WzComparerR2
                 {
                     dlg.FileName += ".txt";
                 }
-                dlg.Filter = "모든 파일 (*.*)|*.*";
+                dlg.Filter = "All Files (*.*)|*.*";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     try
@@ -2257,7 +2284,7 @@ namespace WzComparerR2
                         case Wz_SoundType.WavRaw: dlg.FileName += ".wav"; break;
                     }
                 }
-                dlg.Filter = "모든 파일 (*.*)|*.*";
+                dlg.Filter = "All Files (*.*)|*.*";
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     try
@@ -2281,11 +2308,11 @@ namespace WzComparerR2
                                 }
                             }
                         }
-                        this.labelItemStatus.Text = "오디오 저장 완료";
+                        this.labelItemStatus.Text = "Audio Saved";
                     }
                     catch (Exception ex)
                     {
-                        MessageBoxEx.Show("오디오 저장 실패\r\n" + ex.ToString(), "오류");
+                        MessageBoxEx.Show("Failed to save audio\r\n" + ex.ToString(), "오류");
                     }
                 }
             }
@@ -2297,14 +2324,14 @@ namespace WzComparerR2
             Wz_Uol uol = advTree3.SelectedNode?.AsWzNode()?.Value as Wz_Uol;
             if (uol == null)
             {
-                labelItemStatus.Text = "Uol 노드가 선택되어 있지 않습니다.";
+                labelItemStatus.Text = "Uol No node selected.";
                 return;
             }
 
             Node uolNode = handleUol(advTree3.SelectedNode, uol.Uol);
             if (uolNode == null)
             {
-                labelItemStatus.Text = "Uol 대상 노드를 찾을 수 없습니다.";
+                labelItemStatus.Text = "Uol Destination node not found.";
                 return;
             }
             else
@@ -2536,7 +2563,7 @@ namespace WzComparerR2
 
             if (!this.stringLinker.HasValues)
             {
-                this.stringLinker.Load(findStringWz(), findItemWz());
+                this.stringLinker.Load(findStringWz(), findItemWz(), findEtcWz());
             }
 
             object obj = null;
@@ -2557,18 +2584,7 @@ namespace WzComparerR2
                     }
                     break;
                 case Wz_Type.Item:
-                    if (CharaSimLoader.LoadedSetItems.Count == 0)
-                    {
-                        CharaSimLoader.LoadSetItems();
-                    }
-                    if (CharaSimLoader.LoadedExclusiveEquips.Count == 0)
-                    {
-                        CharaSimLoader.LoadExclusiveEquips();
-                    }
-                    if (CharaSimLoader.LoadedCommoditiesBySN.Count == 0)
-                    {
-                        CharaSimLoader.LoadCommodities();
-                    }
+                    CharaSimLoader.LoadCommoditiesIfEmpty();
                     Wz_Node itemNode = selectedNode;
                     if (Regex.IsMatch(itemNode.FullPathToFile, @"^Item\\(Cash|Consume|Etc|Install|Cash)\\\d{4,6}.img\\\d+$") || Regex.IsMatch(itemNode.FullPathToFile, @"^Item\\Special\\0910.img\\\d+$"))
                     {
@@ -2584,14 +2600,6 @@ namespace WzComparerR2
                         if (CharaSimLoader.LoadedSetItems.Count == 0) //宠物 预读套装
                         {
                             CharaSimLoader.LoadSetItemsIfEmpty();
-                        }
-                        if (CharaSimLoader.LoadedExclusiveEquips.Count == 0)
-                        {
-                            CharaSimLoader.LoadExclusiveEquips();
-                        }
-                        if (CharaSimLoader.LoadedCommoditiesBySN.Count == 0)
-                        {
-                            CharaSimLoader.LoadCommodities();
                         }
                         if ((image = selectedNode.GetValue<Wz_Image>()) == null || !image.TryExtract())
                             return;
@@ -2653,6 +2661,22 @@ namespace WzComparerR2
                     if (npc != null)
                     {
                         fileName = npc.ID + ".png";
+                    }
+                    break;
+
+                case Wz_Type.Etc:
+                    CharaSimLoader.LoadSetItemsIfEmpty();
+                    Wz_Node setItemNode = selectedNode;
+                    if (Regex.IsMatch(setItemNode.FullPathToFile, @"^Etc\\SetItemInfo.img\\-?\d+$"))
+                    {
+                        SetItem setItem;
+                        if (!CharaSimLoader.LoadedSetItems.TryGetValue(Convert.ToInt32(selectedNode.Text), out setItem))
+                            return;
+                        obj = setItem;
+                        if (setItem != null)
+                        {
+                            fileName = setItem.SetItemID + ".png";
+                        }
                     }
                     break;
             }
@@ -2983,13 +3007,13 @@ namespace WzComparerR2
 
                         while (true)
                         {
-                            string txt = string.Format("Wz 파일 :\r\n\r\n  New : {0} (V{1})\r\n  Old : {2} (V{3})\r\n\r\nYes를 누르시면 비교가 시작되고, No를 누르시면 신버전과 구버전을 뒤집을 수 있습니다.",
+                            string txt = string.Format("Wz File :\r\n\r\n  New : {0} (V{1})\r\n  Old : {2} (V{3})\r\n\r\nYes to start comparison, No, swap the new and old markers.",
                                 fileNew.Header.FileName,
                                 fileNew.Header.WzVersion,
                                 fileOld.Header.FileName,
                                 fileOld.Header.WzVersion
                                 );
-                            switch (MessageBoxEx.Show(txt, "Wz 비교", MessageBoxButtons.YesNoCancel))
+                            switch (MessageBoxEx.Show(txt, "Wz Compare", MessageBoxButtons.YesNoCancel))
                             {
                                 case DialogResult.Yes:
                                     comparer.EasyCompareWzFiles(fileNew, fileOld, dlg.SelectedPath);
@@ -3010,11 +3034,11 @@ namespace WzComparerR2
                     }
                     catch (ThreadAbortException)
                     {
-                        MessageBoxEx.Show(this, "비교가 중단되었습니다.", "오류");
+                        MessageBoxEx.Show(this, "Comparison stopped.", "Error");
                     }
                     catch (Exception ex)
                     {
-                        MessageBoxEx.Show(this, "비교가 중단되었습니다." + ex.ToString(), "오류");
+                        MessageBoxEx.Show(this, "Comparison stopped: " + ex.ToString(), "Error");
                     }
                     finally
                     {
@@ -3116,7 +3140,7 @@ namespace WzComparerR2
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 if (!this.stringLinker.HasValues)
-                    this.stringLinker.Load(findStringWz(), findItemWz());
+                    this.stringLinker.Load(findStringWz(), findItemWz(), findEtcWz());
 
                 DBConnection conn = new DBConnection(this.stringLinker);
                 DataSet ds = conn.GenerateSkillTable();
@@ -3139,7 +3163,7 @@ namespace WzComparerR2
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 if (!this.stringLinker.HasValues)
-                    this.stringLinker.Load(findStringWz(), findItemWz());
+                    this.stringLinker.Load(findStringWz(), findItemWz(), findEtcWz());
 
                 DBConnection conn = new DBConnection(this.stringLinker);
                 conn.ExportSkillOption(dlg.SelectedPath);
@@ -3205,7 +3229,7 @@ namespace WzComparerR2
 
         private void buttonItemUpdate_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/KENNYSOFT/WzComparerR2/releases");
+            System.Diagnostics.Process.Start("https://github.com/lapigr/WzComparerR2");
         }
 
         private void btnItemOptions_Click(object sender, System.EventArgs e)

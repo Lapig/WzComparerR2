@@ -332,6 +332,29 @@ namespace WzComparerR2.CharaSimControl
             TextRenderer.DrawText(g, sr.Name.Replace(Environment.NewLine, ""), GearGraphics.ItemNameFont2, new Point(tooltip.Width, picH), Color.White, TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPrefix);
             picH += 21;
 
+            if (Item.Props.TryGetValue(ItemPropType.wonderGrade, out value) && value > 0)
+            {
+                switch (value)
+                {
+                    case 1:
+                        TextRenderer.DrawText(g, "WonderBlack", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), ((SolidBrush)GearGraphics.OrangeBrush3).Color, TextFormatFlags.HorizontalCenter);
+                        break;
+                    case 4:
+                        TextRenderer.DrawText(g, "LunaSweet", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), GearGraphics.itemPinkColor, TextFormatFlags.HorizontalCenter);
+                        break;
+                    case 5:
+                        TextRenderer.DrawText(g, "LunaDream", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), ((SolidBrush)GearGraphics.BlueBrush).Color, TextFormatFlags.HorizontalCenter);
+                        break;
+                    case 6:
+                        TextRenderer.DrawText(g, "Vac", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), GearGraphics.itemPurpleColor, TextFormatFlags.HorizontalCenter);
+                        break;
+                    default:
+                        picH -= 15;
+                        break;
+                }
+                picH += 15;
+            }
+
             //额外特性
             var attrList = GetItemAttributeString();
             if (attrList.Count > 0)
@@ -459,6 +482,43 @@ namespace WzComparerR2.CharaSimControl
                 desc += $"[LV.{item.Level}] ";
             }
             desc += sr.Desc;
+            if (item.ItemID / 10000 == 500)
+            {
+                desc += "\n#c스킬:메소 줍기";
+                if (item.Props.TryGetValue(ItemPropType.pickupItem, out value) && value > 0)
+                {
+                    desc += ", 아이템 줍기";
+                }
+                if (item.Props.TryGetValue(ItemPropType.longRange, out value) && value > 0)
+                {
+                    desc += ", 이동반경 확대";
+                }
+                if (item.Props.TryGetValue(ItemPropType.sweepForDrop, out value) && value > 0)
+                {
+                    desc += ", 자동 줍기";
+                }
+                if (item.Props.TryGetValue(ItemPropType.pickupAll, out value) && value > 0)
+                {
+                    desc += ", 소유권 없는 아이템&메소 줍기";
+                }
+                if (item.Props.TryGetValue(ItemPropType.consumeHP, out value) && value > 0)
+                {
+                    desc += ", HP 물약충전";
+                }
+                if (item.Props.TryGetValue(ItemPropType.consumeMP, out value) && value > 0)
+                {
+                    desc += ", MP 물약충전";
+                }
+                if (item.Props.TryGetValue(ItemPropType.autoBuff, out value) && value > 0)
+                {
+                    desc += ", 버프 스킬 자동 사용";
+                }
+                if (item.Props.TryGetValue(ItemPropType.giantPet, out value) && value > 0)
+                {
+                    desc += ", 펫 자이언트 스킬";
+                }
+                desc += "#";
+            }
             if (!string.IsNullOrEmpty(desc))
             {
                 GearGraphics.DrawString(g, desc, GearGraphics.ItemDetailFont2, 100, right, ref picH, 16);
@@ -483,7 +543,7 @@ namespace WzComparerR2.CharaSimControl
             }
             if (item.ItemID / 1000 == 5533)
             {
-                GearGraphics.DrawString(g, "\n#c더블 클릭 시 미리보기에서 상자 속 아이템들을 3초마다 차례로 확인할 수 있습니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
+                GearGraphics.DrawString(g, "\n#c더블 클릭 시 미리보기에서 상자 속 아이템들을 3초마다 차례로 확인할 수 있습니다.\n\n캐시 보관함에서 더블 클릭하여 사용 가능하며, 상자는 교환할 수 없습니다.\n상자에서 획득한 보상품은 타인과 교환할 수 없습니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
             }
             if (item.Cash)
             {
@@ -491,14 +551,26 @@ namespace WzComparerR2.CharaSimControl
                 {
                     GearGraphics.DrawString(g, "\n#c캐시 보관함으로 이동시킬 수 없는 아이템입니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
                 }
+                else if (item.Props.TryGetValue(ItemPropType.onlyCash, out value) && value > 0)
+                {
+                    GearGraphics.DrawString(g, "#c넥슨캐시로만 구매할 수 있습니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
+                }
                 else if ((!item.Props.TryGetValue(ItemPropType.tradeBlock, out value) || value == 0) && item.ItemID / 10000 != 501 && item.ItemID / 10000 != 502 && item.ItemID / 10000 != 516)
                 {
-                    GearGraphics.DrawString(g, "\n#c사용 전 1회에 한해 타인과 교환할 수 있으며, 아이템 사용 후에는 교환이 제한됩니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
+                    GearGraphics.DrawString(g, "\n#c넥슨캐시로 구매하면 사용 전 1회에 한해 타인과 교환 할 수 있습니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
                 }
             }
             if (item.Props.TryGetValue(ItemPropType.flatRate, out value) && value > 0)
             {
                 GearGraphics.DrawString(g, "\n#c기간 정액제 아이템입니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
+            }
+            if (item.Props.TryGetValue(ItemPropType.noScroll, out value) && value > 0)
+            {
+                GearGraphics.DrawString(g, "#c펫 스킬 주문서와 펫작명하기를 사용할 수 없습니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
+            }
+            if (item.Props.TryGetValue(ItemPropType.noRevive, out value) && value > 0)
+            {
+                GearGraphics.DrawString(g, "#c생명의 물을 사용할 수 없습니다.#", GearGraphics.ItemDetailFont, 100, right, ref picH, 16);
             }
 
             if (item.ItemID / 10000 == 500)

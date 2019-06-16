@@ -128,7 +128,7 @@ namespace WzComparerR2.CharaSimControl
                 GearGraphics.DrawString(g, "[현재레벨 " + Skill.Level + "]", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
                 if (Skill.SkillID / 10000 / 1000 == 10 && Skill.ReqLevel > 0)
                 {
-                    GearGraphics.DrawPlainText(g, "[필요 레벨: " + Skill.ReqLevel.ToString() + "레벨 이상]", GearGraphics.ItemDetailFont2, GearGraphics.gearYellowColor, 10, 272, ref picH, 16);
+                    GearGraphics.DrawPlainText(g, "[필요 레벨: " + Skill.ReqLevel.ToString() + "레벨 이상]", GearGraphics.ItemDetailFont2, GearGraphics.skillYellowColor, 10, 272, ref picH, 16);
                 }
                 if (hStr != null)
                 {
@@ -142,7 +142,7 @@ namespace WzComparerR2.CharaSimControl
                 GearGraphics.DrawString(g, "[다음레벨 " + (Skill.Level + 1) + "]", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
                 if (Skill.SkillID / 10000 / 1000 == 10 && Skill.Level == 0 && Skill.ReqLevel > 0)
                 {
-                    GearGraphics.DrawPlainText(g, "[필요 레벨: " + Skill.ReqLevel.ToString() + "레벨 이상]", GearGraphics.ItemDetailFont2, GearGraphics.gearYellowColor, 10, 272, ref picH, 16);
+                    GearGraphics.DrawPlainText(g, "[필요 레벨: " + Skill.ReqLevel.ToString() + "레벨 이상]", GearGraphics.ItemDetailFont2, GearGraphics.skillYellowColor, 10, 272, ref picH, 16);
                 }
                 if (hStr != null)
                 {

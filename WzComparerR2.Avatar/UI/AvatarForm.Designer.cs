@@ -710,14 +710,14 @@
             // 
             this.btnSave.Name = "btnSave";
             this.btnSave.Image = global::WzComparerR2.Avatar.Properties.Resources.save;
-            this.btnSave.Tooltip = "저장";
+            this.btnSave.Tooltip = "Save";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             //
             // btnExport
             //
             this.btnExport.Name = "btnExport";
             this.btnExport.Image = global::WzComparerR2.Avatar.Properties.Resources.export;
-            this.btnExport.Tooltip = "동작 내보내기";
+            this.btnExport.Tooltip = "Exporting Options";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // AvatarForm
@@ -734,7 +734,7 @@
             this.Controls.Add(this.dockSite8);
             this.DoubleBuffered = true;
             this.Name = "AvatarForm";
-            this.Text = "아바타";
+            this.Text = "Avatar";
             this.dockSite2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bar1)).EndInit();
             this.bar1.ResumeLayout(false);

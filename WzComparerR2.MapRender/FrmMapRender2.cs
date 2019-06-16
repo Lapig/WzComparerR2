@@ -428,7 +428,7 @@ namespace WzComparerR2.MapRender
             this.ui.InputBindings.Add(new KeyBinding(new RelayCommand(_ => {
                 if (this.ui.Visibility == Visibility.Visible)
                 {
-                    this.ui.ChatBox.TextBoxChat.Focus();
+                    ui.ChatBox.TextBoxChat.Focus();
                 }
             }), KeyCode.Enter, ModifierKeys.None));
             this.ui.InputBindings.Add(new KeyBinding(new RelayCommand(_ => this.ui.ChatBox.Toggle()), KeyCode.Oem3, ModifierKeys.None));

@@ -94,10 +94,10 @@
             this.dockSite4.Controls.Add(this.bar2);
             this.dockSite4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.dockSite4.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer(new DevComponents.DotNetBar.DocumentBaseContainer[] {
-            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 488, 95)))}, DevComponents.DotNetBar.eOrientation.Vertical);
-            this.dockSite4.Location = new System.Drawing.Point(0, 282);
+            ((DevComponents.DotNetBar.DocumentBaseContainer)(new DevComponents.DotNetBar.DocumentBarContainer(this.bar2, 488, 103)))}, DevComponents.DotNetBar.eOrientation.Vertical);
+            this.dockSite4.Location = new System.Drawing.Point(0, 306);
             this.dockSite4.Name = "dockSite4";
-            this.dockSite4.Size = new System.Drawing.Size(488, 98);
+            this.dockSite4.Size = new System.Drawing.Size(488, 106);
             this.dockSite4.TabIndex = 7;
             this.dockSite4.TabStop = false;
             // 
@@ -109,7 +109,7 @@
             this.bar2.AutoSyncBarCaption = true;
             this.bar2.CloseSingleTab = true;
             this.bar2.Controls.Add(this.panelDockContainer1);
-            this.bar2.Font = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.bar2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.bar2.GrabHandleStyle = DevComponents.DotNetBar.eGrabHandleStyle.Caption;
             this.bar2.IsMaximized = false;
             this.bar2.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
@@ -117,12 +117,12 @@
             this.bar2.LayoutType = DevComponents.DotNetBar.eLayoutType.DockContainer;
             this.bar2.Location = new System.Drawing.Point(0, 3);
             this.bar2.Name = "bar2";
-            this.bar2.Size = new System.Drawing.Size(488, 95);
+            this.bar2.Size = new System.Drawing.Size(488, 103);
             this.bar2.Stretch = true;
             this.bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.bar2.TabIndex = 0;
             this.bar2.TabStop = false;
-            this.bar2.Text = "출력";
+            this.bar2.Text = "Output";
             // 
             // panelDockContainer1
             // 
@@ -131,13 +131,14 @@
             this.panelDockContainer1.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelDockContainer1.Location = new System.Drawing.Point(3, 23);
             this.panelDockContainer1.Name = "panelDockContainer1";
-            this.panelDockContainer1.Size = new System.Drawing.Size(482, 69);
+            this.panelDockContainer1.Size = new System.Drawing.Size(482, 77);
             this.panelDockContainer1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelDockContainer1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.panelDockContainer1.Style.BorderColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder;
             this.panelDockContainer1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer1.Style.GradientAngle = 90;
             this.panelDockContainer1.TabIndex = 0;
+            this.panelDockContainer1.Visible = true;
             // 
             // textBoxX2
             // 
@@ -151,23 +152,22 @@
             this.textBoxX2.Multiline = true;
             this.textBoxX2.Name = "textBoxX2";
             this.textBoxX2.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxX2.Size = new System.Drawing.Size(482, 69);
+            this.textBoxX2.Size = new System.Drawing.Size(482, 77);
             this.textBoxX2.TabIndex = 1;
-            this.textBoxX2.Text = "-- 도움말을 얻기 위해서는 env:Help() 함수를 사용하세요.\r\n";
+            this.textBoxX2.Text = "-- Use env:Help() for info.\r\n";
             // 
             // dockContainerItem1
             // 
             this.dockContainerItem1.Control = this.panelDockContainer1;
             this.dockContainerItem1.Name = "dockContainerItem1";
-            this.dockContainerItem1.Text = "출력";
+            this.dockContainerItem1.Text = "Console";
             // 
             // dockSite9
             // 
             this.dockSite9.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite9.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite9.Location = new System.Drawing.Point(0, 26);
+            this.dockSite9.Location = new System.Drawing.Point(0, 28);
             this.dockSite9.Name = "dockSite9";
-            this.dockSite9.Size = new System.Drawing.Size(0, 0);
             this.dockSite9.TabIndex = 12;
             this.dockSite9.TabStop = false;
             // 
@@ -176,9 +176,9 @@
             this.dockSite1.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite1.Location = new System.Drawing.Point(0, 26);
+            this.dockSite1.Location = new System.Drawing.Point(0, 25);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(0, 256);
+            this.dockSite1.Size = new System.Drawing.Size(0, 281);
             this.dockSite1.TabIndex = 4;
             this.dockSite1.TabStop = false;
             // 
@@ -187,9 +187,9 @@
             this.dockSite2.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite2.Dock = System.Windows.Forms.DockStyle.Right;
             this.dockSite2.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite2.Location = new System.Drawing.Point(488, 26);
+            this.dockSite2.Location = new System.Drawing.Point(488, 25);
             this.dockSite2.Name = "dockSite2";
-            this.dockSite2.Size = new System.Drawing.Size(0, 256);
+            this.dockSite2.Size = new System.Drawing.Size(0, 281);
             this.dockSite2.TabIndex = 5;
             this.dockSite2.TabStop = false;
             // 
@@ -197,7 +197,7 @@
             // 
             this.dockSite8.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite8.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dockSite8.Location = new System.Drawing.Point(0, 380);
+            this.dockSite8.Location = new System.Drawing.Point(0, 412);
             this.dockSite8.Name = "dockSite8";
             this.dockSite8.Size = new System.Drawing.Size(488, 0);
             this.dockSite8.TabIndex = 11;
@@ -207,9 +207,9 @@
             // 
             this.dockSite5.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite5.Dock = System.Windows.Forms.DockStyle.Left;
-            this.dockSite5.Location = new System.Drawing.Point(0, 26);
+            this.dockSite5.Location = new System.Drawing.Point(0, 25);
             this.dockSite5.Name = "dockSite5";
-            this.dockSite5.Size = new System.Drawing.Size(0, 354);
+            this.dockSite5.Size = new System.Drawing.Size(0, 387);
             this.dockSite5.TabIndex = 8;
             this.dockSite5.TabStop = false;
             // 
@@ -217,9 +217,9 @@
             // 
             this.dockSite6.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite6.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dockSite6.Location = new System.Drawing.Point(488, 26);
+            this.dockSite6.Location = new System.Drawing.Point(488, 25);
             this.dockSite6.Name = "dockSite6";
-            this.dockSite6.Size = new System.Drawing.Size(0, 354);
+            this.dockSite6.Size = new System.Drawing.Size(0, 387);
             this.dockSite6.TabIndex = 9;
             this.dockSite6.TabStop = false;
             // 
@@ -230,7 +230,7 @@
             this.dockSite7.Dock = System.Windows.Forms.DockStyle.Top;
             this.dockSite7.Location = new System.Drawing.Point(0, 0);
             this.dockSite7.Name = "dockSite7";
-            this.dockSite7.Size = new System.Drawing.Size(488, 26);
+            this.dockSite7.Size = new System.Drawing.Size(488, 25);
             this.dockSite7.TabIndex = 10;
             this.dockSite7.TabStop = false;
             // 
@@ -240,7 +240,7 @@
             this.bar1.AccessibleName = "DotNetBar Bar";
             this.bar1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
             this.bar1.DockSide = DevComponents.DotNetBar.eDockSide.Top;
-            this.bar1.Font = new System.Drawing.Font("돋움", 9F);
+            this.bar1.Font = new System.Drawing.Font("Dotum", 9F);
             this.bar1.IsMaximized = false;
             this.bar1.Items.AddRange(new DevComponents.DotNetBar.BaseItem[] {
             this.menuFile,
@@ -248,7 +248,7 @@
             this.bar1.Location = new System.Drawing.Point(0, 0);
             this.bar1.MenuBar = true;
             this.bar1.Name = "bar1";
-            this.bar1.Size = new System.Drawing.Size(488, 25);
+            this.bar1.Size = new System.Drawing.Size(488, 24);
             this.bar1.Stretch = true;
             this.bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.bar1.TabIndex = 0;
@@ -263,20 +263,20 @@
             this.menuOpen,
             this.menuSave,
             this.menuExit});
-            this.menuFile.Text = "파일(&F)";
+            this.menuFile.Text = "File(&F)";
             // 
             // menuNew
             // 
             this.menuNew.Name = "menuNew";
             this.menuNew.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlN);
-            this.menuNew.Text = "새 파일";
+            this.menuNew.Text = "New";
             this.menuNew.Click += new System.EventHandler(this.menuNew_Click);
             // 
             // menuOpen
             // 
             this.menuOpen.Name = "menuOpen";
             this.menuOpen.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlO);
-            this.menuOpen.Text = "열기...";
+            this.menuOpen.Text = "Open...";
             this.menuOpen.Click += new System.EventHandler(this.menuOpen_Click);
             // 
             // menuSave
@@ -284,7 +284,7 @@
             this.menuSave.BeginGroup = true;
             this.menuSave.Name = "menuSave";
             this.menuSave.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.CtrlS);
-            this.menuSave.Text = "저장";
+            this.menuSave.Text = "Save";
             this.menuSave.Click += new System.EventHandler(this.menuSave_Click);
             // 
             // menuExit
@@ -292,7 +292,8 @@
             this.menuExit.BeginGroup = true;
             this.menuExit.Name = "menuExit";
             this.menuExit.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.AltF4);
-            this.menuExit.Text = "끝내기";
+            this.menuExit.Text = "Exit";
+            this.menuExit.Click += new System.EventHandler(this.exit_Clicked);
             // 
             // menuDebug
             // 
@@ -301,12 +302,12 @@
             this.menuReset,
             this.menuRun,
             this.menuStopRun});
-            this.menuDebug.Text = "디버그(&D)";
+            this.menuDebug.Text = "Debug(&D)";
             // 
             // menuReset
             // 
             this.menuReset.Name = "menuReset";
-            this.menuReset.Text = "초기화";
+            this.menuReset.Text = "Reset";
             this.menuReset.Click += new System.EventHandler(this.menuReset_Click);
             // 
             // menuRun
@@ -314,7 +315,7 @@
             this.menuRun.BeginGroup = true;
             this.menuRun.Name = "menuRun";
             this.menuRun.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.F5);
-            this.menuRun.Text = "실행";
+            this.menuRun.Text = "Run";
             this.menuRun.Tooltip = "F5";
             this.menuRun.Click += new System.EventHandler(this.menuRun_Click);
             // 
@@ -322,7 +323,7 @@
             // 
             this.menuStopRun.Name = "menuStopRun";
             this.menuStopRun.Shortcuts.Add(DevComponents.DotNetBar.eShortcut.ShiftF5);
-            this.menuStopRun.Text = "중지";
+            this.menuStopRun.Text = "Stop";
             this.menuStopRun.Tooltip = "Shift+F5";
             // 
             // dockSite3
@@ -330,7 +331,7 @@
             this.dockSite3.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite3.Dock = System.Windows.Forms.DockStyle.Top;
             this.dockSite3.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite3.Location = new System.Drawing.Point(0, 26);
+            this.dockSite3.Location = new System.Drawing.Point(0, 25);
             this.dockSite3.Name = "dockSite3";
             this.dockSite3.Size = new System.Drawing.Size(488, 0);
             this.dockSite3.TabIndex = 6;
@@ -347,13 +348,13 @@
             this.tabStrip1.CanReorderTabs = true;
             this.tabStrip1.CloseButtonVisible = true;
             this.tabStrip1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabStrip1.Location = new System.Drawing.Point(0, 26);
+            this.tabStrip1.Location = new System.Drawing.Point(0, 25);
             this.tabStrip1.MdiForm = this;
             this.tabStrip1.MdiTabbedDocuments = true;
             this.tabStrip1.Name = "tabStrip1";
             this.tabStrip1.SelectedTab = null;
-            this.tabStrip1.SelectedTabFont = new System.Drawing.Font("돋움", 9F, System.Drawing.FontStyle.Bold);
-            this.tabStrip1.Size = new System.Drawing.Size(488, 23);
+            this.tabStrip1.SelectedTabFont = new System.Drawing.Font("Dotum", 9F, System.Drawing.FontStyle.Bold);
+            this.tabStrip1.Size = new System.Drawing.Size(488, 25);
             this.tabStrip1.Style = DevComponents.DotNetBar.eTabStripStyle.Office2007Document;
             this.tabStrip1.TabAlignment = DevComponents.DotNetBar.eTabStripAlignment.Top;
             this.tabStrip1.TabIndex = 14;
@@ -362,9 +363,9 @@
             // 
             // FrmConsole
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(488, 380);
+            this.ClientSize = new System.Drawing.Size(488, 412);
             this.Controls.Add(this.tabStrip1);
             this.Controls.Add(this.dockSite9);
             this.Controls.Add(this.dockSite2);
@@ -378,7 +379,7 @@
             this.DoubleBuffered = true;
             this.IsMdiContainer = true;
             this.Name = "FrmConsole";
-            this.Text = "Lua 콘솔";
+            this.Text = "Lua Console";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmConsole_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmConsole_FormClosed);
             this.MdiChildActivate += new System.EventHandler(this.FrmConsole_MdiChildActivate);

@@ -157,7 +157,7 @@ end
 
             public void Help()
             {
-                this.WriteLine(@"-- 표준 출력을 위해서는 아래 함수를 사용하세요. 
+                this.WriteLine(@"-- For standard output, use the function below. 
 env:Write(object)
 env:Write(string format, object[] args)
 env:WriteLine(object)
@@ -175,7 +175,7 @@ env:WriteLine(string format, object[] args)");
         {
             if (e.CloseReason == CloseReason.UserClosing && this.isRunning)
             {
-                if (DialogResult.Yes == MessageBoxEx.Show("진행중인 작업이 있습니다. 종료하시겠습니까?", "경고", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
+                if (DialogResult.Yes == MessageBoxEx.Show("Work in progress. Are you sure you want to quit?", "Warn", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
                 {
                     e.Cancel = false;
                 }
@@ -222,7 +222,7 @@ env:WriteLine(string format, object[] args)");
             if (!isRunning)
             {
                 InitLuaEnv();
-                textBoxX2.AppendText("===Lua 콘솔 초기화===\r\n");
+                textBoxX2.AppendText("===Lua Console Reset===\r\n");
             }
         }
 
@@ -256,7 +256,7 @@ env:WriteLine(string format, object[] args)");
         private void menuOpen_Click(object sender, EventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Filter = "Lua 스크립트 파일 (*.lua)|*.lua|*.*|*.*";
+            dlg.Filter = "Lua script file (*.lua)|*.lua|*.*|*.*";
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 FrmLuaEditor frm = new FrmLuaEditor();
@@ -279,7 +279,7 @@ env:WriteLine(string format, object[] args)");
             if (string.IsNullOrEmpty(editor.FileName))
             {
                 SaveFileDialog dlg = new SaveFileDialog();
-                dlg.Filter = "Lua 스크립트 파일 (*.lua)|*.lua|*.*|*.*";
+                dlg.Filter = "Lua script file (*.lua)|*.lua|*.*|*.*";
                 dlg.FileName = editor.Text + ".lua";
                 if (dlg.ShowDialog() != DialogResult.OK)
                 {
@@ -289,7 +289,12 @@ env:WriteLine(string format, object[] args)");
             }
 
             editor.SaveFile(editor.FileName);
-            textBoxX2.AppendText($"===={editor.FileName} 저장 완료====");
+            textBoxX2.AppendText($"===={editor.FileName} exited====");
+        }
+
+        private void exit_Clicked(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -928,7 +928,7 @@ namespace WzComparerR2.Avatar.UI
 
         private void btnMale_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx.Show("기본 남자 캐릭터를 불러오시겠습니까?", "확인") == DialogResult.OK)
+            if (MessageBoxEx.Show("Add a basic male character?", "Confirm") == DialogResult.OK)
             {
                 LoadCode("2000,12000,20000,30000,1040036,1060026", 0);
             }
@@ -936,7 +936,7 @@ namespace WzComparerR2.Avatar.UI
 
         private void btnFemale_Click(object sender, EventArgs e)
         {
-            if (MessageBoxEx.Show("기본 여자 캐릭터를 불러오시겠습니까?", "확인") == DialogResult.OK)
+            if (MessageBoxEx.Show("Add a basic female character?", "Confirm") == DialogResult.OK)
             {
                 LoadCode("2000,12000,21000,31000,1041046,1061039", 0);
             }

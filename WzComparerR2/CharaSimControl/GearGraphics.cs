@@ -165,7 +165,9 @@ namespace WzComparerR2.CharaSimControl
         /// 表示装备属性变化的青色画刷。
         /// </summary>
         public static readonly Brush GearPropChangeBrush = new SolidBrush(gearCyanColor);
-        public static readonly Color gearYellowColor = Color.FromArgb(244, 244, 68);
+        public static readonly Color skillYellowColor = Color.FromArgb(244, 244, 68);
+        public static readonly Color itemPinkColor = Color.FromArgb(255, 102, 204);
+        public static readonly Color itemPurpleColor = Color.FromArgb(187, 119, 255);
 
         public static Brush GetGearNameBrush(int diff, bool up, bool cash = false, bool petEquip = false)
         {
@@ -557,7 +559,16 @@ namespace WzComparerR2.CharaSimControl
                 float fontLineHeight = GetFontLineHeight(font);
                 this.infinityRect = new RectangleF(0, 0, ushort.MaxValue, fontLineHeight);
 
-                base.DrawPlainText(s, font, x1 - x, ref y, height);
+                //base.DrawPlainText(s, font, x1 - x, ref y, height);
+                if (TextRenderer.MeasureText(g, s, font, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width <= x1 - x)
+                {
+                    TextRenderer.DrawText(g, s, font, new Point(x, y), color, TextFormatFlags.NoPadding);
+                    y += height;
+                }
+                else
+                {
+                    base.DrawPlainText(s, font, x1 - x, ref y, height);
+                }
             }
 
             private float GetFontLineHeight(Font font)

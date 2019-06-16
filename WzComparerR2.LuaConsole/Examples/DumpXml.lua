@@ -19,8 +19,8 @@ end
 ------------------------------------------------------------
 
 -- all variables
-local topNode = PluginManager.FindWz('Etc')
-local outputDir = "D:\\wzDump"
+local topNode = PluginManager.FindWz('Map\Map4')
+local outputDir = "D:\\Users\\Lapig\\Downloads\\maple\\New\ folder\\fresh"
 
 ------------------------------------------------------------
 -- main function

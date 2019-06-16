@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>发布\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -74,6 +74,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\MonoGame.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
@@ -93,6 +96,7 @@
     </Compile>
     <Compile Include="CharaSimControl\CashPackageRender.cs" />
     <Compile Include="CharaSimControl\GearTooltipRender2.cs" />
+    <Compile Include="CharaSimControl\HelpTooltipRender.cs" />
     <Compile Include="CharaSimControl\ItemTooltipRender.cs" />
     <Compile Include="CharaSimControl\AfrmStat.cs">
       <SubType>Form</SubType>
@@ -104,6 +108,8 @@
     <Compile Include="CharaSimControl\ItemTooltipRender2.cs" />
     <Compile Include="CharaSimControl\MobTooltipRenderer.cs" />
     <Compile Include="CharaSimControl\NpcTooltipRenderer.cs" />
+    <Compile Include="CharaSimControl\ObjectMouseEventArgs.cs" />
+    <Compile Include="CharaSimControl\ObjectMouseEventHandler.cs" />
     <Compile Include="CharaSimControl\RecipeTooltipRender.cs" />
     <Compile Include="CharaSimControl\RenderHelper.cs" />
     <Compile Include="CharaSimControl\SetItemTooltipRender.cs" />
@@ -250,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Resources\dir.png" />
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +305,10 @@
       <Project>{818060bc-404c-470a-94b3-5160716c5247}</Project>
       <Name>WzComparerR2.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WzComparerR2.MapRender\WzComparerR2.MapRender.csproj">
+      <Project>{11e362e4-b8fb-4bd4-b0d3-ba078d5fb002}</Project>
+      <Name>WzComparerR2.MapRender</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WzComparerR2.PluginBase\WzComparerR2.PluginBase.csproj">
       <Project>{FA74A2FD-0250-4182-845D-DD98D829B525}</Project>
       <Name>WzComparerR2.PluginBase</Name>
@@ -322,6 +333,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="wcr2_256.ico" />
+    <None Include="wcr2_32.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

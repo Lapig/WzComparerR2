@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 using System.Text;
+using System.Text.RegularExpressions;
 using CharaSimResource;
 using WzComparerR2.CharaSim;
 using WzComparerR2.Common;
 using WzComparerR2.Controls;
+using WzComparerR2.WzLib;
 
 namespace WzComparerR2.CharaSimControl
 {
@@ -19,6 +22,9 @@ namespace WzComparerR2.CharaSimControl
             for (int i = 0; i < sec.Length; i++)
                 sec[i] = 1 << i;
 
+            hyperStatList = new int[] { 80000400, 80000401, 80000402, 80000403, 80000404, 80000405, 80000406, 80000409, 80000410, 80000412, 80000413, 80000414, 80000416, 80000417, 80000419, 80000420, 80000421 };
+            hyperStatBitmapList = hyperStatList.Select(id => Resource.ResourceManager.GetObject("HyperStat_Window_statList_" + id) as Bitmap).ToArray();
+
             initCtrl();
         }
 
@@ -27,6 +33,12 @@ namespace WzComparerR2.CharaSimControl
         private Point baseOffset;
         private Point newLocation;
         private Character character;
+        private List<TooltipHelpRect> helpList;
+        private List<TooltipHelpRect> helpDetailList;
+        private int hyperStatScrollValue;
+        private int[] hyperStatList;
+        private Bitmap[] hyperStatBitmapList;
+        private Skill[] hyperStatSkillList;
 
         private ACtrlButton btnHPUp;
         private ACtrlButton btnMPUp;
@@ -59,8 +71,8 @@ namespace WzComparerR2.CharaSimControl
         private ACtrlButton btnReduce;
         private bool waitForRefresh;
 
-        private int HyperStatScrollValue;
-        private Bitmap[] HyperStatList = new Bitmap[] { Resource.HyperStat_Window_statList_80000400, Resource.HyperStat_Window_statList_80000401, Resource.HyperStat_Window_statList_80000402, Resource.HyperStat_Window_statList_80000403, Resource.HyperStat_Window_statList_80000404, Resource.HyperStat_Window_statList_80000405, Resource.HyperStat_Window_statList_80000406, Resource.HyperStat_Window_statList_80000407, Resource.HyperStat_Window_statList_80000408, Resource.HyperStat_Window_statList_80000409, Resource.HyperStat_Window_statList_80000410, Resource.HyperStat_Window_statList_80000412, Resource.HyperStat_Window_statList_80000413, Resource.HyperStat_Window_statList_80000414, Resource.HyperStat_Window_statList_80000415, Resource.HyperStat_Window_statList_80000416, Resource.HyperStat_Window_statList_80000417 };
+        public event ObjectMouseEventHandler ObjectMouseMove;
+        public event EventHandler ObjectMouseLeave;
 
         public Character Character
         {
@@ -182,7 +194,7 @@ namespace WzComparerR2.CharaSimControl
             this.btnDetailOpen.Pressed = new BitmapOrigin(Resource.Stat_main_BtDetailOpen_pressed_0);
             this.btnDetailOpen.MouseOver = new BitmapOrigin(Resource.Stat_main_BtDetailOpen_mouseOver_0);
             this.btnDetailOpen.Disabled = new BitmapOrigin(Resource.Stat_main_BtDetailOpen_disabled_0);
-            this.btnDetailOpen.Location = new Point(132,288);
+            this.btnDetailOpen.Location = new Point(132, 288);
             this.btnDetailOpen.Size = new Size(68, 16);
             this.btnDetailOpen.ButtonStateChanged += new EventHandler(aCtrl_RefreshCall);
             this.btnDetailOpen.MouseClick += new MouseEventHandler(btnDetailOpen_MouseClick);
@@ -414,6 +426,48 @@ namespace WzComparerR2.CharaSimControl
 
             g.Dispose();
             this.Bitmap = stat;
+
+            if (helpList == null)
+            {
+                this.helpList = new List<TooltipHelpRect>();
+                foreach (Wz_Node helpNode in PluginBase.PluginManager.FindWz("String/ToolTipHelp.img/Game/UIWnd/Stat")?.Nodes ?? Enumerable.Empty<Wz_Node>())
+                {
+                    Wz_Vector lt = helpNode.Nodes["lt"]?.Value as Wz_Vector ?? new Wz_Vector(0, 0);
+                    Wz_Vector rb = helpNode.Nodes["rb"]?.Value as Wz_Vector ?? new Wz_Vector(0, 0);
+                    helpList.Add(new TooltipHelpRect(new Rectangle(lt.X, lt.Y, rb.X - lt.X, rb.Y - lt.Y), new TooltipHelp(helpNode.Nodes["Title"].GetValueEx<string>(null), helpNode.Nodes["Desc"].GetValueEx<string>(null))));
+                }
+                if (helpList.Count == 0)
+                {
+                    helpList = null;
+                }
+            }
+
+            if (helpDetailList == null)
+            {
+                this.helpDetailList = new List<TooltipHelpRect>();
+                foreach (Wz_Node helpNode in PluginBase.PluginManager.FindWz("String/ToolTipHelp.img/Game/UIWnd/StatDetail")?.Nodes ?? Enumerable.Empty<Wz_Node>())
+                {
+                    Wz_Vector lt = helpNode.Nodes["lt"]?.Value as Wz_Vector ?? new Wz_Vector(0, 0);
+                    Wz_Vector rb = helpNode.Nodes["rb"]?.Value as Wz_Vector ?? new Wz_Vector(0, 0);
+                    helpDetailList.Add(new TooltipHelpRect(new Rectangle(lt.X, lt.Y, rb.X - lt.X, rb.Y - lt.Y), new TooltipHelp(helpNode.Nodes["Title"].GetValueEx<string>(null), helpNode.Nodes["Desc"].GetValueEx<string>(null))));
+                }
+                if (helpDetailList.Count == 0)
+                {
+                    helpDetailList = null;
+                }
+            }
+
+            if (hyperStatSkillList == null)
+            {
+                try
+                {
+                    hyperStatSkillList = hyperStatList.Select(id => id.ToString().PadLeft(7, '0')).Select(id => Skill.CreateFromNode(PluginBase.PluginManager.FindWz("Skill/" + (Regex.IsMatch(id, @"80\d{6}") ? id.Substring(0, 6) : id.Substring(0, id.Length - 4)) + ".img/skill/" + id), PluginBase.PluginManager.FindWz)).ToArray();
+                }
+                catch (Exception ex)
+                {
+                    hyperStatSkillList = null;
+                }
+            }
         }
 
         private Point calcRenderBaseOffset()
@@ -446,8 +500,8 @@ namespace WzComparerR2.CharaSimControl
                 this.btnHyperStatOpen.Visible = true;
                 this.btnHyperStatClose.Visible = false;
                 this.vScroll.Visible = true;
-                this.vScroll.Maximum = 5;
-                this.vScroll.Value = this.HyperStatScrollValue;
+                this.vScroll.Maximum = hyperStatList.Length - 12;
+                this.vScroll.Value = this.hyperStatScrollValue;
                 this.btnLVUp1.Visible = true;
                 this.btnLVUp2.Visible = true;
                 this.btnLVUp3.Visible = true;
@@ -535,7 +589,7 @@ namespace WzComparerR2.CharaSimControl
             {
                 CharacterStatus charStat = this.character.Status;
                 //绘制自动分配
-               // g.DrawImage(charStat.Ap > 0 ? Resource.Stat_main_BtAuto_normal_3 : Resource.Stat_main_BtAuto_disabled_0, 94, 180);
+                // g.DrawImage(charStat.Ap > 0 ? Resource.Stat_main_BtAuto_normal_3 : Resource.Stat_main_BtAuto_disabled_0, 94, 180);
                 /*switch (charStat.Job / 100 % 10)//绘制角色属性灰色背景
                 {
                     case 0:
@@ -641,7 +695,7 @@ namespace WzComparerR2.CharaSimControl
             format.Alignment = StringAlignment.Far;
             for (int i = 0; i < 12; i++)
             {
-                g.DrawImage(HyperStatList[HyperStatScrollValue + i], 16, 43 + 18 * i);
+                g.DrawImage(hyperStatBitmapList[hyperStatScrollValue + i], 16, 43 + 18 * i);
                 g.DrawString("0", GearGraphics.EquipDetailFont, getDetailBrush(0), 139f, 44f + 18f * i, format);
             }
             g.DrawString("0", GearGraphics.EquipDetailFont, getDetailBrush(0), 169f, 269f, format);
@@ -659,6 +713,54 @@ namespace WzComparerR2.CharaSimControl
                 default: return GearGraphics.StatDetailGrayBrush;
             }
 
+        }
+
+        public TooltipHelp GetPairByPoint(Point point)
+        {
+            Point p = point;
+            if (DetailVisible && DetailRect.Contains(p))
+            {
+                p = Point.Subtract(point, new Size(DetailRect.X, DetailRect.Y));
+                return helpDetailList?.FirstOrDefault(t => t.Rect.Contains(p))?.Help;
+            }
+            p = Point.Subtract(point, new Size(baseOffset.X, baseOffset.Y));
+            return helpList?.FirstOrDefault(t => t.Rect.Contains(p))?.Help;
+        }
+
+        public int GetSlotIndexByPoint(Point point)
+        {
+            Point p = point;
+            p.Offset(-11, -41);
+            if (p.X < 0 || p.Y < 0)
+                return -1;
+            int idx = p.Y / 18;
+            if (new Rectangle(new Point(0, idx * 18), new Size(71, 16)).Contains(p))
+                return idx;
+            else
+                return -1;
+        }
+
+        public int GetHyperStatIndexByPoint(Point point)
+        {
+            int slotIdx = GetSlotIndexByPoint(point);
+            if (slotIdx != -1)
+            {
+                slotIdx += this.hyperStatScrollValue;
+            }
+            return slotIdx;
+        }
+
+        public Skill GetHyperStatByPoint(Point point)
+        {
+            if (HyperStatVisible && HyperStatRect.Contains(point) && hyperStatSkillList != null)
+            {
+                int hyperStatIdx = GetHyperStatIndexByPoint(Point.Subtract(point, new Size(HyperStatRect.X, HyperStatRect.Y)));
+                if (hyperStatIdx > -1 && hyperStatIdx < this.hyperStatSkillList.Length)
+                    return this.hyperStatSkillList[hyperStatIdx];
+                else
+                    return null;
+            }
+            return null;
         }
 
         private void btnClose_MouseClick(object sender, MouseEventArgs e)
@@ -697,7 +799,7 @@ namespace WzComparerR2.CharaSimControl
 
         private void vScroll_ValueChanged(object sender, EventArgs e)
         {
-            this.HyperStatScrollValue = this.vScroll.Value;
+            this.hyperStatScrollValue = this.vScroll.Value;
             this.waitForRefresh = true;
         }
 
@@ -731,6 +833,14 @@ namespace WzComparerR2.CharaSimControl
             }
 
             base.OnMouseMove(e);
+
+            object obj = GetPairByPoint(e.Location);
+            if (obj == null)
+                obj = GetHyperStatByPoint(e.Location);
+            if (obj != null)
+                this.OnObjectMouseMove(new ObjectMouseEventArgs(e, obj));
+            else
+                this.OnObjectMouseLeave(EventArgs.Empty);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -859,6 +969,40 @@ namespace WzComparerR2.CharaSimControl
             }
 
             base.OnMouseWheel(e);
+        }
+
+        protected virtual void OnObjectMouseMove(ObjectMouseEventArgs e)
+        {
+            if (this.ObjectMouseMove != null)
+                this.ObjectMouseMove(this, e);
+        }
+
+        protected virtual void OnObjectMouseLeave(EventArgs e)
+        {
+            if (this.ObjectMouseLeave != null)
+                this.ObjectMouseLeave(this, e);
+        }
+
+        public class TooltipHelpRect
+        {
+            public TooltipHelpRect(Rectangle rect, TooltipHelp pair)
+            {
+                this.rect = rect;
+                this.help = pair;
+            }
+
+            private Rectangle rect;
+            private TooltipHelp help;
+
+            public Rectangle Rect
+            {
+                get { return rect; }
+            }
+
+            public TooltipHelp Help
+            {
+                get { return help; }
+            }
         }
     }
 }

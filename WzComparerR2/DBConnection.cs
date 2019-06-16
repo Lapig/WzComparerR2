@@ -10,6 +10,8 @@ using WzComparerR2.Common;
 using WzComparerR2.PluginBase;
 using WzComparerR2.CharaSimControl;
 using WzComparerR2.CharaSim;
+//using WzComparerR2.MapRender;
+using WzComparerR2.Controls;
 
 namespace WzComparerR2
 {
@@ -22,6 +24,82 @@ namespace WzComparerR2
 
         private StringLinker sl;
 
+        public DataSet GenerateMapTable()
+        {
+            Wz_Node mapWz = PluginManager.FindWz(Wz_Type.Map);
+            if (mapWz == null)
+                return null;
+
+            Regex r = new Regex(@"^(\d+)\.img", RegexOptions.Compiled);
+
+            ServiceContainer x;
+       //     x.GetType(MappingType);
+
+         //   ResourceLoader mapLoader = new ResourceLoader();
+            DataSet ds = new DataSet();
+            DataTable mapTable = new DataTable("ms_map");
+            mapTable.Columns.Add("mapID", typeof(string));
+            mapTable.Columns.Add("mapName", typeof(string));
+
+            StringResult sr;
+
+            foreach (Wz_Node node in mapWz.Nodes)
+            {
+                Match m = r.Match(node.Text);
+                Wz_Image img = node.GetValue<Wz_Image>(null);
+                if (!m.Success)
+                {
+                    continue;
+                }
+                if (img == null || !img.TryExtract())
+                {
+                    continue;
+                }
+                string mapID = m.Result("$1");
+
+                Wz_Node mapListNode = img.Node.FindNodeByPath("map");
+          //      MapData currmap;
+          //      currmap.Load(mapListNode,)
+                if (mapListNode == null || mapListNode.Nodes.Count <= 0)
+                {
+                    continue;
+                }
+
+                foreach (Wz_Node mapNode in mapListNode.Nodes)
+                {
+                    Skill skill = Skill.CreateFromNode(mapNode, PluginManager.FindWz);
+                    if (skill == null)
+                        continue;
+
+                    string skillID = mapNode.Text;
+                    sl.StringSkill2.TryGetValue(skillID, out sr);
+
+                    string reqSkill = null;
+                    int reqSkillLevel = 0;
+                    if (skill.ReqSkill.Count > 0)
+                    {
+                        foreach (var kv in skill.ReqSkill)
+                        {
+                            reqSkill = kv.Key.ToString();
+                            reqSkillLevel = kv.Value;
+                        }
+                    }
+
+                    mapTable.Rows.Add(
+                        mapID,
+                        skillID,
+                        sr != null ? sr.Name : null,
+                        sr != null ? sr.Desc : null
+                    );
+
+                }
+
+                img.Unextract();
+            }
+            ds.Tables.Add(mapTable);
+
+            return ds;
+        }
         public DataSet GenerateSkillTable()
         {
             Wz_Node skillWz = PluginManager.FindWz(Wz_Type.Skill);

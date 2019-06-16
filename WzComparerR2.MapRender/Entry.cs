@@ -20,11 +20,11 @@ namespace WzComparerR2.MapRender
 
         }
 
-        #if MapRenderV1
+#if MapRenderV1
         private RibbonBar bar;
         private ButtonItem btnItemMapRender;
         private FrmMapRender mapRenderGame1;
-        #endif
+#endif
 
         private RibbonBar bar2;
         private ButtonItem btnItemMapRenderV2;
@@ -32,12 +32,12 @@ namespace WzComparerR2.MapRender
 
         protected override void OnLoad()
         {
-            #if MapRenderV1
+#if MapRenderV1
             this.bar = Context.AddRibbonBar("Modules", "MapRender");
             btnItemMapRender = new ButtonItem("", "맵 미리보기");
             btnItemMapRender.Click += btnItem_Click;
             bar.Items.Add(btnItemMapRender);
-            #endif
+#endif
 
             this.bar2 = Context.AddRibbonBar("Modules", "MapRender2");
             btnItemMapRenderV2 = new ButtonItem("", "맵 미리보기 V2");
@@ -69,7 +69,7 @@ namespace WzComparerR2.MapRender
                     if (!sl.HasValues) //生成默认stringLinker
                     {
                         sl = new StringLinker();
-                        sl.Load(PluginManager.FindWz(Wz_Type.String).GetValueEx<Wz_File>(null), PluginManager.FindWz(Wz_Type.Item).GetValueEx<Wz_File>(null));
+                        sl.Load(PluginManager.FindWz(Wz_Type.String).GetValueEx<Wz_File>(null), PluginManager.FindWz(Wz_Type.Item).GetValueEx<Wz_File>(null), PluginManager.FindWz(Wz_Type.Etc).GetValueEx<Wz_File>(null));
                     }
 
                     //开始绘制
@@ -101,25 +101,25 @@ namespace WzComparerR2.MapRender
                         }
                         else
 #endif
-                        {
-                            if (this.mapRenderGame2 != null)
                             {
-                                return;
-                            }
-                            this.mapRenderGame2 = new FrmMapRender2(img) { StringLinker = sl };
-                            this.mapRenderGame2.Window.Title = "MapRender " + this.Version;
-                            try
-                            {
-                                using (this.mapRenderGame2)
+                                if (this.mapRenderGame2 != null)
                                 {
-                                    this.mapRenderGame2.Run();
+                                    return;
+                                }
+                                this.mapRenderGame2 = new FrmMapRender2(img) { StringLinker = sl };
+                                this.mapRenderGame2.Window.Title = "MapRender " + this.Version;
+                                try
+                                {
+                                    using (this.mapRenderGame2)
+                                    {
+                                        this.mapRenderGame2.Run();
+                                    }
+                                }
+                                finally
+                                {
+                                    this.mapRenderGame2 = null;
                                 }
                             }
-                            finally
-                            {
-                                this.mapRenderGame2 = null;
-                            }
-                        }
 #if !DEBUG
                         }
                         catch (Exception ex)

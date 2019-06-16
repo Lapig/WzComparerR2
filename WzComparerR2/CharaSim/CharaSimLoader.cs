@@ -103,6 +103,7 @@ namespace WzComparerR2.CharaSim
                 return;
 
             LoadedCommoditiesBySN.Clear();
+            LoadedCommoditiesByItemId.Clear();
             foreach (Wz_Node node in commodityNode.Nodes)
             {
                 int commodityIndex;
