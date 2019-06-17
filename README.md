@@ -1,22 +1,21 @@
-*<s>使用前先大喊 niconiconi! poi! duang!以减少bug发生率</s>*  
 
 # WzComparerR2
-这是一个用C#6.0/.Net4.0组装的冒险岛提取器...  
-包含了一些奇怪的机能比如stringWZ搜索 客户端对比 装备模拟 地图模拟等等..  
+C#6.0/.Net4.0
+Multi-function MapleStory .wz extractor, map-renderer, character simulator
 
-tips: WcR2将尽力维持每周更新，Releases里**不会**提供最新版和稳定版下载:)  
-links: [\[更新日志\]](https://github.com/Kagamia/WzComparerR2/tree/master/UpdateLogs)  [\[版本计划\]](https://github.com/Kagamia/WzComparerR2/wiki/Roadmap)
+
+links: [\[Update Log\]](https://github.com/Kagamia/WzComparerR2/tree/master/UpdateLogs)  [\[RoadMap\]](https://github.com/Kagamia/WzComparerR2/wiki/Roadmap)
 
 # Modules
-- **WzComparerR2** 主程序
-- **WzComparerR2.Common** 一些通用类
-- **WzComparerR2.PluginBase** 插件管理器
-- **WzComparerR2.WzLib** wz文件读取相关
-- **CharaSimResource** 用于装备模拟的资源文件
-- **WzComparerR2.Updater** 程序更新器(未完成)
-- **WzComparerR2.LuaConsole** (可选插件)Lua控制台
-- **WzComparerR2.MapRender** (可选插件)地图仿真器
-- **WzComparerR2.Avatar** (可选插件)纸娃娃
+- **WzComparerR2** Core
+- **WzComparerR2.Common** Core Utilities
+- **WzComparerR2.PluginBase** Plugin Manager
+- **WzComparerR2.WzLib** wz File Reader
+- **CharaSimResource** Character Simulation Library
+- **WzComparerR2.Updater** MapleStory patch file tools (wip)
+- **WzComparerR2.LuaConsole** Lua Console for scripting
+- **WzComparerR2.MapRender** Map Renderer including mobs, npcs, footholds, portals, etc
+- **WzComparerR2.Avatar** Avatar Builder
 
 # Usage
 - **2.x**: Win7+/.net4.0+/dx11.0
@@ -36,5 +35,5 @@ links: [\[更新日志\]](https://github.com/Kagamia/WzComparerR2/tree/master/Up
 - [Spine-Runtime](https://github.com/EsotericSoftware/spine-runtimes)
 - [EmptyKeysUI](https://github.com/EmptyKeys)
 - **[@KENNYSOFT](https://github.com/KENNYSOFT)** and his WcR2-KMS version.
-- **[@Spadow](https://github.com/Sunaries)** and his WcR2-GMS version.
+- **[@Lapigr](https://github.com/Lapigr)** and his WcR2-EN version.
 - All testers from CMST tester group.
