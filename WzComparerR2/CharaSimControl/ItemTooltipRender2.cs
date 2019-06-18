@@ -337,16 +337,16 @@ namespace WzComparerR2.CharaSimControl
                 switch (value)
                 {
                     case 1:
-                        TextRenderer.DrawText(g, "WonderBlack", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), ((SolidBrush)GearGraphics.OrangeBrush3).Color, TextFormatFlags.HorizontalCenter);
+                        TextRenderer.DrawText(g, "Wonder Black", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), ((SolidBrush)GearGraphics.OrangeBrush3).Color, TextFormatFlags.HorizontalCenter);
                         break;
                     case 4:
-                        TextRenderer.DrawText(g, "LunaSweet", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), GearGraphics.itemPinkColor, TextFormatFlags.HorizontalCenter);
+                        TextRenderer.DrawText(g, "Luna Sweet", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), GearGraphics.itemPinkColor, TextFormatFlags.HorizontalCenter);
                         break;
                     case 5:
-                        TextRenderer.DrawText(g, "LunaDream", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), ((SolidBrush)GearGraphics.BlueBrush).Color, TextFormatFlags.HorizontalCenter);
+                        TextRenderer.DrawText(g, "Luna Dream", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), ((SolidBrush)GearGraphics.BlueBrush).Color, TextFormatFlags.HorizontalCenter);
                         break;
                     case 6:
-                        TextRenderer.DrawText(g, "Vac", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), GearGraphics.itemPurpleColor, TextFormatFlags.HorizontalCenter);
+                        TextRenderer.DrawText(g, "Luna Petite", GearGraphics.EquipDetailFont, new Point(tooltip.Width, picH), GearGraphics.itemPurpleColor, TextFormatFlags.HorizontalCenter);
                         break;
                     default:
                         picH -= 15;

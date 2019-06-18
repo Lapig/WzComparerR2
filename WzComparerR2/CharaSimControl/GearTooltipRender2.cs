@@ -763,7 +763,7 @@ namespace WzComparerR2.CharaSimControl
                     GearPropType.charmEXP };
 
                 string[] inclineString = new string[]{
-                    "카리스마","통찰력","의지","손재주","감성","매력"};
+                    "Charisma","Insight","Willpower","Dilligence","Empathy","Charm"};
 
                 for (int i = 0; i < inclineTypes.Length; i++)
                 {
@@ -810,17 +810,17 @@ namespace WzComparerR2.CharaSimControl
 
                 if (!string.IsNullOrEmpty(incline))
                 {
-                    desc.Add(" #c장착 시 1회에 한해 " + incline.Substring(2) + "의 경험치를 얻으실 수 있습니다.#");
+                    desc.Add(" #c" + incline.Substring(2) + " EXP will be given when equipped.#");
                 }
 
                 if (Gear.Cash && (!Gear.Props.TryGetValue(GearPropType.noMoveToLocker, out value) || value == 0) && (!Gear.Props.TryGetValue(GearPropType.tradeBlock, out value) || value == 0) && (!Gear.Props.TryGetValue(GearPropType.accountSharable, out value) || value == 0))
                 {
-                    desc.Add(" #c사용 전 1회에 한해 타인과 교환할 수 있으며, 아이템 사용 후에는 교환이 제한됩니다.#");
+                    desc.Add(" #cItem may be traded one time or until it is equipped.#");
                 }
 
                 if (PluginBase.PluginManager.FindWz("Effect/ItemEff.img/" + Gear.ItemID) != null)
                 {
-                    desc.Add(" #cBuy with Nexon Cache, you can exchange with others only once before use.#");
+                    desc.Add(" #cThis item does not show in some situations, such as in the Character Info window.#");
                 }
 
                 if (desc.Last() == "")

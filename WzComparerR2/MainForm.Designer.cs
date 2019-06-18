@@ -2703,7 +2703,7 @@
             // 
             // columnHeader6
             // 
-            this.columnHeader6.Text = "코드";
+            this.columnHeader6.Text = "Code";
             this.columnHeader6.Width = 80;
             // 
             // columnHeader7
@@ -2713,12 +2713,12 @@
             // 
             // columnHeader8
             // 
-            this.columnHeader8.Text = "설명";
+            this.columnHeader8.Text = "Description";
             this.columnHeader8.Width = 350;
             // 
             // columnHeader9
             // 
-            this.columnHeader9.Text = "경로";
+            this.columnHeader9.Text = "Path";
             this.columnHeader9.Width = 150;
             // 
             // comboItem1

@@ -53,11 +53,6 @@ namespace WzComparerR2.MapRender
 
         public void Load(Wz_Node mapImgNode, ResourceLoader resLoader)
         {
-         //   WzComparerR2.MapRender.UI.UIChatBox.TextBoxChat.InsertText("test");
- //           DrawToolTip("hello"+Environment.NewLine+"Line2");
-
-//            DrawToolTip("box2" + Environment.NewLine + "aaaaaaaaa");
-
             var infoNode = mapImgNode.Nodes["info"];
             if (infoNode == null)
             {
@@ -88,19 +83,19 @@ namespace WzComparerR2.MapRender
             {
                 LoadMinimap(node, resLoader);
             }
-            else
+      /*      else
             {
                 DrawToolTip("Minimap error");
-            }
+            }*/
             //加载地图元件
             if ((node = mapImgNode.Nodes["back"]) != null)
             {
                 LoadBack(node);
             }
-            else
+         /*   else
             {
                 DrawToolTip("Background null");
-            }
+            }*/
             for (int i = 0; i <= 7; i++)
             {
                 if ((node = mapImgNode.Nodes[i.ToString()]) != null)
@@ -117,28 +112,28 @@ namespace WzComparerR2.MapRender
                     {
                         LoadFoothold(fhLevel, i);
                     }
-                    else
+                  /*  else
                     {
                         DrawToolTip("Foothold node null");
-                    }
+                    }*/
                 }
             }
             if ((node = mapImgNode.Nodes["life"]) != null)
             {
                 LoadLife(node);
             }
-            else
+        /*    else
             {
                 DrawToolTip("Life node null");
-            }
+            }*/
             if ((node = mapImgNode.Nodes["reactor"]) != null)
             {
                 LoadReactor(node);
             }
-            else
+         /*   else
             {
                 DrawToolTip("Reactor node null");
-            }
+            }*/
             if ((node = mapImgNode.Nodes["portal"]) != null)
             {
                 LoadPortal(node);
@@ -147,10 +142,10 @@ namespace WzComparerR2.MapRender
             {
                 LoadLadderRope(node);
             }
-            else
+      /*      else
             {
                 DrawToolTip("Ladder/rope node null");
-            }
+            }*/
             if ((node = mapImgNode.Nodes["skyWhale"]) != null)
             {
                 LoadSkyWhale(node);
@@ -159,18 +154,18 @@ namespace WzComparerR2.MapRender
             {
                 LoadTooltip(node);
             }
-            else
+       /*     else
             {
                 DrawToolTip("Tooltip node null");
-            }
+            }*/
             if ((node = mapImgNode.Nodes["particle"]) != null)
             {
                 LoadParticle(node);
             }
-            else
+       /*     else
             {
                 DrawToolTip("Particle node null");
-            }
+            }*/
 
             //计算地图大小
             CalcMapSize();

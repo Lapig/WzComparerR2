@@ -19,8 +19,8 @@ end
 ------------------------------------------------------------
 
 -- all variables
-local topNode = PluginManager.FindWz('Map\Map4')
-local outputDir = "D:\\Users\\Lapig\\Downloads\\maple\\New\ folder\\fresh"
+local topNode = PluginManager.FindWz('Map')
+local outputDir = "D:\\lua-xml-out"
 
 ------------------------------------------------------------
 -- main function
