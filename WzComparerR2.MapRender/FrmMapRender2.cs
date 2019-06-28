@@ -476,7 +476,7 @@ namespace WzComparerR2.MapRender
             string mapName = sr?["mapName"] ?? "(null)";
             int last = (mapName.LastOrDefault(c => c >= '가' && c <= '힣') - '가') % 28;
             //var message = string.Format("是否传送到地图\r\n{0} ({1})？", sr?.Name ?? "null", mapID);
-            var message = mapName + (last == 0 || last == 8 ? "" : "으") + "로 이동하시겠습니까?";
+            var message = "Move to " + mapName + (last == 0 || last == 8 ? "" : "으") + "?";
             MessageBox.Show(message, "", MessageBoxButton.OKCancel, callback, false);
         }
 
@@ -826,6 +826,14 @@ namespace WzComparerR2.MapRender
             {
                 this.ui.TopBar.Hide();
             }
+            if(config.ChatBoxVisible == false)
+            {
+                this.ui.ChatBox.Visibility = Visibility.Hidden;
+            }
+            else if (config.ChatBoxVisible)
+            {
+                this.ui.ChatBox.Visibility = Visibility.Visible;
+            }
             this.ui.Minimap.CameraRegionVisible = config.Minimap_CameraRegionVisible;
             this.ui.WorldMap.UseImageNameAsInfoName = config.WorldMap_UseImageNameAsInfoName;
             this.batcher.D2DEnabled = config.UseD2dRenderer;
@@ -927,7 +935,7 @@ namespace WzComparerR2.MapRender
 
         private void SwitchResolution()
         {
-            var r = (Resolution)(((int)this.resolution + 1) % 4);
+            var r = (Resolution)(((int)this.resolution + 1) % Enum.GetNames(typeof(Resolution)).Length);
             SwitchResolution(r);
         }
 
@@ -939,6 +947,7 @@ namespace WzComparerR2.MapRender
                 case Resolution.Window_800_600:
                 case Resolution.Window_1024_768:
                 case Resolution.Window_1366_768:
+                case Resolution.Window_1920_1080:
                     gameWindow.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
                     break;
                 case Resolution.WindowFullScreen:
@@ -967,7 +976,8 @@ namespace WzComparerR2.MapRender
             Window_800_600 = 0,
             Window_1024_768 = 1,
             Window_1366_768 = 2,
-            WindowFullScreen = 3,
+            Window_1920_1080 = 3,
+            WindowFullScreen = 4,
         }
 
         struct ItemRect

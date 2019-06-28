@@ -37,7 +37,7 @@ namespace WzComparerR2.MapRender.UI
             this.Content = grid;
 
             TextBlock title = new TextBlock();
-            title.Text = "설정";
+            title.Text = "Settings";
             title.IsHitTestVisible = false;
             title.Foreground = Brushes.Gold;
             title.HorizontalAlignment = HorizontalAlignment.Center;
@@ -51,7 +51,7 @@ namespace WzComparerR2.MapRender.UI
             this.SetDragTarget(header);
 
             TabItem tab1 = new TabItem();
-            tab1.Header = "일반";
+            tab1.Header = "Config";
             tab1.Content = GetTabContent1();
 
             TabItem tab2 = new TabItem();
@@ -92,14 +92,14 @@ namespace WzComparerR2.MapRender.UI
             btnOK.Width = 50;
             btnOK.Height = 20;
             btnOK.Margin = new Thickness(5);
-            btnOK.Content = "확인";
+            btnOK.Content = "Okay";
             btnOK.Click += BtnOK_Click;
 
             Button btnCancel = new Button();
             btnCancel.Width = 50;
             btnCancel.Height = 20;
             btnCancel.Margin = new Thickness(5);
-            btnCancel.Content = "취소";
+            btnCancel.Content = "Cancel";
             btnCancel.Click += BtnCancel_Click;
 
             StackPanel footerPanel = new StackPanel();
@@ -115,8 +115,8 @@ namespace WzComparerR2.MapRender.UI
             Grid.SetRow(footer, 3);
             Grid.SetColumn(footer, 0);
 
-            this.Width = 300;
-            this.Height = 240;
+            this.Width = 371;
+            this.Height = 297;
             this.SetResourceReference(BackgroundProperty, MapRenderResourceKey.TooltipBrush);
             base.InitializeComponents();
         }
@@ -239,7 +239,7 @@ namespace WzComparerR2.MapRender.UI
             grid.Children.Add(lbl5);
 
             CheckBox chk3 = new CheckBox();
-            chk3.Content = "D2D 사용";
+            chk3.Content = "D2D Renderer";
             chk3.Margin = new Thickness(18, 0, 0, 0);
             chk3.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.UseD2dRenderer)));
             Grid.SetRow(chk3, 7);
@@ -274,6 +274,8 @@ namespace WzComparerR2.MapRender.UI
         {
             Grid grid = new Grid();
             grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(24, GridUnitType.Pixel) });
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(24, GridUnitType.Pixel) });
+        //    grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(144, GridUnitType.Pixel) });
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.ColumnDefinitions.Add(new ColumnDefinition());
 
@@ -284,6 +286,21 @@ namespace WzComparerR2.MapRender.UI
             Grid.SetColumn(chk1, 0);
             Grid.SetColumnSpan(chk1, 2);
             grid.Children.Add(chk1);
+
+            CheckBox chk2 = new CheckBox();
+            chk2.Content = "Chat Box";
+            chk2.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.ChatBoxVisible)));
+            Grid.SetRow(chk2, 1);
+            Grid.SetColumn(chk2, 0);
+            Grid.SetColumnSpan(chk2, 2);
+            grid.Children.Add(chk2);
+
+       /*     TextBlock lbl = new TextBlock();
+            lbl.TextWrapping = TextWrapping.NoWrap;
+            lbl.Margin = new Thickness(0, 1, 0, 50);
+            lbl.VisualPosition = new PointF(50, 50);
+            lbl.Text = "1: Background\n2:Reactors\n3:Objects\n4:Tiles\n5:NPC\n6:Mob";
+            grid.Children.Add(lbl);*/
 
             return grid;
         }
@@ -309,12 +326,12 @@ namespace WzComparerR2.MapRender.UI
         private UIElement GetTabContent4()
         {
             Grid grid = new Grid();
-            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(24, GridUnitType.Pixel) });
+            grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(30, GridUnitType.Pixel) });
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             grid.ColumnDefinitions.Add(new ColumnDefinition());
 
             CheckBox chk1 = new CheckBox();
-            chk1.Content = "img name as world map name";
+            chk1.Content = "Use IMG name as\n Info name";
             chk1.SetBinding(CheckBox.IsCheckedProperty, new Binding(nameof(UIOptionsDataModel.WorldMap_UseImageNameAsInfoName)));
             Grid.SetRow(chk1, 0);
             Grid.SetColumn(chk1, 0);
@@ -333,14 +350,14 @@ namespace WzComparerR2.MapRender.UI
             {
                  "Hotkeys :",
                  "",
-                 "M Minimap",
-                 "W Worldmap",
-                 "Esc Settings",
+                 "M - Minimap",
+                 "W - Worldmap",
+                 "Esc - Settings",
                  "Ctrl+1~9 Toggle Display Layers",
                  "Ctrl+U Change View Limits",
                  "` Chat",
-                 "Alt+Enter Reso Cycle",
-                 "ScrollLock SS",
+                 "Alt+Enter Cycle Resolutions",
+                 "ScrollLock - Screenshot",
             };
 
             foreach (var tip in tips)
@@ -400,6 +417,7 @@ namespace WzComparerR2.MapRender.UI
         private bool _topBarVisible;
         private bool _minimap_cameraRegionVisible;
         private bool _worldmap_useImageNameAsInfoName;
+        private bool _chatBoxVisible;
 
 
         public bool MuteOnLeaveFocus
@@ -460,6 +478,12 @@ namespace WzComparerR2.MapRender.UI
         {
             get { return this._worldmap_useImageNameAsInfoName; }
             set { base.SetProperty(ref this._worldmap_useImageNameAsInfoName, value); }
+        }
+
+        public bool ChatBoxVisible
+        {
+            get { return this._chatBoxVisible; }
+            set { base.SetProperty(ref this._chatBoxVisible, value); }
         }
     }
 }

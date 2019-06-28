@@ -16,6 +16,7 @@ namespace WzComparerR2.MapRender.Config
             this.Volume = 1f;
             this.MuteOnLeaveFocus = true;
             this.ClipMapRegion = true;
+            this.ChatBoxVisible = true;
         }
 
         [ConfigurationProperty("volume")]
@@ -72,6 +73,12 @@ namespace WzComparerR2.MapRender.Config
         {
             get { return (ConfigItem<bool>)this["worldMap.UseImageNameAsInfoName"]; }
             set { this["worldMap.UseImageNameAsInfoName"] = value; }
+        }
+        [ConfigurationProperty("ChatBoxVisible")]
+        public ConfigItem<bool> ChatBoxVisible
+        {
+            get { return (ConfigItem<bool>)this["ChatBoxVisible"]; }
+            set { this["ChatBoxVisible"] = value; }
         }
     }
 }
