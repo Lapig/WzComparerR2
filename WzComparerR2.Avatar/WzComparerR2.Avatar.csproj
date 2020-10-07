@@ -45,6 +45,11 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup Condition="Exists('..\Build\CommonAssemblyInfo.cs')">
+    <Compile Include="..\Build\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Action.cs" />
     <Compile Include="ActionFrame.cs" />
@@ -112,6 +117,12 @@
     <None Include="Resources\script_code.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\export.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\WzComparerR2.Common\WzComparerR2.Common.csproj">
       <Project>{818060bc-404c-470a-94b3-5160716c5247}</Project>
       <Name>WzComparerR2.Common</Name>
@@ -130,13 +141,8 @@
     <ProjectReference Include="..\WzComparerR2\WzComparerR2.csproj">
       <Project>{5e883be2-2009-4517-8026-4b90deb83884}</Project>
       <Name>WzComparerR2</Name>
+      <Private>False</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\export.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -19,6 +19,8 @@ namespace WzComparerR2.LuaConsole
 {
     public partial class FrmConsole : DevComponents.DotNetBar.Office2007Form
     {
+        //NoOptimization防止Assembly.GetCallingAssembly因尾调用优化出错
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoOptimization)]
         public FrmConsole()
         {
             InitializeComponent();
@@ -175,7 +177,7 @@ env:WriteLine(string format, object[] args)");
         {
             if (e.CloseReason == CloseReason.UserClosing && this.isRunning)
             {
-                if (DialogResult.Yes == MessageBoxEx.Show("Work in progress. Are you sure you want to quit?", "Warn", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
+                if (DialogResult.Yes == MessageBoxEx.Show("진행중인 작업이 있습니다. 종료하시겠습니까?", "경고", MessageBoxButtons.YesNo, MessageBoxIcon.Information))
                 {
                     e.Cancel = false;
                 }
@@ -290,11 +292,7 @@ env:WriteLine(string format, object[] args)");
 
             editor.SaveFile(editor.FileName);
             textBoxX2.AppendText($"===={editor.FileName} exited====");
-        }
 
-        private void exit_Clicked(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

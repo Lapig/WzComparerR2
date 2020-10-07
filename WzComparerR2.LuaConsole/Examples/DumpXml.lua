@@ -19,8 +19,8 @@ end
 ------------------------------------------------------------
 
 -- all variables
-local topNode = PluginManager.FindWz('Map')
-local outputDir = "D:\\lua-xml-out"
+local topNode = PluginManager.FindWz('Etc')
+local outputDir = "D:\\wzDump"
 
 ------------------------------------------------------------
 -- main function

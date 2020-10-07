@@ -1224,7 +1224,16 @@ namespace WzComparerR2.Avatar.UI
             }
             else
             {
-                if (worker?.IsBusy ?? false)
+                if (this.worker == null)
+                {
+                    this.worker = new BackgroundWorker();
+                    this.worker.WorkerReportsProgress = true;
+                    this.worker.WorkerSupportsCancellation = true;
+                    this.worker.DoWork += new DoWorkEventHandler(ExportAll_DoWork);
+                    this.worker.ProgressChanged += new ProgressChangedEventHandler(ExportAll_ProgressChanged);
+                    this.worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ExportAll_RunWorkerCompleted);
+                }
+                else if (this.worker.IsBusy)
                 {
                     MessageBox.Show("다른 내보내기 작업이 진행중입니다.");
                     return;
@@ -1263,13 +1272,13 @@ namespace WzComparerR2.Avatar.UI
 
                 for (int i = 0; i < avatar.Actions.Count; i++)
                 {
-                    if (worker.CancellationPending)
+                    if (this.worker.CancellationPending)
                     {
                         break;
                     }
                     avatar.ActionName = avatar.Actions[i].Name;
                     ExportGif(0, arg.Item2, 0, System.IO.Path.Combine(arg.Item1, avatar.Actions[i].Name.Replace('\\', '.') + encParams.FileExtension), config);
-                    worker.ReportProgress(i);
+                    this.worker.ReportProgress(i);
                 }
 
                 stopwatch.Stop();

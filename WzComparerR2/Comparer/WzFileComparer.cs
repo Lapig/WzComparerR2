@@ -230,7 +230,7 @@ namespace WzComparerR2.Comparer
                                         {
                                             if (newPng != oldPng && !CompareData(newPng, oldPng)) //对比有差异 不输出dummy
                                             {
-                                                //yield return new CompareDifference(nodeNew.LinkNode, nodeOld.LinkNode, DifferenceType.Changed);
+                                                yield return new CompareDifference(nodeNew.LinkNode, nodeOld.LinkNode, DifferenceType.Changed);
                                             }
                                             else
                                             {
@@ -253,7 +253,7 @@ namespace WzComparerR2.Comparer
                             {
                                 foreach (CompareDifference diff in Compare(arrayNew[l], arrayOld[r]))
                                 {
-                                    if (linkFilter) // && diff.DifferenceType != DifferenceType.Changed) [s]过滤新增或删除[/s] 全部过滤
+                                    /*if (linkFilter) // && diff.DifferenceType != DifferenceType.Changed) [s]过滤新增或删除[/s] 全部过滤
                                     {
                                         if ((diff.NodeNew?.ParentNode == arrayNew[l].LinkNode
                                             || diff.NodeOld?.ParentNode == arrayOld[r].LinkNode)) //差异节点为当前的子级
@@ -264,7 +264,7 @@ namespace WzComparerR2.Comparer
                                                 continue;
                                             }
                                         }
-                                    }
+                                    }*/
                                     yield return diff;
                                 }
                             }

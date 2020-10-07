@@ -113,6 +113,7 @@ namespace WzComparerR2.MapRender
             {
                 return;
             }
+
             var origin = mesh.FlipX ? new Vector2(frame.Rectangle.Width - frame.Origin.X, frame.Origin.Y) : frame.Origin.ToVector2();
             var eff = mesh.FlipX ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 

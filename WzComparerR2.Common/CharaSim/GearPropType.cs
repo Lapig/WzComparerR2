@@ -23,7 +23,6 @@ namespace WzComparerR2.CharaSim
         incMMP,
         incMMPr,
         incMDF,
-        incARC,
         incPAD_incMAD,
         incPAD,
         incMAD,
@@ -36,6 +35,7 @@ namespace WzComparerR2.CharaSim
         incEVA,
         incSpeed,
         incJump,
+        incARC,
         incCraft,
         knockback,
         incPVPDamage,
@@ -46,6 +46,7 @@ namespace WzComparerR2.CharaSim
         damR,
         nbdR,
         statR,
+        incCHUC,
 
         //潜能属性
         incPADr = 100,
@@ -175,6 +176,7 @@ namespace WzComparerR2.CharaSim
         onlyUpgrade,
         cantRepair,
         colorvar,
+        noPetEquipStatMoveItem,
 
         gatherTool_incSkillLevel = 2000,
         gatherTool_incSpeed,

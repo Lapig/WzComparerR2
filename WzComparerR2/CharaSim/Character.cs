@@ -629,13 +629,13 @@ namespace WzComparerR2.CharaSim
         {
             15,34,57,92,
             135,372,560,840,
-            1242,2207026470,84838062013
+            1242,2207026470,271970512164
         };
 
         public static long ExpToNextLevel(int level)
         {
             long exp;
-            if (level < 1 || level > 250)
+            if (level < 1 || level > 275)
                 return -1;
             if (level < 10)
                 return _exptnl[level - 1];
@@ -717,7 +717,7 @@ namespace WzComparerR2.CharaSim
                 }
                 return exp;
             }
-            if (level >= 140 && level <= 179)
+            if (level >= 140 && level <= 169)
             {
                 exp = ExpToNextLevel(139);
                 while (level > 139)
@@ -727,12 +727,12 @@ namespace WzComparerR2.CharaSim
                 }
                 return exp;
             }
-            if (level >= 180 && level <= 199)
+            if (level >= 170 && level <= 199)
             {
-                exp = ExpToNextLevel(179);
-                while (level > 179)
+                exp = ExpToNextLevel(169);
+                while (level > 169)
                 {
-                    exp = (long)(exp * 1.06);
+                    exp = (long)(exp * 1.05);
                     level -= 1;
                 }
                 return exp;
@@ -752,29 +752,49 @@ namespace WzComparerR2.CharaSim
             if (level >= 210 && level <= 219)
             {
                 exp = (long)(ExpToNextLevel(209) * 2.75);
-                while (level > 209)
+                while (level > 210)
                 {
                     exp = (long)(exp * 1.08);
                     level -= 1;
                 }
                 return exp;
             }
-            if (level == 220)
-                return _exptnl[10];
-            if (level >= 221 && level <= 229)
+            if (level >= 220 && level <= 224)
             {
-                exp = ExpToNextLevel(220);
+                double exp2 = ExpToNextLevel(219) * 1.7;
                 while (level > 220)
                 {
-                    exp = (long)(exp * 1.04);
+                    exp2 = exp2 * 1.05;
                     level -= 1;
                 }
-                return exp;
+                return (long)(exp2 + 0.5);
             }
-            if (level >= 230 && level <= 239)
+            if (level >= 225 && level <= 229)
             {
-                exp = ExpToNextLevel(229) * 2;
-                while (level > 229)
+                double exp2 = ExpToNextLevel(219) * 1.7 * 1.05 * 1.05 * 1.05 * 1.05 * 1.35;
+                while (level > 225)
+                {
+                    exp2 = exp2 * 1.03;
+                    level -= 1;
+                }
+                return (long)(exp2 + 0.5);
+            }
+            if (level >= 230 && level <= 234)
+            {
+                double exp2 = ExpToNextLevel(219) * 1.7 * 1.05 * 1.05 * 1.05 * 1.05 * 1.35 * 1.03 * 1.03 * 1.03 * 1.03 * 1.65;
+                while (level > 230)
+                {
+                    exp2 = exp2 * 1.02;
+                    level -= 1;
+                }
+                return (long)(exp2 + 0.5);
+            }
+            if (level == 235)
+                return _exptnl[10];
+            if (level >= 236 && level <= 239)
+            {
+                exp = ExpToNextLevel(235);
+                while (level > 235)
                 {
                     exp = (long)(exp * 1.02);
                     level -= 1;

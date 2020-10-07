@@ -78,12 +78,13 @@ namespace WzComparerR2.Controls
             if (!DesignMode)
             {
                 this.graphicsDeviceService = GraphicsDeviceService.AddRef(Handle,
-                                                                    ClientSize.Width,
-                                                                    ClientSize.Height);
+                                                                     ClientSize.Width,
+                                                                     ClientSize.Height);
                 this.swapChainRT = new SwapChainRenderTarget(graphicsDeviceService.GraphicsDevice,
                     this.Handle,
                     ClientSize.Width,
                     ClientSize.Height);
+
                 // Register the service, so components like ContentManager can find it.
                 services.AddService<IGraphicsDeviceService>(graphicsDeviceService);
 
@@ -155,7 +156,6 @@ namespace WzComparerR2.Controls
                 }
             }
         }
-
 
         /// <summary>
         /// Attempts to begin drawing the control. Returns an error message string
@@ -256,7 +256,7 @@ namespace WzComparerR2.Controls
                     PresentationParameters pp = GraphicsDevice.PresentationParameters;
 
                     deviceNeedsReset = (clientSize.Width != pp.BackBufferWidth) ||
-                                      (clientSize.Height != pp.BackBufferHeight);
+                                       (clientSize.Height != pp.BackBufferHeight);
                     break;
             }
 

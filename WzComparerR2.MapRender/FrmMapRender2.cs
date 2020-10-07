@@ -129,7 +129,7 @@ namespace WzComparerR2.MapRender
 
         CoroutineManager cm;
         FpsCounter fpsCounter;
-        List<IDisposable> attachedEvent = new List<IDisposable>();
+        readonly List<IDisposable> attachedEvent = new List<IDisposable>();
         IMEHandler imeHelper;
 
         bool isUnloaded;
@@ -250,6 +250,7 @@ namespace WzComparerR2.MapRender
                 }
             }), KeyCode.D8, ModifierKeys.Control));
             this.ui.InputBindings.Add(new KeyBinding(new RelayCommand(_ => this.patchVisibility.FrontVisible = !this.patchVisibility.FrontVisible), KeyCode.D9, ModifierKeys.Control));
+            this.ui.InputBindings.Add(new KeyBinding(new RelayCommand(_ => this.patchVisibility.EffectVisible = !this.patchVisibility.EffectVisible), KeyCode.D0, ModifierKeys.Control));
 
             //移动操作
             #region 移动操作
@@ -428,7 +429,7 @@ namespace WzComparerR2.MapRender
             this.ui.InputBindings.Add(new KeyBinding(new RelayCommand(_ => {
                 if (this.ui.Visibility == Visibility.Visible)
                 {
-                    ui.ChatBox.TextBoxChat.Focus();
+                    this.ui.ChatBox.TextBoxChat.Focus();
                 }
             }), KeyCode.Enter, ModifierKeys.None));
             this.ui.InputBindings.Add(new KeyBinding(new RelayCommand(_ => this.ui.ChatBox.Toggle()), KeyCode.Oem3, ModifierKeys.None));
@@ -476,7 +477,7 @@ namespace WzComparerR2.MapRender
             string mapName = sr?["mapName"] ?? "(null)";
             int last = (mapName.LastOrDefault(c => c >= '가' && c <= '힣') - '가') % 28;
             //var message = string.Format("是否传送到地图\r\n{0} ({1})？", sr?.Name ?? "null", mapID);
-            var message = "Move to " + mapName + (last == 0 || last == 8 ? "" : "으") + "?";
+            var message = mapName + (last == 0 || last == 8 ? "" : "으") + "로 이동하시겠습니까?";
             MessageBox.Show(message, "", MessageBoxButton.OKCancel, callback, false);
         }
 
@@ -578,7 +579,13 @@ namespace WzComparerR2.MapRender
                     break;
                     
                 case "/questlist":
-                    List<Tuple<int, int>> questList = this?.mapData.Scene.Layers.Nodes.SelectMany(l => ((LayerNode)l).Obj.Slots.SelectMany(item => ((ObjItem)item).Quest)).Union(this?.mapData.Scene.Npcs.SelectMany(item => item.Quest)).Distinct().ToList();
+                    List<Tuple<int, int>> questList = this?.mapData.Scene.Back.Slots.SelectMany(item => ((BackItem)item).Quest)
+                        .Concat(this?.mapData.Scene.Layers.Nodes.SelectMany(l => ((LayerNode)l).Obj.Slots.SelectMany(item => ((ObjItem)item).Quest)))
+                        .Concat(this?.mapData.Scene.Npcs.SelectMany(item => item.Quest))
+                        .Concat(this?.mapData.Scene.Front.Slots.SelectMany(item => ((BackItem)item).Quest))
+                        .Concat(this?.mapData.Scene.Effect.Slots.Where(item => item is ParticleItem).SelectMany(item => ((ParticleItem)item).Quest))
+                        .Concat(this?.mapData.Scene.Effect.Slots.Where(item => item is ParticleItem).SelectMany(item => ((ParticleItem)item).SubItems).SelectMany(item => item.Quest))
+                        .Distinct().ToList();
                     this.ui.ChatBox.AppendTextHelp($"관련된 퀘스트 개수: ({questList.Count()})");
                     foreach (Tuple<int, int> item in questList)
                     {
@@ -876,12 +883,13 @@ namespace WzComparerR2.MapRender
         protected override void UnloadContent()
         {
             base.UnloadContent();
+
             if (!this.isUnloaded)
             {
-                this.resLoader.Unload();
-                this.ui.UnloadContents();
+                this.resLoader?.Unload();
+                this.ui?.UnloadContents();
                 this.Content.Unload();
-                this.imeHelper.Dispose();
+                this.imeHelper?.Dispose();
                 this.bgm = null;
                 this.mapImg = null;
                 this.mapData = null;
@@ -902,9 +910,9 @@ namespace WzComparerR2.MapRender
                 return;
             }
 
-            this.batcher.Dispose();
+            this.batcher?.Dispose();
             this.batcher = null;
-            this.renderEnv.Dispose();
+            this.renderEnv?.Dispose();
             this.renderEnv = null;
             this.engine = null;
 
@@ -913,7 +921,7 @@ namespace WzComparerR2.MapRender
                 disposable.Dispose();
             }
             this.attachedEvent.Clear();
-            this.ui.InputBindings.Clear();
+            this.ui?.InputBindings.Clear();
 
             GameExt.RemoveKeyboardEvent(this);
             GameExt.RemoveMouseStateCache();

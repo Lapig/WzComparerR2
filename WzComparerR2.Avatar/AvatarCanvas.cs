@@ -262,7 +262,8 @@ namespace WzComparerR2.Avatar
             {
                 case GearType.body: this.Body = part; break;
                 case GearType.head: this.Head = part; break;
-                case GearType.face: this.Face = part; break;
+                case GearType.face:
+                case GearType.face2: this.Face = part; break;
                 case GearType.hair:
                 case GearType.hair2: this.Hair = part; break;
                 case GearType.cap: this.Cap = part; break;
@@ -604,7 +605,7 @@ namespace WzComparerR2.Avatar
             //根骨骼 作为角色原点
             Bone bodyRoot = new Bone("@root");
             bodyRoot.Position = Point.Empty;
-            CreateBone(bodyRoot, playerNodes, bodyAction.Face);
+            CreateBone(bodyRoot, playerNodes, bodyAction?.Face);
             SetBonePoperty(bodyRoot, BoneGroup.Character, bodyAction);
 
             if (tamingNodes != null && tamingNodes.Length > 0)
@@ -687,9 +688,9 @@ namespace WzComparerR2.Avatar
                 foreach (Wz_Node childNode in linkPartNode.Nodes) //分析部件
                 {
                     Wz_Node linkNode = childNode;
-                    while (linkNode?.Value is Wz_Uol)
+                    while (linkNode?.Value is Wz_Uol uol)
                     {
-                        linkNode = ((Wz_Uol)childNode.Value).HandleUol(linkNode);
+                        linkNode = uol.HandleUol(linkNode);
                     }
                     if (linkNode == null)
                     {
@@ -1099,7 +1100,7 @@ namespace WzComparerR2.Avatar
                 partNode.Add(headNode);
 
                 //脸
-                if (this.Face != null && this.Face.Visible && faceAction != null && Parts.Where(part => part != null && part.Visible && part.InvisibleFace).Count() == 0)
+                if (this.Face != null && this.Face.Visible && faceAction != null)
                 {
                     if ((face ?? true) && !invisibleFace)
                     {

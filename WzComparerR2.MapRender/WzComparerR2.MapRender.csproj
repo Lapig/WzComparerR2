@@ -83,6 +83,11 @@
       <HintPath>..\References\TSF.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="Exists('..\Build\CommonAssemblyInfo.cs')">
+    <Compile Include="..\Build\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="Animation\IStateMachineAnimationData.cs" />
     <Compile Include="Animation\RepeatableFrameAnimationData.cs" />
@@ -175,6 +180,7 @@
     <Compile Include="UI\Tooltip2.cs" />
     <Compile Include="UI\TooltipHelper.cs" />
     <Compile Include="UI\UIChatBox.cs" />
+    <Compile Include="UI\UIDanmaku.cs" />
     <Compile Include="UI\UIGraphics.cs" />
     <Compile Include="UI\UIHelper.cs" />
     <Compile Include="UI\UIMiniMap.cs" />
@@ -212,7 +218,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>

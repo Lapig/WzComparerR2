@@ -14,6 +14,7 @@ namespace WzComparerR2.CharaSim
             this.levelCommon = new List<Dictionary<string, string>>();
             this.common = new Dictionary<string, string>();
             this.PVPcommon = new Dictionary<string, string>();
+            this.RelationSkill = null;
             this.ReqSkill = new Dictionary<int, int>();
             this.Action = new List<string>();
         }
@@ -40,6 +41,7 @@ namespace WzComparerR2.CharaSim
         public BitmapOrigin IconDisabled { get; set; }
 
         public HyperSkillType Hyper { get; set; }
+        public bool HyperStat { get; set; }
 
         public int Level
         {
@@ -61,6 +63,7 @@ namespace WzComparerR2.CharaSim
         public bool NotRemoved { get; set; }
         public bool VSkill { get; set; }
         public bool TimeLimited { get; set; }
+        public Tuple<int, int> RelationSkill { get; set; }
         public bool DisableNextLevelInfo { get; set; }
         public int MasterLevel { get; set; }
         public Dictionary<int, int> ReqSkill { get; private set; }
@@ -142,6 +145,9 @@ namespace WzComparerR2.CharaSim
                     case "hyper":
                         skill.Hyper = (HyperSkillType)childNode.GetValue<int>();
                         break;
+                    case "hyperStat":
+                        skill.HyperStat = childNode.GetValue<int>() != 0;
+                        break;
                     case "invisible":
                         skill.Invisible = childNode.GetValue<int>() != 0;
                         break;
@@ -156,6 +162,9 @@ namespace WzComparerR2.CharaSim
                         break;
                     case "timeLimited":
                         skill.TimeLimited = childNode.GetValue<int>() != 0;
+                        break;
+                    case "relationSkill":
+                        skill.RelationSkill = new Tuple<int, int>(childNode.Nodes["skillID"].GetValueEx<int>(0), childNode.Nodes["periodMin"].GetValueEx<int>(0));
                         break;
                     case "disableNextLevelInfo":
                         skill.DisableNextLevelInfo = childNode.GetValue<int>() != 0;

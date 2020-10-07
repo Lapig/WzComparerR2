@@ -82,10 +82,10 @@ namespace WzComparerR2.CharaSimControl
             TextRenderer.DrawText(g, sr.Name, GearGraphics.ItemNameFont2, new Point(bitmap.Width, 10), Color.White, TextFormatFlags.HorizontalCenter | TextFormatFlags.NoPrefix);
 
             //绘制图标
-            picH = 33;
-            g.FillRectangle(GearGraphics.GearIconBackBrush2, 14, picH, 68, 68);
             if (Skill.Icon.Bitmap != null)
             {
+                picH = 33;
+                g.FillRectangle(GearGraphics.GearIconBackBrush2, 14, picH, 68, 68);
                 g.DrawImage(GearGraphics.EnlargeBitmap(Skill.Icon.Bitmap),
                 14 + (1 - Skill.Icon.Origin.X) * 2,
                 picH + (33 - Skill.Icon.Bitmap.Height) * 2);
@@ -93,24 +93,38 @@ namespace WzComparerR2.CharaSimControl
 
             //绘制desc
             picH = 35;
-            if (!Skill.PreBBSkill)
-                GearGraphics.DrawString(g, "[Master Level : " + Skill.MaxLevel + "]", GearGraphics.ItemDetailFont2, 92, 274, ref picH, 16);
+            if (Skill.HyperStat)
+                GearGraphics.DrawString(g, "[최대 레벨 : " + Skill.MaxLevel + "]", GearGraphics.ItemDetailFont2, 10, 274, ref picH, 16);
+            else if (!Skill.PreBBSkill)
+                GearGraphics.DrawString(g, "[마스터 레벨 : " + Skill.MaxLevel + "]", GearGraphics.ItemDetailFont2, 92, 274, ref picH, 16);
 
             if (sr.Desc != null)
             {
                 string hdesc = SummaryParser.GetSkillSummary(sr.Desc, Skill.Level, Skill.Common, SummaryParams.Default);
                 //string hStr = SummaryParser.GetSkillSummary(skill, skill.Level, sr, SummaryParams.Default);
-                GearGraphics.DrawString(g, hdesc, GearGraphics.ItemDetailFont2, 92, 274, ref picH, 16);
+                GearGraphics.DrawString(g, hdesc, GearGraphics.ItemDetailFont2, Skill.Icon.Bitmap == null ? 10 : 92, 274, ref picH, 16);
             }
             if (Skill.TimeLimited)
             {
                 DateTime time = DateTime.Now.AddDays(7d);
                 string expireStr = time.ToString("유효기간 : yyyy년 M월 d일 HH시 mm분");
-                GearGraphics.DrawString(g, "#c" + expireStr + "#", GearGraphics.ItemDetailFont2, 92, 274, ref picH, 16);
+                GearGraphics.DrawString(g, "#c" + expireStr + "#", GearGraphics.ItemDetailFont2, Skill.Icon.Bitmap == null ? 10 : 92, 274, ref picH, 16);
+            }
+            if (Skill.RelationSkill != null)
+            {
+                StringResult sr2 = null;
+                if (StringLinker == null || !StringLinker.StringSkill.TryGetValue(Skill.RelationSkill.Item1, out sr2))
+                {
+                    sr2 = new StringResultSkill();
+                    sr2.Name = "(null)";
+                }
+                DateTime time = DateTime.Now.AddMinutes(Skill.RelationSkill.Item2);
+                string expireStr = time.ToString("유효기간 : yyyy년 M월 d일 H시 m분");
+                GearGraphics.DrawString(g, "#c" + sr2.Name + "의 " + expireStr + "#", GearGraphics.ItemDetailFont2, Skill.Icon.Bitmap == null ? 10 : 92, 274, ref picH, 16);
             }
             /*if (Skill.ReqLevel > 0)
             {
-                GearGraphics.DrawString(g, "#c[필요 레벨 : " + Skill.ReqLevel.ToString() + "]#", GearGraphics.ItemDetailFont2, 90, 270, ref picH, 16);
+                GearGraphics.DrawString(g, "#c[要求等级：" + Skill.ReqLevel.ToString() + "]#", GearGraphics.ItemDetailFont2, 90, 270, ref picH, 16);
             }
             if (Skill.ReqAmount > 0)
             {
@@ -125,8 +139,8 @@ namespace WzComparerR2.CharaSimControl
             if (Skill.Level > 0)
             {
                 string hStr = SummaryParser.GetSkillSummary(Skill, Skill.Level, sr, SummaryParams.Default);
-                GearGraphics.DrawString(g, "[Current Level " + Skill.Level + "]", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
-                if (Skill.SkillID / 10000 / 1000 == 10 && Skill.ReqLevel > 0)
+                GearGraphics.DrawString(g, "[현재레벨 " + Skill.Level + "]", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
+                if (Skill.SkillID / 10000 / 1000 == 10 && Skill.Level == 1 && Skill.ReqLevel > 0)
                 {
                     GearGraphics.DrawPlainText(g, "[필요 레벨: " + Skill.ReqLevel.ToString() + "레벨 이상]", GearGraphics.ItemDetailFont2, GearGraphics.skillYellowColor, 10, 272, ref picH, 16);
                 }
@@ -139,8 +153,8 @@ namespace WzComparerR2.CharaSimControl
             if (Skill.Level < Skill.MaxLevel && !Skill.DisableNextLevelInfo)
             {
                 string hStr = SummaryParser.GetSkillSummary(Skill, Skill.Level + 1, sr, SummaryParams.Default);
-                GearGraphics.DrawString(g, "[Next Level " + (Skill.Level + 1) + "]", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
-                if (Skill.SkillID / 10000 / 1000 == 10 && Skill.Level == 0 && Skill.ReqLevel > 0)
+                GearGraphics.DrawString(g, "[다음레벨 " + (Skill.Level + 1) + "]", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
+                if (Skill.SkillID / 10000 / 1000 == 10 && (Skill.Level + 1) == 1 && Skill.ReqLevel > 0)
                 {
                     GearGraphics.DrawPlainText(g, "[필요 레벨: " + Skill.ReqLevel.ToString() + "레벨 이상]", GearGraphics.ItemDetailFont2, GearGraphics.skillYellowColor, 10, 272, ref picH, 16);
                 }
@@ -155,7 +169,7 @@ namespace WzComparerR2.CharaSimControl
             {
                 g.DrawLine(Pens.White, 6, picH, 283, picH);
                 picH += 9;
-                GearGraphics.DrawString(g, "#$[Combination Skill]#", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
+                GearGraphics.DrawPlainText(g, "[콤비네이션 스킬]", GearGraphics.ItemDetailFont, Color.FromArgb(119, 204, 255), 10, 272, ref picH, 16);
                 BitmapOrigin icon = new BitmapOrigin();
                 Wz_Node skillNode = PluginBase.PluginManager.FindWz(string.Format(@"Skill\{0}.img\skill\{1}", Skill.AddAttackToolTipDescSkill / 10000, Skill.AddAttackToolTipDescSkill));
                 if (skillNode != null)
@@ -186,7 +200,7 @@ namespace WzComparerR2.CharaSimControl
             {
                 g.DrawLine(Pens.White, 6, picH, 283, picH);
                 picH += 9;
-                GearGraphics.DrawString(g, "#c[Assist Skill]#", GearGraphics.ItemDetailFont, 10, 272, ref picH, 16);
+                GearGraphics.DrawPlainText(g, "[어시스트 스킬]", GearGraphics.ItemDetailFont, ((SolidBrush)GearGraphics.OrangeBrush).Color, 10, 272, ref picH, 16);
                 BitmapOrigin icon = new BitmapOrigin();
                 Wz_Node skillNode = PluginBase.PluginManager.FindWz(string.Format(@"Skill\{0}.img\skill\{1}", Skill.AssistSkillLink / 10000, Skill.AssistSkillLink));
                 if (skillNode != null)
@@ -227,11 +241,11 @@ namespace WzComparerR2.CharaSimControl
                 }
                 if (Skill.Hyper != HyperSkillType.None)
                 {
-                    attr.Add("Hyper Skill: " + Skill.Hyper);
+                    attr.Add("하이퍼스킬: " + Skill.Hyper);
                 }
                 if (Skill.CombatOrders)
                 {
-                    attr.Add("Affected by Combat Orders");
+                    attr.Add("컴뱃오더스 적용 가능");
                 }
                 if (Skill.NotRemoved)
                 {

@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
-using Environment = System.Environment;
 
 namespace WzComparerR2.LuaConsole
 {
@@ -16,7 +15,6 @@ namespace WzComparerR2.LuaConsole
         {
             InitializeComponent();
             textEditorControl1.SetHighlighting("Lua");
-            
         }
 
         public void LoadFile(string fileName)

@@ -37,15 +37,17 @@ namespace WzComparerR2.CharaSimControl
                 return null;
             }
 
+            bool specialPetSetEffectName = this.SetItem.ItemIDs.Parts.Any(p => p.Value.ItemIDs.Any(i => isSpecialPet(i.Key)));
+
             int width = 261;
             int picHeight1;
-            Bitmap originBmp = RenderSetItem(out picHeight1);
+            Bitmap originBmp = RenderSetItem(specialPetSetEffectName, out picHeight1);
             int picHeight2 = 0;
             Bitmap effectBmp = null;
 
             if (this.SetItem.ExpandToolTip)
             {
-                effectBmp = RenderEffectPart(out picHeight2);
+                effectBmp = RenderEffectPart(specialPetSetEffectName, out picHeight2);
                 width += 261;
             }
 
@@ -69,7 +71,23 @@ namespace WzComparerR2.CharaSimControl
             return tooltip;
         }
 
-        private Bitmap RenderSetItem(out int picHeight)
+        private bool isSpecialPet(int itemID)
+        {
+            if (itemID / 1000000 != 5)
+            {
+                return false;
+            }
+            Wz_Node itemNode = PluginBase.PluginManager.FindWz(string.Format(@"Item\Pet\{0:D7}.img", itemID));
+            if (itemNode != null)
+            {
+                var item = Item.CreateFromNode(itemNode, PluginManager.FindWz);
+                int value;
+                return item.Props.TryGetValue(ItemPropType.wonderGrade, out value) && (value == 1 || value == 4 || value == 5 || value == 6);
+            }
+            return false;
+        }
+
+        private Bitmap RenderSetItem(bool specialPetSetEffectName, out int picHeight)
         {
             Bitmap setBitmap = new Bitmap(261, DefaultPicHeight);
             Graphics g = Graphics.FromImage(setBitmap);
@@ -190,6 +208,11 @@ namespace WzComparerR2.CharaSimControl
                         typeName = "(" + typeName + ")";
                     }
 
+                    if (this.SetItem.Effects.Count > 1 && this.SetItem.ItemIDs.Parts.Count == 1)
+                    {
+                        typeName += "  [0/3]";
+                    }
+
                     if (!partNames.Contains(itemName + typeName))
                     {
                         partNames.Add(itemName + typeName);
@@ -197,7 +220,7 @@ namespace WzComparerR2.CharaSimControl
                         if (!cash)
                         {
                             TextRenderer.DrawText(g, itemName, GearGraphics.EquipDetailFont2, new Point(10, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
-                            TextRenderer.DrawText(g, typeName, GearGraphics.EquipDetailFont2, new Point(252 - TextRenderer.MeasureText(g, typeName, GearGraphics.EquipDetailFont2, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
+                            TextRenderer.DrawText(g, typeName, GearGraphics.EquipDetailFont2, new Point(261 - 10 - TextRenderer.MeasureText(g, typeName, GearGraphics.EquipDetailFont2, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
                             picHeight += 18;
                         }
                         else
@@ -210,9 +233,42 @@ namespace WzComparerR2.CharaSimControl
                                 g.DrawImage(icon.Bitmap, 10 + 2 - icon.Origin.X, picHeight + 2 + 32 - icon.Origin.Y);
                             }
                             g.DrawImage(Resource.CashItem_0, 10 + 2 + 20, picHeight + 2 + 32 - 12);
-                            TextRenderer.DrawText(g, itemName, GearGraphics.EquipDetailFont2, new Point(50, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
-                            TextRenderer.DrawText(g, typeName, GearGraphics.EquipDetailFont2, new Point(252 - TextRenderer.MeasureText(g, typeName, GearGraphics.EquipDetailFont2, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
-                            picHeight += 40;
+                            TextRenderer.DrawText(g, itemName, GearGraphics.EquipDetailFont2, new Point(52, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
+                            TextRenderer.DrawText(g, typeName, GearGraphics.EquipDetailFont2, new Point(261 - 10 - TextRenderer.MeasureText(g, typeName, GearGraphics.EquipDetailFont2, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
+                            if (setItemPart.Value.ByGender)
+                            {
+                                picHeight += 18;
+                                foreach (var itemID in setItemPart.Value.ItemIDs.Keys)
+                                {
+                                    StringResult sr = null; ;
+                                    if (this.StringLinker != null)
+                                    {
+                                        if (this.StringLinker.StringEqp.TryGetValue(itemID, out sr))
+                                        {
+                                            itemName = sr.Name;
+                                            switch (Gear.GetGender(itemID))
+                                            {
+                                                case 0: itemName += " (남)"; break;
+                                                case 1: itemName += " (여)"; break;
+                                            }
+                                        }
+                                        else if (this.StringLinker.StringItem.TryGetValue(itemID, out sr)) //兼容宠物
+                                        {
+                                            itemName = sr.Name;
+                                        }
+                                    }
+                                    if (sr == null)
+                                    {
+                                        itemName = "(null)";
+                                    }
+                                    TextRenderer.DrawText(g, "- " + itemName, GearGraphics.EquipDetailFont2, new Point(61, picHeight), ((SolidBrush)brush).Color, TextFormatFlags.NoPadding);
+                                    picHeight += 18;
+                                }
+                            }
+                            else
+                            {
+                                picHeight += 40;
+                            }
                         }
                     }
                 }
@@ -232,7 +288,7 @@ namespace WzComparerR2.CharaSimControl
                 picHeight += 5;
                 g.DrawLine(Pens.White, 6, picHeight, 254, picHeight);//分割线
                 picHeight += 9;
-                RenderEffect(g, ref picHeight);
+                RenderEffect(g, specialPetSetEffectName, ref picHeight);
             }
             picHeight += 11;
 
@@ -241,12 +297,12 @@ namespace WzComparerR2.CharaSimControl
             return setBitmap;
         }
 
-        private Bitmap RenderEffectPart(out int picHeight)
+        private Bitmap RenderEffectPart(bool specialPetSetEffectName, out int picHeight)
         {
             Bitmap effBitmap = new Bitmap(261, DefaultPicHeight);
             Graphics g = Graphics.FromImage(effBitmap);
             picHeight = 9;
-            RenderEffect(g, ref picHeight);
+            RenderEffect(g, specialPetSetEffectName, ref picHeight);
             picHeight += 11;
             g.Dispose();
             return effBitmap;
@@ -255,7 +311,7 @@ namespace WzComparerR2.CharaSimControl
         /// <summary>
         /// 绘制套装属性。
         /// </summary>
-        private void RenderEffect(Graphics g, ref int picHeight)
+        private void RenderEffect(Graphics g, bool specialPetSetEffectName, ref int picHeight)
         {
             foreach (KeyValuePair<int, SetItemEffect> effect in this.SetItem.Effects)
             {
@@ -263,6 +319,10 @@ namespace WzComparerR2.CharaSimControl
                 if (this.SetItem.SetItemID < 0)
                 {
                     effTitle = $"월드 내 중복 착용 효과({effect.Key} / {this.SetItem.CompleteCount})";
+                }
+                else if (specialPetSetEffectName && this.SetItem.SetItemName.EndsWith(" 세트"))
+                {
+                    effTitle = $"{Regex.Replace(this.SetItem.SetItemName, " 세트$", "")} {effect.Key}세트 효과";
                 }
                 else
                 {
@@ -282,7 +342,7 @@ namespace WzComparerR2.CharaSimControl
                         List<Potential> ops = (List<Potential>)prop.Value;
                         foreach (Potential p in ops)
                         {
-                            GearGraphics.DrawPlainText(g, p.ConvertSummary(), GearGraphics.EquipDetailFont2, color, 10, 244, ref picHeight, 15);
+                            GearGraphics.DrawString(g, p.ConvertSummary(), GearGraphics.EquipDetailFont2, 10, 244, ref picHeight, 15, textColor: color);
                         }
                     }
                     else if (prop.Key == GearPropType.OptionToMob)

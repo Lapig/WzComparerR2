@@ -47,5 +47,8 @@ namespace WzComparerR2.CharaSim
         consumeMP,
         autoBuff,
         giantPet,
+        useTradeBlock,
+        level,
+        sharableOnce,
     }
 }

@@ -101,7 +101,7 @@ namespace WzComparerR2.CharaSimControl
             propBlocks.Add(PrepareText(g, "레벨: " + MobInfo.Level, GearGraphics.ItemDetailFont, Brushes.White, 0, picY));
             string hpNum = !string.IsNullOrEmpty(MobInfo.FinalMaxHP) ? this.AddCommaSeparators(MobInfo.FinalMaxHP) : MobInfo.MaxHP.ToString("N0");
             propBlocks.Add(PrepareText(g, "HP: " + hpNum, GearGraphics.ItemDetailFont, Brushes.White, 0, picY += 16));
-            string mpNum = !string.IsNullOrEmpty(MobInfo.FinalMaxMP) ? this.AddCommaSeparators(MobInfo.FinalMaxMP) : MobInfo.MaxMP.ToString();
+            string mpNum = !string.IsNullOrEmpty(MobInfo.FinalMaxMP) ? this.AddCommaSeparators(MobInfo.FinalMaxMP) : MobInfo.MaxMP.ToString("N0");
             propBlocks.Add(PrepareText(g, "MP: " + mpNum, GearGraphics.ItemDetailFont, Brushes.White, 0, picY += 16));
             propBlocks.Add(PrepareText(g, "물리공격력: " + MobInfo.PADamage, GearGraphics.ItemDetailFont, Brushes.White, 0, picY += 16));
             propBlocks.Add(PrepareText(g, "마법공격력: " + MobInfo.MADamage, GearGraphics.ItemDetailFont, Brushes.White, 0, picY += 16));

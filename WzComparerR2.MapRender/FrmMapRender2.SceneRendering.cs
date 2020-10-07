@@ -194,11 +194,11 @@ namespace WzComparerR2.MapRender
 
             //可见性
             sb.Append(" Ctrl+");
-            int[] array = new[] { 1, 2, 3, 4, 5, 6, 7, 9, 10 };
+            int[] array = new[] { 1, 2, 3, 4, 5, 6, 7, 9, 10, 13 };
             for (int i = 0; i < array.Length; i++)
             {
                 var objType = (Patches.RenderObjectType)array[i];
-                sb.Append(this.patchVisibility.IsVisible(objType) ? "-" : (i + 1).ToString());
+                sb.Append(this.patchVisibility.IsVisible(objType) ? "-" : ((i + 1) % 10).ToString());
             }
 
             sb.Append(" Mouse:");
@@ -278,10 +278,8 @@ namespace WzComparerR2.MapRender
             var origin = renderEnv.Camera.Origin.ToPoint();
             foreach (var item in mapData.Tooltips)
             {
-                if (item.CharRect.Contains(pos) || item.Rect.Contains(pos) || item.Title=="D")
+                if (item.CharRect.Contains(pos) || item.Rect.Contains(pos))
                 {
-                    if (item.Title == "D")
-                        item.Title = "Debug";
                     var center = new Vector2(item.Rect.Center.X - origin.X, item.Rect.Center.Y - origin.Y);
                     tooltip.Draw(gameTime, renderEnv, item, center);
                 }
@@ -588,6 +586,10 @@ namespace WzComparerR2.MapRender
             if (item is BackItem)
             {
                 var back = (BackItem)item;
+                if (back.Quest.Exists(quest => !patchVisibility.IsVisible(quest.Item1, quest.Item2)))
+                {
+                    return null;
+                }
                 if (back.IsFront ? patchVisibility.FrontVisible : patchVisibility.BackVisible)
                 {
                     return GetMeshBack(back);
@@ -597,12 +599,9 @@ namespace WzComparerR2.MapRender
             {
                 if (patchVisibility.ObjVisible)
                 {
-                    foreach (Tuple<int, int> quest in ((ObjItem)item).Quest)
+                    if (((ObjItem)item).Quest.Exists(quest => !patchVisibility.IsVisible(quest.Item1, quest.Item2)))
                     {
-                        if (!patchVisibility.IsVisible(quest.Item1, quest.Item2))
-                        {
-                            return null;
-                        }
+                        return null;
                     }
                     return GetMeshObj((ObjItem)item);
                 }
@@ -639,7 +638,14 @@ namespace WzComparerR2.MapRender
             }
             else if (item is ParticleItem)
             {
-                return GetMeshParticle((ParticleItem)item);
+                if (((ParticleItem)item).Quest.Exists(quest => !patchVisibility.IsVisible(quest.Item1, quest.Item2)))
+                {
+                    return null;
+                }
+                if (patchVisibility.EffectVisible)
+                {
+                    return GetMeshParticle((ParticleItem)item);
+                }
             }
             return null;
         }

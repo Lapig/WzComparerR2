@@ -159,7 +159,7 @@ namespace WzComparerR2.MapRender.UI
                     try
                     {
                         var quests = this.CurrentWorldMap?.QuestLimit;
-                        if (quests == null || quests.Count <= 0)
+                        if (quests == null || quests.Count <= 0 && this.CmbQuestList.ItemsSource!=null)
                         {
                             this.CmbQuestList.ItemsSource = null;
                             this.CmbQuestList.Visibility = Visibility.Hidden;
@@ -656,6 +656,7 @@ namespace WzComparerR2.MapRender.UI
                         if (link.LinkImg.HitMap?[(int)pos.X, (int)pos.Y] ?? false)
                         {
                             addItem(link.LinkImg, link);
+                            break;
                         }
                     }
                 }

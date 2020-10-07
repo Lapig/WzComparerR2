@@ -439,6 +439,11 @@ namespace WzComparerR2.CharaSimControl
                 renderItemBase(g, itemArray[i + idxOffset], origin);
             }
 
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Far;
+            g.DrawString("0", GearGraphics.EquipDetailFont, Brushes.Black, 128f, 270f, format);
+            g.DrawString("0", GearGraphics.EquipDetailFont, Brushes.Black, 160f, 287f, format);
+
             g.Dispose();
         }
 
@@ -462,6 +467,11 @@ namespace WzComparerR2.CharaSimControl
                 origin.Offset(0, 32);
                 renderItemBase(g, itemArray[i], origin);
             }
+
+            StringFormat format = new StringFormat();
+            format.Alignment = StringAlignment.Far;
+            g.DrawString("0", GearGraphics.EquipDetailFont, Brushes.Black, 131f, 340f, format);
+            g.DrawString("0", GearGraphics.EquipDetailFont, Brushes.Black, 341f, 340f, format);
 
             g.Dispose();
         }

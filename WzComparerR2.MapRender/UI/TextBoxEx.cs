@@ -244,7 +244,7 @@ namespace WzComparerR2.MapRender.UI
             }
         }
 
-        public void InsertText(string text)
+        private void InsertText(string text)
         {
             if (string.IsNullOrEmpty(text))
             {

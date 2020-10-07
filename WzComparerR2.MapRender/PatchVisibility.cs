@@ -94,6 +94,12 @@ namespace WzComparerR2.MapRender
             set { this.SetVisible(RenderObjectType.MobName, value); }
         }
 
+        public bool EffectVisible
+        {
+            get { return IsVisible(RenderObjectType.Effect); }
+            set { this.SetVisible(RenderObjectType.Effect, value); }
+        }
+
         private Dictionary<RenderObjectType, bool> dictVisible;
         private Dictionary<int, int> questVisible;
 

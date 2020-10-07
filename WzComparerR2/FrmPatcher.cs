@@ -234,14 +234,19 @@ namespace WzComparerR2
                 foreach (PatchPartContext part in patcher.PatchParts)
                 {
                     advTreePatchFiles.Nodes.Add(CreateFileNode(part));
+                    advTreePatchFiles.Nodes[advTreePatchFiles.Nodes.Count - 1].Enabled = prePatch;
+                    if (prePatch && part.Type == 1)
+                    {
+                        advTreePatchFiles.Nodes[advTreePatchFiles.Nodes.Count - 1].Checked = File.Exists(Path.Combine(msFolder, part.FileName));
+                    }
                 }
                 if (prePatch)
                 {
-                    advTreePatchFiles.Enabled = true;
+                    //advTreePatchFiles.Enabled = true;
                     AppendStateText("패치할 파일을 선택한 후 패치 버튼을 눌러주세요...\r\n");
                     waiting = true;
                     waitHandle.WaitOne();
-                    advTreePatchFiles.Enabled = false;
+                    //advTreePatchFiles.Enabled = false;
                     patcher.PatchParts.Clear();
                     for (int i = 0, j = advTreePatchFiles.Nodes.Count; i < j; i++)
                     {
@@ -249,6 +254,7 @@ namespace WzComparerR2
                         {
                             patcher.PatchParts.Add(advTreePatchFiles.Nodes[i].Tag as PatchPartContext);
                         }
+                        advTreePatchFiles.Nodes[i].Enabled = false;
                     }
                     patcher.PatchParts.Sort((part1, part2) => part1.Offset.CompareTo(part2.Offset));
                 }
@@ -300,6 +306,22 @@ namespace WzComparerR2
                 catch
                 {
                 }
+                try
+                {
+                    if (htmlFile != null)
+                    {
+                        htmlFile.Flush();
+                        htmlFile.Close();
+                    }
+                }
+                catch
+                {
+                }
+                htmlFilePath = null;
+                foreach (List<PatchPartContext> parts in typedParts.Values)
+                {
+                    parts.Clear();
+                }
 
                 if (patcher != null)
                 {
@@ -323,19 +345,20 @@ namespace WzComparerR2
                     AppendStateText("[" + e.Part.FileName + "] 패치중\r\n");
                     break;
                 case PatchingState.VerifyOldChecksumBegin:
-                    AppendStateText("  패치 전 체크섬 계산...");
+                    AppendStateText("  패치 전 체크섬 확인...");
+                    progressBarX1.Maximum = e.Part.NewFileLength;
                     break;
                 case PatchingState.VerifyOldChecksumEnd:
                     AppendStateText("  완료\r\n");
                     break;
                 case PatchingState.VerifyNewChecksumBegin:
-                    AppendStateText("  패치 후 체크섬 계산...");
+                    AppendStateText("  패치 후 체크섬 확인...");
                     break;
                 case PatchingState.VerifyNewChecksumEnd:
                     AppendStateText("  완료\r\n");
                     break;
                 case PatchingState.TempFileCreated:
-                    AppendStateText("  임시 파일 생성...\r\n");
+                    AppendStateText("  임시 파일 작성 시작...\r\n");
                     progressBarX1.Maximum = e.Part.NewFileLength;
                     break;
                 case PatchingState.TempFileBuildProcessChanged:
@@ -343,7 +366,7 @@ namespace WzComparerR2
                     progressBarX1.Text = string.Format("{0:N0}/{1:N0}", e.CurrentFileLength, e.Part.NewFileLength);
                     break;
                 case PatchingState.TempFileClosed:
-                    AppendStateText("  임시 파일 삭제...\r\n");
+                    AppendStateText("  임시 파일 작성 완료...\r\n");
                     progressBarX1.Value = 0;
                     progressBarX1.Maximum = 0;
                     progressBarX1.Text = string.Empty;
@@ -367,13 +390,20 @@ namespace WzComparerR2
                             comparer.OutputRemovedImg = chkOutputRemovedImg.Checked;
                             comparer.Comparer.PngComparison = (WzPngComparison)cmbComparePng.SelectedItem;
                             comparer.Comparer.ResolvePngLink = chkResolvePngLink.Checked;
+                            comparer.PatchingStateChanged += new EventHandler<PatchingEventArgs>(patcher_PatchingStateChanged);
                             //wznew.Load(e.Part.TempFilePath, false);
                             //wzold.Load(e.Part.OldFilePath, false);
                             //comparer.EasyCompareWzFiles(wznew.wz_files[0], wzold.wz_files[0], this.compareFolder);
                             foreach (PatchPartContext part in typedParts[e.Part.WzType])
                             {
-                                wznew.Load(part.TempFilePath, false);
-                                wzold.Load(part.OldFilePath, false);
+                                if (part.Type != 2)
+                                {
+                                    wznew.Load(part.TempFilePath, false);
+                                }
+                                if (part.Type != 0)
+                                {
+                                    wzold.Load(part.OldFilePath, false);
+                                }
                             }
                             if (htmlFilePath == null)
                             {
@@ -422,6 +452,18 @@ namespace WzComparerR2
                         ((WzPatcher)sender).SafeMove(e.Part.TempFilePath, e.Part.OldFilePath);
                         AppendStateText("  파일 적용...\r\n");
                     }
+                    break;
+                case PatchingState.CompareStarted:
+                    progressBarX1.Maximum = e.Part.NewFileLength;
+                    break;
+                case PatchingState.CompareProcessChanged:
+                    progressBarX1.Value = (int)e.CurrentFileLength;
+                    progressBarX1.Text = string.Format("{0:N0}/{1:N0}", e.CurrentFileLength, e.Part.NewFileLength);
+                    break;
+                case PatchingState.CompareFinished:
+                    progressBarX1.Value = 0;
+                    progressBarX1.Maximum = 0;
+                    progressBarX1.Text = string.Empty;
                     break;
             }
         }

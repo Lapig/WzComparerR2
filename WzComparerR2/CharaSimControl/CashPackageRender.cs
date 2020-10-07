@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -8,7 +9,6 @@ using Resource = CharaSimResource.Resource;
 using WzComparerR2.PluginBase;
 using WzComparerR2.WzLib;
 using WzComparerR2.Common;
-using System.Text.RegularExpressions;
 using WzComparerR2.CharaSim;
 
 namespace WzComparerR2.CharaSimControl
@@ -196,7 +196,7 @@ namespace WzComparerR2.CharaSimControl
             else
                 columnRight = (int)Math.Ceiling(titleSize.Height);
 
-            for(int i = 0; i < CashPackage.SN.Count; ++i)
+            for (int i = 0; i < CashPackage.SN.Count; ++i)
             {
                 if (CashPackage.SN.Count >= 8 && i == (CashPackage.SN.Count + 1) / 2)
                 {
@@ -275,7 +275,7 @@ namespace WzComparerR2.CharaSimControl
                         if (commodity.originalPrice == commodity.Price)
                             commodity.originalPrice = 0;
                     }
-                    if (commodity.originalPrice > 0)
+                    if (commodity.originalPrice > 0 && commodity.Price < commodity.originalPrice)
                     {
                         info += commodity.originalPrice + "캐시      ";
                         totalOriginalPrice += commodity.originalPrice;
@@ -318,7 +318,7 @@ namespace WzComparerR2.CharaSimControl
                     if (commodity.Bonus == 0)
                     {
                         TextRenderer.DrawText(g, info, GearGraphics.ItemDetailFont, new Point(columnLeft + 55, picH + 33), Color.White, TextFormatFlags.NoPadding);
-                        if (commodity.originalPrice > 0)
+                        if (commodity.originalPrice > 0 && commodity.Price < commodity.originalPrice)
                         {
                             int width = TextRenderer.MeasureText(g, info.Substring(0, info.IndexOf("      ")), GearGraphics.ItemDetailFont, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width;
                             g.DrawLine(Pens.White, columnLeft + 55, picH + 33 + 4, columnLeft + 55 + width + 1, picH + 33 + 4);
@@ -338,7 +338,7 @@ namespace WzComparerR2.CharaSimControl
                     if (commodity.Bonus == 0)
                     {
                         TextRenderer.DrawText(g, info, GearGraphics.ItemDetailFont, new Point(columnLeft + 55, picH + 24), Color.White, TextFormatFlags.NoPadding);
-                        if (commodity.originalPrice > 0)
+                        if (commodity.originalPrice > 0 && commodity.Price < commodity.originalPrice)
                         {
                             int width = TextRenderer.MeasureText(g, info.Substring(0, info.IndexOf("      ")), GearGraphics.ItemDetailFont, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width;
                             g.DrawLine(Pens.White, columnLeft + 55, picH + 24 + 4, columnLeft + 55 + width + 1, picH + 24 + 4);
@@ -371,7 +371,7 @@ namespace WzComparerR2.CharaSimControl
                 TextRenderer.DrawText(g, totalOriginalPrice + "캐시     " + totalPrice + "캐시", GearGraphics.ItemDetailFont, new Point(53, picH), Color.White, TextFormatFlags.NoPadding);
                 TextRenderer.DrawText(g, totalOriginalPrice + "캐시", GearGraphics.ItemDetailFont, new Point(53, picH), Color.Red, TextFormatFlags.NoPadding);
                 g.DrawImage(Resource.CSDiscount_arrow, 53 + TextRenderer.MeasureText(g, totalOriginalPrice + "캐시", GearGraphics.ItemDetailFont, new Size(int.MaxValue, int.MaxValue), TextFormatFlags.NoPadding).Width + 5, picH + 1);
-                DrawDiscountNum(g, "-" + (int)((1 - (double)totalPrice / totalOriginalPrice) * 100) + "%", cashBitmap.Width - 9, picH - 1, StringAlignment.Far);
+                DrawDiscountNum(g, "-" + (int)((100 - 100.0 * totalPrice / totalOriginalPrice)) + "%", cashBitmap.Width - 9, picH - 1, StringAlignment.Far);
             }
             picH += 11;
 

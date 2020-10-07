@@ -11,6 +11,7 @@ namespace WzComparerR2.CharaSim
         face = 2,
         hair = 3,
         hair2 = 4,
+        face2 = 5,
 
         /// <summary>
         /// 脸饰 101
@@ -142,9 +143,13 @@ namespace WzComparerR2.CharaSim
         /// </summary>
         shoes = 107,
         /// <summary>
-        /// 双头杖 121
+        /// 双头杖 1212
         /// </summary>
-        shiningRod = 121,
+        shiningRod = 1212,
+        /// <summary>
+        /// 调谐器 1213
+        /// </summary>
+        tuner = 1213,
         /// <summary>
         /// 灵魂手铳 122
         /// </summary>
@@ -173,6 +178,10 @@ namespace WzComparerR2.CharaSim
         /// 魔力手套 128
         /// </summary>
         magicGauntlet = 128,
+        /// <summary>
+        /// 扇子 129
+        /// </summary>
+        handFan = 129,
         /// <summary>
         /// 单手剑 130
         /// </summary>
@@ -338,6 +347,18 @@ namespace WzComparerR2.CharaSim
         /// </summary>
         pathOfAbyss = 135360,
         /// <summary>
+        /// 遗物 135370x
+        /// </summary>
+        relic = 135370,
+        /// <summary>
+        /// 扇坠 135380x
+        /// </summary>
+        fanTassel = 135380,
+        /// <summary>
+        /// 手链 135400x
+        /// </summary>
+        bracelet = 135400,
+        /// <summary>
         /// 手杖
         /// </summary>
         cane = 136,
@@ -430,6 +451,10 @@ namespace WzComparerR2.CharaSim
         /// 机甲手枪 158
         /// </summary>
         GauntletBuster = 158,
+        /// <summary>
+        /// 远古弓 159
+        /// </summary>
+        ancientBow = 159,
         /// <summary>
         /// 拼图 168
         /// </summary>

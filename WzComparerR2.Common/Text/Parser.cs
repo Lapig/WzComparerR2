@@ -48,6 +48,8 @@ namespace WzComparerR2.Text
                         {
                             case 'r': curChar = '\r'; break;
                             case 'n': curChar = '\n'; break;
+                            
+                            default: curChar = '\0'; break; // when it is not recognizable escape char (ex. \b)
                         }
                     }
                     else //结束符处理
@@ -96,6 +98,9 @@ namespace WzComparerR2.Text
                     case '\n': //插入换行
                         flushRun();
                         elements.Add(LineBreak.Instance);
+                        break;
+
+                    case '\0':  // not recognizable escape char
                         break;
 
                     default:

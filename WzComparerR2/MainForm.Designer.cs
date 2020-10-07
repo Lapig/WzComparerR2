@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.ribbonControl1 = new DevComponents.DotNetBar.RibbonControl();
             this.ribbonPanel2 = new DevComponents.DotNetBar.RibbonPanel();
             this.ribbonBar8 = new DevComponents.DotNetBar.RibbonBar();
@@ -105,6 +106,7 @@
             this.comboItem7 = new DevComponents.Editors.ComboItem();
             this.comboItem8 = new DevComponents.Editors.ComboItem();
             this.comboItem9 = new DevComponents.Editors.ComboItem();
+            this.comboItem19 = new DevComponents.Editors.ComboItem();
             this.itemContainer12 = new DevComponents.DotNetBar.ItemContainer();
             this.buttonItemSearchString = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItemSelectStringWz = new DevComponents.DotNetBar.ButtonItem();
@@ -138,7 +140,6 @@
             this.itemContainer2 = new DevComponents.DotNetBar.ItemContainer();
             this.itemContainer3 = new DevComponents.DotNetBar.ItemContainer();
             this.btnItemOpenWz = new DevComponents.DotNetBar.ButtonItem();
-            this.btnItemOpenImg = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItemClose = new DevComponents.DotNetBar.ButtonItem();
             this.buttonItemCloseAll = new DevComponents.DotNetBar.ButtonItem();
             this.galleryContainerRecent = new DevComponents.DotNetBar.GalleryContainer();
@@ -248,6 +249,7 @@
             this.dockSite3 = new DevComponents.DotNetBar.DockSite();
             this.dockContainerItem2 = new DevComponents.DotNetBar.DockContainerItem();
             this.panelDockContainer2 = new DevComponents.DotNetBar.PanelDockContainer();
+            this.btnItemOpenImg = new DevComponents.DotNetBar.ButtonItem();
             this.ribbonControl1.SuspendLayout();
             this.ribbonPanel2.SuspendLayout();
             this.ribbonPanel1.SuspendLayout();
@@ -328,7 +330,7 @@
             this.ribbonPanel2.Location = new System.Drawing.Point(0, 56);
             this.ribbonPanel2.Name = "ribbonPanel2";
             this.ribbonPanel2.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.ribbonPanel2.Size = new System.Drawing.Size(740, 0);
+            this.ribbonPanel2.Size = new System.Drawing.Size(740, 94);
             // 
             // 
             // 
@@ -342,7 +344,6 @@
             // 
             this.ribbonPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.ribbonPanel2.TabIndex = 2;
-            this.ribbonPanel2.Visible = true;
             // 
             // ribbonBar8
             // 
@@ -365,7 +366,7 @@
             this.itemContainer32});
             this.ribbonBar8.Location = new System.Drawing.Point(265, 0);
             this.ribbonBar8.Name = "ribbonBar8";
-            this.ribbonBar8.Size = new System.Drawing.Size(270, 0);
+            this.ribbonBar8.Size = new System.Drawing.Size(270, 91);
             this.ribbonBar8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ribbonBar8.TabIndex = 1;
             this.ribbonBar8.Text = "CharaSim";
@@ -810,7 +811,7 @@
             this.itemContainer6});
             this.ribbonBar3.Location = new System.Drawing.Point(3, 0);
             this.ribbonBar3.Name = "ribbonBar3";
-            this.ribbonBar3.Size = new System.Drawing.Size(262, 0);
+            this.ribbonBar3.Size = new System.Drawing.Size(262, 91);
             this.ribbonBar3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.ribbonBar3.TabIndex = 0;
             this.ribbonBar3.Text = "SoundPlayer";
@@ -1105,6 +1106,7 @@
             // 
             this.textBoxItemSearchString.Name = "textBoxItemSearchString";
             this.textBoxItemSearchString.TextBoxWidth = 110;
+            this.textBoxItemSearchString.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.textBoxItemSearchString.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxItemSearchString_KeyDown);
             // 
             // itemContainer11
@@ -1139,7 +1141,8 @@
             this.comboItem6,
             this.comboItem7,
             this.comboItem8,
-            this.comboItem9});
+            this.comboItem9,
+            this.comboItem19});
             this.comboBoxItem2.Name = "comboBoxItem2";
             // 
             // comboItem3
@@ -1169,6 +1172,10 @@
             // comboItem9
             // 
             this.comboItem9.Text = "Skill";
+            // 
+            // comboItem19
+            // 
+            this.comboItem19.Text = "Set Item";
             // 
             // itemContainer12
             // 
@@ -1280,6 +1287,7 @@
             this.textBoxItemSearchWz.MaxLength = 50;
             this.textBoxItemSearchWz.Name = "textBoxItemSearchWz";
             this.textBoxItemSearchWz.TextBoxWidth = 98;
+            this.textBoxItemSearchWz.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.textBoxItemSearchWz.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxItemSearchWz_KeyDown);
             // 
             // itemContainer16
@@ -1592,12 +1600,6 @@
             this.btnItemOpenWz.Text = "Wz open(&O)...";
             this.btnItemOpenWz.Click += new System.EventHandler(this.btnItemOpenWz_Click);
             // 
-            // btnItemOpenImg
-            // 
-            this.btnItemOpenImg.Name = "btnItemOpenImg";
-            this.btnItemOpenImg.Text = "Img Open...";
-            this.btnItemOpenImg.Click += new System.EventHandler(this.btnItemOpenImg_Click);
-            // 
             // buttonItemClose
             // 
             this.buttonItemClose.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText;
@@ -1754,9 +1756,9 @@
             this.panelExMain.Controls.Add(this.panelExLeft);
             this.panelExMain.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelExMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelExMain.Location = new System.Drawing.Point(5, 57);
+            this.panelExMain.Location = new System.Drawing.Point(5, 154);
             this.panelExMain.Name = "panelExMain";
-            this.panelExMain.Size = new System.Drawing.Size(740, 331);
+            this.panelExMain.Size = new System.Drawing.Size(740, 234);
             this.panelExMain.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelExMain.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelExMain.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -1777,7 +1779,7 @@
             this.panelExRight.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelExRight.Location = new System.Drawing.Point(207, 3);
             this.panelExRight.Name = "panelExRight";
-            this.panelExRight.Size = new System.Drawing.Size(530, 325);
+            this.panelExRight.Size = new System.Drawing.Size(530, 228);
             this.panelExRight.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelExRight.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelExRight.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -1831,9 +1833,9 @@
             this.superTabControlPanel1.Controls.Add(this.expandableSplitter1);
             this.superTabControlPanel1.Controls.Add(this.panelEx1);
             this.superTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 24);
+            this.superTabControlPanel1.Location = new System.Drawing.Point(0, 0);
             this.superTabControlPanel1.Name = "superTabControlPanel1";
-            this.superTabControlPanel1.Size = new System.Drawing.Size(530, 301);
+            this.superTabControlPanel1.Size = new System.Drawing.Size(530, 228);
             this.superTabControlPanel1.TabIndex = 1;
             this.superTabControlPanel1.TabItem = this.superTabItem1;
             // 
@@ -1848,7 +1850,7 @@
             this.panelEx2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEx2.Location = new System.Drawing.Point(238, 0);
             this.panelEx2.Name = "panelEx2";
-            this.panelEx2.Size = new System.Drawing.Size(292, 301);
+            this.panelEx2.Size = new System.Drawing.Size(292, 228);
             this.panelEx2.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx2.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx2.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -1870,7 +1872,7 @@
             this.pictureBoxEx1.PictureName = null;
             this.pictureBoxEx1.ShowInfo = true;
             this.pictureBoxEx1.ShowPositionGridOnDrag = true;
-            this.pictureBoxEx1.Size = new System.Drawing.Size(292, 196);
+            this.pictureBoxEx1.Size = new System.Drawing.Size(292, 123);
             this.pictureBoxEx1.TabIndex = 7;
             this.pictureBoxEx1.Text = "pictureBoxEx1";
             // 
@@ -1893,7 +1895,7 @@
             this.cmbItemSkins,
             this.buttonItemSaveImage,
             this.buttonItemGif});
-            this.ribbonBar5.Location = new System.Drawing.Point(0, 275);
+            this.ribbonBar5.Location = new System.Drawing.Point(0, 202);
             this.ribbonBar5.Name = "ribbonBar5";
             this.ribbonBar5.Size = new System.Drawing.Size(292, 26);
             this.ribbonBar5.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -2057,7 +2059,7 @@
             this.expandableSplitter1.HotGripLightColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground;
             this.expandableSplitter1.Location = new System.Drawing.Point(233, 0);
             this.expandableSplitter1.Name = "expandableSplitter1";
-            this.expandableSplitter1.Size = new System.Drawing.Size(5, 301);
+            this.expandableSplitter1.Size = new System.Drawing.Size(5, 228);
             this.expandableSplitter1.Style = DevComponents.DotNetBar.eSplitterStyle.Office2007;
             this.expandableSplitter1.TabIndex = 1;
             this.expandableSplitter1.TabStop = false;
@@ -2072,7 +2074,7 @@
             this.panelEx1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelEx1.Location = new System.Drawing.Point(0, 0);
             this.panelEx1.Name = "panelEx1";
-            this.panelEx1.Size = new System.Drawing.Size(233, 301);
+            this.panelEx1.Size = new System.Drawing.Size(233, 228);
             this.panelEx1.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelEx1.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelEx1.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -2106,7 +2108,7 @@
             this.advTree3.NodesConnector = this.nodeConnector3;
             this.advTree3.NodeStyle = this.elementStyle3;
             this.advTree3.PathSeparator = ";";
-            this.advTree3.Size = new System.Drawing.Size(227, 215);
+            this.advTree3.Size = new System.Drawing.Size(227, 142);
             this.advTree3.Styles.Add(this.elementStyle3);
             this.advTree3.TabIndex = 1;
             this.advTree3.Text = "advTree3";
@@ -2148,91 +2150,91 @@
             this.tsmi2Prev,
             this.tsmi2Next});
             this.contextMenuStrip2.Name = "contextMenuStrip2";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(193, 248);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(196, 198);
             this.contextMenuStrip2.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip2_Opening);
             // 
             // tsmi2SaveAs
             // 
             this.tsmi2SaveAs.Name = "tsmi2SaveAs";
             this.tsmi2SaveAs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.tsmi2SaveAs.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2SaveAs.Size = new System.Drawing.Size(195, 22);
             this.tsmi2SaveAs.Text = "Save as...";
             this.tsmi2SaveAs.Click += new System.EventHandler(this.tsmi2SaveAs_Click);
             // 
             // tsmi2HandleUol
             // 
             this.tsmi2HandleUol.Name = "tsmi2HandleUol";
-            this.tsmi2HandleUol.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2HandleUol.Size = new System.Drawing.Size(195, 22);
             this.tsmi2HandleUol.Text = "Uol 따라가기";
             this.tsmi2HandleUol.Click += new System.EventHandler(this.tsmi2HandleUol_Click);
             // 
             // tsmi2Splitter1
             // 
             this.tsmi2Splitter1.Name = "tsmi2Splitter1";
-            this.tsmi2Splitter1.Size = new System.Drawing.Size(189, 6);
+            this.tsmi2Splitter1.Size = new System.Drawing.Size(192, 6);
             // 
             // tsmi2ExpandAll
             // 
             this.tsmi2ExpandAll.Name = "tsmi2ExpandAll";
-            this.tsmi2ExpandAll.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2ExpandAll.Size = new System.Drawing.Size(195, 22);
             this.tsmi2ExpandAll.Text = "Expand All(&E)";
             this.tsmi2ExpandAll.Click += new System.EventHandler(this.tsmi2ExpandAll_Click);
             // 
             // tsmi2CollapseAll
             // 
             this.tsmi2CollapseAll.Name = "tsmi2CollapseAll";
-            this.tsmi2CollapseAll.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2CollapseAll.Size = new System.Drawing.Size(195, 22);
             this.tsmi2CollapseAll.Text = "Collapse All(&C)";
             this.tsmi2CollapseAll.Click += new System.EventHandler(this.tsmi2CollapseAll_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(189, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(192, 6);
             // 
             // tsmi2ExpandLevel
             // 
             this.tsmi2ExpandLevel.Name = "tsmi2ExpandLevel";
-            this.tsmi2ExpandLevel.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2ExpandLevel.Size = new System.Drawing.Size(195, 22);
             this.tsmi2ExpandLevel.Text = "Expand Level(&X)";
             this.tsmi2ExpandLevel.Click += new System.EventHandler(this.tsmi2ExpandLevel_Click);
             // 
             // tsmi2CollapseLevel
             // 
             this.tsmi2CollapseLevel.Name = "tsmi2CollapseLevel";
-            this.tsmi2CollapseLevel.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2CollapseLevel.Size = new System.Drawing.Size(195, 22);
             this.tsmi2CollapseLevel.Text = "Collapse Level(&O)";
             this.tsmi2CollapseLevel.Click += new System.EventHandler(this.tsmi2CollapseLevel_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(189, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(192, 6);
             // 
             // tsmi2ExpandType
             // 
             this.tsmi2ExpandType.Name = "tsmi2ExpandType";
-            this.tsmi2ExpandType.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2ExpandType.Size = new System.Drawing.Size(195, 22);
             this.tsmi2ExpandType.Text = "Expand Type(&A)";
             this.tsmi2ExpandType.Click += new System.EventHandler(this.tsmi2ExpandType_Click);
             // 
             // tsmi2CollapseType
             // 
             this.tsmi2CollapseType.Name = "tsmi2CollapseType";
-            this.tsmi2CollapseType.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2CollapseType.Size = new System.Drawing.Size(195, 22);
             this.tsmi2CollapseType.Text = "Collapse Type(&L)";
             this.tsmi2CollapseType.Click += new System.EventHandler(this.tsmi2CollapseType_Click);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(189, 6);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(192, 6);
             // 
             // tsmi2Prev
             // 
             this.tsmi2Prev.Name = "tsmi2Prev";
             this.tsmi2Prev.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.tsmi2Prev.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2Prev.Size = new System.Drawing.Size(195, 22);
             this.tsmi2Prev.Text = "Undo Move(&P)";
             this.tsmi2Prev.Click += new System.EventHandler(this.tsmi2Prev_Click);
             // 
@@ -2240,7 +2242,7 @@
             // 
             this.tsmi2Next.Name = "tsmi2Next";
             this.tsmi2Next.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.tsmi2Next.Size = new System.Drawing.Size(192, 22);
+            this.tsmi2Next.Size = new System.Drawing.Size(195, 22);
             this.tsmi2Next.Text = "Redo Move(&N)";
             this.tsmi2Next.Click += new System.EventHandler(this.tsmi2Next_Click);
             // 
@@ -2318,7 +2320,6 @@
             this.superTabControlPanel2.Size = new System.Drawing.Size(530, 228);
             this.superTabControlPanel2.TabIndex = 0;
             this.superTabControlPanel2.TabItem = this.superTabItem2;
-            this.superTabControlPanel2.Visible = false;
             // 
             // chkResolvePngLink
             // 
@@ -2368,6 +2369,7 @@
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.Location = new System.Drawing.Point(34, 39);
             this.labelX1.Name = "labelX1";
+            this.labelX1.Size = new System.Drawing.Size(44, 16);
             this.labelX1.TabIndex = 6;
             this.labelX1.Text = "PNG :";
             // 
@@ -2410,6 +2412,7 @@
             this.labelXComp2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelXComp2.Location = new System.Drawing.Point(3, 113);
             this.labelXComp2.Name = "labelXComp2";
+            this.labelXComp2.Size = new System.Drawing.Size(44, 16);
             this.labelXComp2.TabIndex = 3;
             this.labelXComp2.Text = "detail";
             this.labelXComp2.TextLineAlignment = System.Drawing.StringAlignment.Near;
@@ -2423,6 +2426,7 @@
             this.labelXComp1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelXComp1.Location = new System.Drawing.Point(3, 91);
             this.labelXComp1.Name = "labelXComp1";
+            this.labelXComp1.Size = new System.Drawing.Size(31, 16);
             this.labelXComp1.TabIndex = 1;
             this.labelXComp1.Text = "tail";
             this.labelXComp1.TextLineAlignment = System.Drawing.StringAlignment.Near;
@@ -2456,7 +2460,6 @@
             this.superTabControlPanel3.Size = new System.Drawing.Size(530, 228);
             this.superTabControlPanel3.TabIndex = 0;
             this.superTabControlPanel3.TabItem = this.superTabItem3;
-            this.superTabControlPanel3.Visible = false;
             // 
             // btnExportSkillOption
             // 
@@ -2509,6 +2512,7 @@
             this.btnNodeForward.SymbolColor = System.Drawing.Color.Gray;
             this.btnNodeForward.SymbolSize = 12F;
             this.btnNodeForward.Text = "forward";
+            this.btnNodeForward.Click += new System.EventHandler(this.btnNodeForward_Click);
             // 
             // panelExLeft
             // 
@@ -2522,7 +2526,7 @@
             this.panelExLeft.DisabledBackColor = System.Drawing.Color.Empty;
             this.panelExLeft.Location = new System.Drawing.Point(3, 3);
             this.panelExLeft.Name = "panelExLeft";
-            this.panelExLeft.Size = new System.Drawing.Size(200, 325);
+            this.panelExLeft.Size = new System.Drawing.Size(200, 228);
             this.panelExLeft.Style.Alignment = System.Drawing.StringAlignment.Center;
             this.panelExLeft.Style.BackColor1.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground;
             this.panelExLeft.Style.BackColor2.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2;
@@ -2551,7 +2555,7 @@
             this.advTree2.NodesConnector = this.nodeConnector2;
             this.advTree2.NodeStyle = this.elementStyle2;
             this.advTree2.PathSeparator = ";";
-            this.advTree2.Size = new System.Drawing.Size(200, 168);
+            this.advTree2.Size = new System.Drawing.Size(200, 71);
             this.advTree2.Styles.Add(this.elementStyle2);
             this.advTree2.TabIndex = 1;
             this.advTree2.Text = "advTree2";
@@ -2638,31 +2642,31 @@
             this.tsmi1Export,
             this.tsmi1DumpAsXml});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(151, 76);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(155, 76);
             // 
             // tsmi1Sort
             // 
             this.tsmi1Sort.Name = "tsmi1Sort";
-            this.tsmi1Sort.Size = new System.Drawing.Size(150, 22);
+            this.tsmi1Sort.Size = new System.Drawing.Size(154, 22);
             this.tsmi1Sort.Text = "Sort(&S)";
             this.tsmi1Sort.Click += new System.EventHandler(this.tsmi1Sort_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(147, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(151, 6);
             // 
             // tsmi1Export
             // 
             this.tsmi1Export.Name = "tsmi1Export";
-            this.tsmi1Export.Size = new System.Drawing.Size(150, 22);
+            this.tsmi1Export.Size = new System.Drawing.Size(154, 22);
             this.tsmi1Export.Text = "Export(&E)";
             this.tsmi1Export.Click += new System.EventHandler(this.tsmi1Export_Click);
             // 
             // tsmi1DumpAsXml
             // 
             this.tsmi1DumpAsXml.Name = "tsmi1DumpAsXml";
-            this.tsmi1DumpAsXml.Size = new System.Drawing.Size(150, 22);
+            this.tsmi1DumpAsXml.Size = new System.Drawing.Size(154, 22);
             this.tsmi1DumpAsXml.Text = "XML Dump(&D)";
             this.tsmi1DumpAsXml.Click += new System.EventHandler(this.tsmi1DumpAsXml_Click);
             // 
@@ -2771,6 +2775,7 @@
             this.bar1.AccessibleName = "DotNetBar Bar";
             this.bar1.AccessibleRole = System.Windows.Forms.AccessibleRole.Grouping;
             this.bar1.AutoSyncBarCaption = true;
+            this.bar1.CanCustomize = false;
             this.bar1.CanDockLeft = false;
             this.bar1.CanDockRight = false;
             this.bar1.CanDockTab = false;
@@ -2806,7 +2811,6 @@
             this.panelDockContainer1.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer1.Style.GradientAngle = 90;
             this.panelDockContainer1.TabIndex = 0;
-            this.panelDockContainer1.Visible = true;
             // 
             // dockContainerItem1
             // 
@@ -2819,9 +2823,9 @@
             this.dockSite1.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite1.Dock = System.Windows.Forms.DockStyle.Left;
             this.dockSite1.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite1.Location = new System.Drawing.Point(5, 57);
+            this.dockSite1.Location = new System.Drawing.Point(5, 154);
             this.dockSite1.Name = "dockSite1";
-            this.dockSite1.Size = new System.Drawing.Size(0, 331);
+            this.dockSite1.Size = new System.Drawing.Size(0, 234);
             this.dockSite1.TabIndex = 4;
             this.dockSite1.TabStop = false;
             // 
@@ -2830,9 +2834,9 @@
             this.dockSite2.AccessibleRole = System.Windows.Forms.AccessibleRole.Window;
             this.dockSite2.Dock = System.Windows.Forms.DockStyle.Right;
             this.dockSite2.DocumentDockContainer = new DevComponents.DotNetBar.DocumentDockContainer();
-            this.dockSite2.Location = new System.Drawing.Point(745, 57);
+            this.dockSite2.Location = new System.Drawing.Point(745, 154);
             this.dockSite2.Name = "dockSite2";
-            this.dockSite2.Size = new System.Drawing.Size(0, 331);
+            this.dockSite2.Size = new System.Drawing.Size(0, 234);
             this.dockSite2.TabIndex = 5;
             this.dockSite2.TabStop = false;
             // 
@@ -2904,7 +2908,12 @@
             this.panelDockContainer2.Style.ForeColor.ColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.ItemText;
             this.panelDockContainer2.Style.GradientAngle = 90;
             this.panelDockContainer2.TabIndex = 2;
-            this.panelDockContainer2.Visible = true;
+            // 
+            // btnItemOpenImg
+            // 
+            this.btnItemOpenImg.Name = "btnItemOpenImg";
+            this.btnItemOpenImg.Text = "Img open...";
+            this.btnItemOpenImg.Click += new System.EventHandler(this.btnItemOpenImg_Click);
             // 
             // MainForm
             // 
@@ -2920,6 +2929,7 @@
             this.Controls.Add(this.dockSite7);
             this.Controls.Add(this.dockSite8);
             this.Controls.Add(this.ribbonBar2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(750, 513);
             this.Name = "MainForm";
             this.Text = "WzComparerR2-KMS-EN";
@@ -3173,5 +3183,6 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX chkResolvePngLink;
         private DevComponents.DotNetBar.ComboBoxItem cmbItemSkins;
         private DevComponents.DotNetBar.ButtonItem btnItemOpenImg;
+        private DevComponents.Editors.ComboItem comboItem19;
     }
 }

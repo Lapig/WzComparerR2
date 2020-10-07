@@ -20,11 +20,11 @@ namespace WzComparerR2.MapRender
 
         }
 
-#if MapRenderV1
+        #if MapRenderV1
         private RibbonBar bar;
         private ButtonItem btnItemMapRender;
         private FrmMapRender mapRenderGame1;
-#endif
+        #endif
 
         private RibbonBar bar2;
         private ButtonItem btnItemMapRenderV2;
@@ -32,18 +32,16 @@ namespace WzComparerR2.MapRender
 
         protected override void OnLoad()
         {
-#if MapRenderV1
+            #if MapRenderV1
             this.bar = Context.AddRibbonBar("Modules", "MapRender");
             btnItemMapRender = new ButtonItem("", "맵 미리보기");
             btnItemMapRender.Click += btnItem_Click;
             bar.Items.Add(btnItemMapRender);
-#endif
-
+            #endif
             this.bar2 = Context.AddRibbonBar("Modules", "MapRender2");
             btnItemMapRenderV2 = new ButtonItem("", "Map Render V2");
             btnItemMapRenderV2.Click += btnItem_Click;
             bar2.Items.Add(btnItemMapRenderV2);
-
             ConfigManager.RegisterAllSection();
         }
 
@@ -101,25 +99,25 @@ namespace WzComparerR2.MapRender
                         }
                         else
 #endif
+                        {
+                            if (this.mapRenderGame2 != null)
                             {
-                                if (this.mapRenderGame2 != null)
+                                return;
+                            }
+                            this.mapRenderGame2 = new FrmMapRender2(img) { StringLinker = sl };
+                            this.mapRenderGame2.Window.Title = "MapRender " + this.Version;
+                            try
+                            {
+                                using (this.mapRenderGame2)
                                 {
-                                    return;
-                                }
-                                this.mapRenderGame2 = new FrmMapRender2(img) { StringLinker = sl };
-                                this.mapRenderGame2.Window.Title = "MapRender " + this.Version;
-                                try
-                                {
-                                    using (this.mapRenderGame2)
-                                    {
-                                        this.mapRenderGame2.Run();
-                                    }
-                                }
-                                finally
-                                {
-                                    this.mapRenderGame2 = null;
+                                    this.mapRenderGame2.Run();
                                 }
                             }
+                            finally
+                            {
+                                this.mapRenderGame2 = null;
+                            }
+                        }
 #if !DEBUG
                         }
                         catch (Exception ex)

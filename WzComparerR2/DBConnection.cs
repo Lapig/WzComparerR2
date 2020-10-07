@@ -10,8 +10,6 @@ using WzComparerR2.Common;
 using WzComparerR2.PluginBase;
 using WzComparerR2.CharaSimControl;
 using WzComparerR2.CharaSim;
-//using WzComparerR2.MapRender;
-using WzComparerR2.Controls;
 
 namespace WzComparerR2
 {
@@ -24,82 +22,6 @@ namespace WzComparerR2
 
         private StringLinker sl;
 
-        public DataSet GenerateMapTable()
-        {
-            Wz_Node mapWz = PluginManager.FindWz(Wz_Type.Map);
-            if (mapWz == null)
-                return null;
-
-            Regex r = new Regex(@"^(\d+)\.img", RegexOptions.Compiled);
-
-            ServiceContainer x;
-       //     x.GetType(MappingType);
-
-         //   ResourceLoader mapLoader = new ResourceLoader();
-            DataSet ds = new DataSet();
-            DataTable mapTable = new DataTable("ms_map");
-            mapTable.Columns.Add("mapID", typeof(string));
-            mapTable.Columns.Add("mapName", typeof(string));
-
-            StringResult sr;
-
-            foreach (Wz_Node node in mapWz.Nodes)
-            {
-                Match m = r.Match(node.Text);
-                Wz_Image img = node.GetValue<Wz_Image>(null);
-                if (!m.Success)
-                {
-                    continue;
-                }
-                if (img == null || !img.TryExtract())
-                {
-                    continue;
-                }
-                string mapID = m.Result("$1");
-
-                Wz_Node mapListNode = img.Node.FindNodeByPath("map");
-          //      MapData currmap;
-          //      currmap.Load(mapListNode,)
-                if (mapListNode == null || mapListNode.Nodes.Count <= 0)
-                {
-                    continue;
-                }
-
-                foreach (Wz_Node mapNode in mapListNode.Nodes)
-                {
-                    Skill skill = Skill.CreateFromNode(mapNode, PluginManager.FindWz);
-                    if (skill == null)
-                        continue;
-
-                    string skillID = mapNode.Text;
-                    sl.StringSkill2.TryGetValue(skillID, out sr);
-
-                    string reqSkill = null;
-                    int reqSkillLevel = 0;
-                    if (skill.ReqSkill.Count > 0)
-                    {
-                        foreach (var kv in skill.ReqSkill)
-                        {
-                            reqSkill = kv.Key.ToString();
-                            reqSkillLevel = kv.Value;
-                        }
-                    }
-
-                    mapTable.Rows.Add(
-                        mapID,
-                        skillID,
-                        sr != null ? sr.Name : null,
-                        sr != null ? sr.Desc : null
-                    );
-
-                }
-
-                img.Unextract();
-            }
-            ds.Tables.Add(mapTable);
-
-            return ds;
-        }
         public DataSet GenerateSkillTable()
         {
             Wz_Node skillWz = PluginManager.FindWz(Wz_Type.Skill);
@@ -112,7 +34,7 @@ namespace WzComparerR2
             DataTable jobTable = new DataTable("ms_job");
             jobTable.Columns.Add("jobID", typeof(string));
             jobTable.Columns.Add("jobName", typeof(string));
- 
+
             DataTable skillTable = new DataTable("ms_skill");
             skillTable.Columns.Add("jobID", typeof(string));
             skillTable.Columns.Add("skillID", typeof(string));
@@ -169,7 +91,7 @@ namespace WzComparerR2
                 jobTable.Rows.Add(jobID, (sr != null ? sr["bookName"] : null));
 
                 //获取技能
-                Wz_Node skillListNode = img.Node .FindNodeByPath("skill");
+                Wz_Node skillListNode = img.Node.FindNodeByPath("skill");
                 if (skillListNode == null || skillListNode.Nodes.Count <= 0)
                 {
                     continue;
@@ -177,7 +99,7 @@ namespace WzComparerR2
 
                 foreach (Wz_Node skillNode in skillListNode.Nodes)
                 {
-                    Skill skill = Skill.CreateFromNode(skillNode,  PluginManager.FindWz);
+                    Skill skill = Skill.CreateFromNode(skillNode, PluginManager.FindWz);
                     if (skill == null)
                         continue;
 
@@ -212,7 +134,7 @@ namespace WzComparerR2
                         skill.ReqLevel
                     );
 
-                   
+
                     if (!skill.PreBBSkill)
                     {
                         //导入技能common
@@ -247,12 +169,20 @@ namespace WzComparerR2
                     for (int i = 1, j = skill.MaxLevel + (skill.CombatOrders ? 2 : 0); i <= j; i++)
                     {
                         skill.Level = i;
-                        string levelDesc = SummaryParser.GetSkillSummary(skill, sr, SummaryParams.Default);
+                        string levelDesc;
+                        try
+                        {
+                            levelDesc = SummaryParser.GetSkillSummary(skill, sr, SummaryParams.Default);
+                        }
+                        catch(Exception ex)
+                        {
+                            levelDesc = "错误：" + ex.Message;
+                        }
+                       
                         skillLevelTable.Rows.Add(
                             skillID,
                             i,
                             levelDesc);
-
                     }
                 }
 
@@ -440,7 +370,7 @@ namespace WzComparerR2
                             List<KeyValuePair<int, Potential>> tempOptions = new List<KeyValuePair<int, Potential>>();
                             int totalProb = 0;
                             Wz_Node tempOptionNode = skillOptionNode.Nodes["tempOption"];
-                           
+
                             if (tempOptionNode != null)
                             {
                                 foreach (Wz_Node optionNode in tempOptionNode.Nodes)
@@ -473,7 +403,7 @@ namespace WzComparerR2
                                         opt.Value.code, opt.Key, totalProb, (1.0 * opt.Key / totalProb));
                                 }
                             }
-                             
+
                         }
 
                         sw.WriteLine("</tbody></table><br/>");

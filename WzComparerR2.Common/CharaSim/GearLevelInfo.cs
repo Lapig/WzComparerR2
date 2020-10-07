@@ -17,6 +17,8 @@ namespace WzComparerR2.CharaSim
         public int Level { get; set; }
         public Dictionary<GearPropType, Range> BonusProps { get; private set; }
         public int Exp { get; set; }
+        public int Point { get; set; }
+        public int DecPoint { get; set; }
 
         public string HS { get; set; }
         public int Prob { get; set; }
@@ -33,6 +35,14 @@ namespace WzComparerR2.CharaSim
                 if (child.Text == "exp")
                 {
                     info.Exp = child.GetValue(0);
+                }
+                else if (child.Text == "point")
+                {
+                    info.Point = child.GetValue(0);
+                }
+                else if (child.Text == "decPoint")
+                {
+                    info.DecPoint = child.GetValue(0);
                 }
                 else 
                 {

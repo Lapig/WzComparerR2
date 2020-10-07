@@ -13,7 +13,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>发布\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,6 +25,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -37,7 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>0</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>
     </DocumentationFile>
@@ -49,7 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
@@ -60,6 +60,48 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>0</WarningLevel>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WarningLevel>0</WarningLevel>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Bass.Net, Version=2.4.8.5, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
@@ -74,15 +116,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\References\MonoGame.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.1-beta1\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup Condition="Exists('..\Build\CommonAssemblyInfo.cs')">
+    <Compile Include="..\Build\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharaSimControl\AControl.cs" />
@@ -96,7 +140,6 @@
     </Compile>
     <Compile Include="CharaSimControl\CashPackageRender.cs" />
     <Compile Include="CharaSimControl\GearTooltipRender2.cs" />
-    <Compile Include="CharaSimControl\HelpTooltipRender.cs" />
     <Compile Include="CharaSimControl\ItemTooltipRender.cs" />
     <Compile Include="CharaSimControl\AfrmStat.cs">
       <SubType>Form</SubType>
@@ -120,6 +163,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CharaSimControl\GearGraphics.cs" />
+    <Compile Include="CharaSimControl\HelpTooltipRender.cs" />
     <Compile Include="CharaSimControl\TextBlock.cs" />
     <Compile Include="CharaSim\Character.cs" />
     <Compile Include="CharaSim\CharacterStatus.cs" />
@@ -256,7 +300,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
     <None Include="Resources\dir.png" />
   </ItemGroup>
   <ItemGroup>
@@ -305,10 +348,6 @@
       <Project>{818060bc-404c-470a-94b3-5160716c5247}</Project>
       <Name>WzComparerR2.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WzComparerR2.MapRender\WzComparerR2.MapRender.csproj">
-      <Project>{11e362e4-b8fb-4bd4-b0d3-ba078d5fb002}</Project>
-      <Name>WzComparerR2.MapRender</Name>
-    </ProjectReference>
     <ProjectReference Include="..\WzComparerR2.PluginBase\WzComparerR2.PluginBase.csproj">
       <Project>{FA74A2FD-0250-4182-845D-DD98D829B525}</Project>
       <Name>WzComparerR2.PluginBase</Name>
@@ -333,13 +372,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="wcr2_256.ico" />
-    <None Include="wcr2_32.ico" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)References\x86\*" "$(TargetDir)Lib\x86" /Y /I
-xcopy "$(SolutionDir)References\x64\*" "$(TargetDir)Lib\x64" /Y /I</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(ProjectDir)..\References\x86\*" "$(TargetDir)Lib\x86" /Y /I
+xcopy "$(ProjectDir)..\References\x64\*" "$(TargetDir)Lib\x64" /Y /I</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -184,7 +184,8 @@ namespace WzComparerR2.CharaSim
         /// <returns></returns>
         public static bool IsLeftWeapon(GearType type)
         {
-            return (int)type >= 121 && (int)type <= 139 && type != GearType.katara;
+            return (int)type >= 121 && (int)type <= 139 && type != GearType.katara
+                || ((int)type / 10) == 121;
         }
 
         public static bool IsSubWeapon(GearType type)
@@ -215,7 +216,7 @@ namespace WzComparerR2.CharaSim
         {
             int _type = (int)type;
             return (_type >= 140 && _type <= 149)
-                || (_type >= 152 && _type <= 158);
+                || (_type >= 152 && _type <= 159);
         }
 
         public static bool IsMechanicGear(GearType type)
@@ -344,6 +345,10 @@ namespace WzComparerR2.CharaSim
                     return GearType.soulShield;
                 case 1099:
                     return GearType.demonShield;
+                case 1212:
+                    return GearType.shiningRod;
+                case 1213:
+                    return GearType.tuner;
             }
             if (code / 10000 == 135)
             {
@@ -720,7 +725,7 @@ namespace WzComparerR2.CharaSim
                             break;
 
                         case "onlyUpgrade":
-                            gear.Props.Add(GearPropType.onlyUpgrade, Convert.ToInt32(subNode.Value));
+                            gear.Props.Add(GearPropType.onlyUpgrade, Convert.ToInt32(subNode.Nodes["0"]?.Value));
                             break;
 
                         case "epic":
@@ -751,7 +756,7 @@ namespace WzComparerR2.CharaSim
                         default:
                             {
                                 GearPropType type;
-                                if (Enum.TryParse(subNode.Text, out type))
+                                if (!int.TryParse(subNode.Text, out _) && Enum.TryParse(subNode.Text, out type))
                                 {
                                     try
                                     {
@@ -788,6 +793,7 @@ namespace WzComparerR2.CharaSim
                     case 2: gear.Grade = GearGrade.B; break;
                     case 3: gear.Grade = GearGrade.A; break;
                     case 5: gear.Grade = GearGrade.S; break;
+                    case 7: gear.Grade = GearGrade.SS; break;
                     default: gear.Grade = (GearGrade)(value - 1); break;
                 }
             }
@@ -826,7 +832,7 @@ namespace WzComparerR2.CharaSim
             //追加限时属性
             gear.MakeTimeLimitedPropAvailable();
 
-            if (gear.type == GearType.face)
+            if (gear.type == GearType.face || gear.type == GearType.face2)
             {
                 gear.Icon = BitmapOrigin.CreateFromNode(findNode(@"Item\Install\0380.img\03801284\info\icon"), findNode);
                 gear.IconRaw = BitmapOrigin.CreateFromNode(findNode(@"Item\Install\0380.img\03801284\info\iconRaw"), findNode);
@@ -835,6 +841,11 @@ namespace WzComparerR2.CharaSim
             {
                 gear.Icon = BitmapOrigin.CreateFromNode(findNode(@"Item\Install\0380.img\03801283\info\icon"), findNode);
                 gear.IconRaw = BitmapOrigin.CreateFromNode(findNode(@"Item\Install\0380.img\03801283\info\iconRaw"), findNode);
+            }
+
+            if (gear.Props.TryGetValue(GearPropType.incCHUC, out value))
+            {
+                gear.Star = value;
             }
 
             return gear;

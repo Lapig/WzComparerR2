@@ -533,7 +533,6 @@ namespace WzComparerR2.WzLib
             }
             else if (value is Wz_Png)
             {
-                return;
                 var png = (Wz_Png)value;
                 writer.WriteStartElement("png");
                 writer.WriteAttributeString("name", node.Text);
@@ -563,7 +562,6 @@ namespace WzComparerR2.WzLib
             }
             else if (value is Wz_Sound)
             {
-                return;
                 var sound = (Wz_Sound)value;
                 writer.WriteStartElement("sound");
                 writer.WriteAttributeString("name", node.Text);

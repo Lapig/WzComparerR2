@@ -10,7 +10,6 @@ using WzComparerR2.PluginBase;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using WzComparerR2.Animation;
-using WzComparerR2.MapRender.UI;
 
 
 namespace WzComparerR2.MapRender
@@ -83,19 +82,12 @@ namespace WzComparerR2.MapRender
             {
                 LoadMinimap(node, resLoader);
             }
-      /*      else
-            {
-                DrawToolTip("Minimap error");
-            }*/
+
             //加载地图元件
             if ((node = mapImgNode.Nodes["back"]) != null)
             {
                 LoadBack(node);
             }
-         /*   else
-            {
-                DrawToolTip("Background null");
-            }*/
             for (int i = 0; i <= 7; i++)
             {
                 if ((node = mapImgNode.Nodes[i.ToString()]) != null)
@@ -112,28 +104,16 @@ namespace WzComparerR2.MapRender
                     {
                         LoadFoothold(fhLevel, i);
                     }
-                  /*  else
-                    {
-                        DrawToolTip("Foothold node null");
-                    }*/
                 }
             }
             if ((node = mapImgNode.Nodes["life"]) != null)
             {
                 LoadLife(node);
             }
-        /*    else
-            {
-                DrawToolTip("Life node null");
-            }*/
             if ((node = mapImgNode.Nodes["reactor"]) != null)
             {
                 LoadReactor(node);
             }
-         /*   else
-            {
-                DrawToolTip("Reactor node null");
-            }*/
             if ((node = mapImgNode.Nodes["portal"]) != null)
             {
                 LoadPortal(node);
@@ -142,10 +122,6 @@ namespace WzComparerR2.MapRender
             {
                 LoadLadderRope(node);
             }
-      /*      else
-            {
-                DrawToolTip("Ladder/rope node null");
-            }*/
             if ((node = mapImgNode.Nodes["skyWhale"]) != null)
             {
                 LoadSkyWhale(node);
@@ -154,18 +130,10 @@ namespace WzComparerR2.MapRender
             {
                 LoadTooltip(node);
             }
-       /*     else
-            {
-                DrawToolTip("Tooltip node null");
-            }*/
             if ((node = mapImgNode.Nodes["particle"]) != null)
             {
                 LoadParticle(node);
             }
-       /*     else
-            {
-                DrawToolTip("Particle node null");
-            }*/
 
             //计算地图大小
             CalcMapSize();
@@ -406,25 +374,6 @@ namespace WzComparerR2.MapRender
             }
         }
 
-        private int position = 50;
-        private void DrawToolTip(string info)
-        {
-            var item = new TooltipItem();
-            Func<Point, Rectangle> getRect = (pnt) =>
-            {
-               // int x1 = node.X;
-               // int x2 = node.Nodes["x2"].GetValueEx<int>(0);
-              //  int y1 = node.Y;
-               // int y2 = node.Nodes["y2"].GetValueEx<int>(0);
-                return new Rectangle(pnt,new Point(200));
-            };
-            item.Name = "Debug";
-            item.Rect = getRect(new Point(50, position));
-            item.ItemEU = info;
-            item.Title = "D";
-            this.Tooltips.Add(item);
-            position += 70;
-        }
         private void LoadTooltip(Wz_Node tooltipNode)
         {
             Func<Wz_Node, Rectangle> getRect = (node) =>
@@ -840,10 +789,19 @@ namespace WzComparerR2.MapRender
             for (int i = 0; i < particle.SubItems.Length; i++)
             {
                 var subItem = particle.SubItems[i];
+                if (subItem.Quest.Exists(quest => !resLoader.PatchVisibility.IsVisible(quest.Item1, quest.Item2)))
+                {
+                    continue;
+                }
                 var pGroup = pSystem.CreateGroup(i.ToString());
                 pGroup.Position = new Vector2(subItem.X, subItem.Y);
                 pGroup.Active();
                 pSystem.Groups.Add(pGroup);
+            }
+
+            if (pSystem.Groups.Count == 0)
+            {
+                pSystem = new ParticleSystem(this.random);
             }
 
             particle.View = new ParticleItem.ItemView()
@@ -939,7 +897,7 @@ namespace WzComparerR2.MapRender
         private void AddNpcAI(StateMachineAnimator ani)
         {
             var actions = new[] { "stand", "say", "mouse", "move", "hand", "laugh", "eye" };
-            var availActions = ani.Data.States.Where(act => !act.EndsWith("_old") && actions.Where(acts => act.Contains(acts)).Count() > 0).ToArray();
+            var availActions = ani.Data.States.Where(act => !act.EndsWith("_old") && Array.Exists(actions, acts => act.Contains(acts))).ToArray();
             if (availActions.Length > 0)
             {
                 ani.AnimationEnd += (o, e) =>
